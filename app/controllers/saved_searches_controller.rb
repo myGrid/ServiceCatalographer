@@ -1,4 +1,4 @@
-# BioCatalogue: app/controllers/saved_searches_controller.rb
+# ServiceCatalographer: app/controllers/saved_searches_controller.rb
 #
 # Copyright (c) 2010, University of Manchester, The European Bioinformatics 
 # Institute (EMBL-EBI) and the University of Southampton.
@@ -71,7 +71,7 @@ class SavedSearchesController < ApplicationController
 protected
 
   def authorise
-    unless BioCatalogue::Auth.allow_user_to_claim_thing?(current_user, @saved_search)
+    unless ServiceCatalographer::Auth.allow_user_to_claim_thing?(current_user, @saved_search)
       error_to_back_or_home("You are not allowed to perform this action")
       return false
     end

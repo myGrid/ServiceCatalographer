@@ -9,7 +9,7 @@
 
 <legend> <h4> Upload a test for this <%= testable_item.class %></h4> </legend>
 
-<% if BioCatalogue::Auth.allow_user_to_curate_thing?(current_user, testable_item) %>
+<% if ServiceCatalographer::Auth.allow_user_to_curate_thing?(current_user, testable_item) %>
 
 	<%= form_tag(test_scripts_path, :method => :post, :multipart => true )  do -%>
         <% if service_test %>

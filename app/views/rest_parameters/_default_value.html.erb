@@ -1,6 +1,6 @@
 <%
 
-# BioCatalogue: app/views/rest_parameters/_default_value.html.erb
+# ServiceCatalographer: app/views/rest_parameters/_default_value.html.erb
 #
 # Copyright (c) 2009, University of Manchester, The European Bioinformatics 
 # Institute (EMBL-EBI) and the University of Southampton.
@@ -12,7 +12,7 @@
 	main_div_id = "default_value_#{rand(10000000)}"
     
   meth = RestMethod.find(rest_method_id)
-  can_edit = BioCatalogue::Auth.allow_user_to_curate_thing?(current_user, parameter, :rest_method => meth)  
+  can_edit = ServiceCatalographer::Auth.allow_user_to_curate_thing?(current_user, parameter, :rest_method => meth)
   %>
 
 <% unless parameter.nil? %>

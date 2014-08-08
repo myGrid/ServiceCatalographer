@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-# BioCatalogue: vendor/embrace_scripts/make_rundirs.py
+# ServiceCatalographer: vendor/embrace_scripts/make_rundirs.py
 #
 # Copyright (c) 2010, University of Manchester, The European Bioinformatics 
 # Institute (EMBL-EBI) and the University of Southampton.
@@ -9,7 +9,7 @@
 #
 # This script builds the run directories that will be used by
 # harness.py and wrapper.py to run the test scripts.
-# The scripts uses the biocatalogue registry database to build the directories 
+# The scripts uses the ServiceCatalographer instance's database to build the directories
 # using the pattern 
 # <base_dir>/<service id>/<test_id>/package/>
 # 

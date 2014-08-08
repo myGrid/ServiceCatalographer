@@ -1,4 +1,4 @@
-# BioCatalogue: lib/object.rb
+# ServiceCatalographer: lib/object.rb
 
 # From: http://ozmm.org/posts/try.html
 

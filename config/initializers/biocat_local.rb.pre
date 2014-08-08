@@ -1,4 +1,4 @@
-# BioCatalogue: app/config/initializers/biocat_local.rb.pre
+# ServiceCatalographer: app/config/initializers/biocat_local.rb.pre
 #
 # Copyright (c) 2008-2010, University of Manchester, The European Bioinformatics 
 # Institute (EMBL-EBI) and the University of Southampton.
@@ -41,7 +41,7 @@ HTTP_PROXY = true
 
 # Set the user agent for any URI open calls. Set this to something that
 # will identify your installation should errors occur.
-HTTP_USER_AGENT = "BioCatalogue (Ruby/#{RUBY_VERSION})"
+HTTP_USER_AGENT = "ServiceCatalogue (Ruby/#{RUBY_VERSION})"
 
 # ====================================================
 
@@ -55,18 +55,18 @@ ENABLE_STATUS_DISPLAY = true
 # --------------------------------------------------------------
 
 #New format for Rails 3. The independently assigned values below are commented out. They are the old rails 2 versions.
-BioCatalogue::Application.config.middleware.use ExceptionNotifier,
+ServiceCatalographer::Application.config.middleware.use ExceptionNotifier,
 
                                                 :email => {
                                                     :email_prefix => "[APP-#{Rails.env.capitalize} ERROR]",
-                                                    :sender_address => %{"BioCatalogue Error" <biocatalogue-errors@company.com>},
+                                                    :sender_address => %{"ServiceCatalogue Error" <servicecatalogue-errors@company.com>},
                                                     :exception_recipients => %w{exceptions@example.com}
                                                 }
 
 
 
 # defaults to exception.notifier@default.com
-#ExceptionNotifier.sender_address = %("BioCatalogue Errors" <biocatalogue-errors@company.com>)
+#ExceptionNotifier.sender_address = %("ServiceCatalogue Errors" <servicecatalogue-errors@company.com>)
 
 # defaults to "[ERROR] "
 #ExceptionNotifier.email_prefix = "[APP-#{RAILS_ENV.capitalize} ERROR] "
@@ -80,7 +80,7 @@ BioCatalogue::Application.config.middleware.use ExceptionNotifier,
 # ==============================================================
 
 # The sender email address for emails sent from the application.
-SENDER_EMAIL_ADDRESS = "biocatalogue-support@example.com"
+SENDER_EMAIL_ADDRESS = "servicecatalogue-support@example.com"
 
 # The email address used for sending feedback from users to.
 FEEDBACK_EMAIL_ADDRESS = "contact@example.com"
@@ -96,12 +96,12 @@ ENV["RECAPTCHA_PRIVATE_KEY"] = "xyz456"
 
 
 # The site's base host URL (for times when the base host cannot be obtained from controllers):
-SITE_BASE_HOST = "http://www.biocatalogue.org"
+SITE_BASE_HOST = "http://www.servicecatalogue.org"
 
-# The name of this BioCatalogue instance, displayed across the site
-SITE_NAME = "BioCatalogue"
+# The name of this ServiceCatalographer instance, displayed across the site
+SITE_NAME = "ServiceCatalogue"
 
-# an URL to the logo, displayed in the top left
+# A URL to the logo, displayed in the top left
 SITE_LOGO = "logo_small.png"
 
 # Twitter integration:
@@ -164,7 +164,7 @@ NOTIFY_SERVICE_RESPONSIBLE = false
 # For cases where an 'identifier' is not set for new annotation attributes,
 # this config setting is be used as the default "catch all" template for generating 
 # an identifier.
-ANNOTATION_ATTRIBUTE_DEFAULT_IDENTIFIER_TEMPLATE = "http://biocatalogue.org/attribute/%s"
+ANNOTATION_ATTRIBUTE_DEFAULT_IDENTIFIER_TEMPLATE = "http://servicecatalographer.org/attribute/%s"
 
 # ====================================================
 

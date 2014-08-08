@@ -1,4 +1,4 @@
-# BioCatalogue: app/config/initializers/biocat_main.rb
+# ServiceCatalographer: app/config/initializers/biocat_main.rb
 #
 # Copyright (c) 2008-2010, University of Manchester, The European Bioinformatics 
 # Institute (EMBL-EBI) and the University of Southampton.
@@ -9,11 +9,11 @@
 # Set up loggers to STDOUT if in script/console 
 # (so now things like SQL queries etc are shown in the console instead of the development/production/etc logs).
 if "irb" == $0
-  BioCatalogue::Util.say "Setting up IRB to log SQL queries etc"
+  ServiceCatalographer::Util.say "Setting up IRB to log SQL queries etc"
   ActiveRecord::Base.logger = Logger.new(STDOUT)
 end
 
-module BioCatalogue
+module ServiceCatalographer
   include VersionInfo
   VERSION.file_name = File.expand_path("version_info.yml", ".")
   
@@ -23,8 +23,8 @@ end
 # This is not loaded in Rails 2.3 anymore (apparently).
 require 'net/smtp'
 
-# Register the custom BioCatalogue "lite" API mime type
-Mime::Type.register 'application/biocat-lite+json', :bljson
+# Register the custom ServiceCatalographer's "lite" API mime type
+Mime::Type.register 'application/servicecatalographer-lite+json', :bljson
 
 # Require additional libraries
 
@@ -46,28 +46,28 @@ require 'pp'
 require 'rexml/document'
 require 'acts_as_archived'
 require 'exception_notifier'
-require 'bio_catalogue/annotations/custom_migration_to_v3'
+require 'service_catalographer/annotations/custom_migration_to_v3'
 
 # NOTE: 
-# all libraries within /lib/bio_catalogue will be loaded automatically by Rails (when accessed),
-# as long as they follow the convention. E.g.: the module BioCatalogue::ActsAsHuman
-# should be defined in the file /lib/bio_catalogue/acts_as_human.rb
+# all libraries within /lib/servicecatalographer will be loaded automatically by Rails (when accessed),
+# as long as they follow the convention. E.g.: the module ServiceCatalographer::ActsAsHuman
+# should be defined in the file /lib/service_catalogue/acts_as_human.rb
 #
 # Some of these need to be preloaded...
-require 'bio_catalogue/acts_as_service_versionified'
-require 'bio_catalogue/has_submitter'
-require 'bio_catalogue/annotations'
-require 'bio_catalogue/annotations/extensions'
-require 'bio_catalogue/monitoring'
-require 'bio_catalogue/monitoring/status'
+require 'service_catalographer/acts_as_service_versionified'
+require 'service_catalographer/has_submitter'
+require 'service_catalographer/annotations'
+require 'service_catalographer/annotations/extensions'
+require 'service_catalographer/monitoring'
+require 'service_catalographer/monitoring/status'
 
-require 'bio_catalogue/util'
-require 'bio_catalogue/categorising'
+require 'service_catalographer/util'
+require 'service_catalographer/categorising'
 
-require 'bio_catalogue/cache_helper'
+require 'service_catalographer/cache_helper'
 require 'oauth_authorize'
 
-require 'bio_catalogue/resource'
+require 'service_catalographer/resource'
 require 'country_codes'
 
 require 'will_paginate/array'
@@ -75,13 +75,13 @@ require 'will_paginate/array'
 # Require all .rb files from lib/ directory
 #Dir[File.join(File.dirname(__FILE__), '../../lib/**/*.rb')].each {|file| require file}
 
-BioCatalogue::Util.say("Running in #{Rails.env} mode...")
-BioCatalogue::Util.say("Configuring the #{SITE_NAME} application...")
+ServiceCatalographer::Util.say("Running in #{Rails.env} mode...")
+ServiceCatalographer::Util.say("Configuring the #{SITE_NAME} application...")
 
 # Remember that for RJB to work you have to set JAVA_HOME (path to Java JDK not JRE!) variable on linux.
 # On Mac OS X, JAVA_HOME is reported by calling /usr/libexec/java_home.
 require 'rjb'
-BioCatalogue::Util.say("Loading RJB JVM for WSDL parsing ...\nFor RJB JVM to work remember to set JAVA_HOME (path to Java JDK not JRE!) under Linux or the appropriate Java version using /System/Library/Frameworks/JavaVM.framework/Libraries symbolic link on Mac OS X.")
+ServiceCatalographer::Util.say("Loading RJB JVM for WSDL parsing ...\nFor RJB JVM to work remember to set JAVA_HOME (path to Java JDK not JRE!) under Linux or the appropriate Java version using /System/Library/Frameworks/JavaVM.framework/Libraries symbolic link on Mac OS X.")
 #path = "#{Rails.root}/lib/wsdl-generic-1.11.0-service-catalogue-SNAPSHOT-jar-with-dependencies.jar"
 path = "#{Rails.root}/lib/wsdl-generic-3.0.0-service-catalogue-jar-with-dependencies.jar"
 Rjb::load(classpath = path, jvmargs=[])
@@ -98,10 +98,10 @@ ActiveSupport::XmlMini.backend = 'LibXML'
 CountryCodes
 
 # Set up caches
-#BioCatalogue::CacheHelper.setup_caches
+#ServiceCatalographer::CacheHelper.setup_caches
 
 # Load the up categories data into the DB if required
-BioCatalogue::Categorising.load_data
+ServiceCatalographer::Categorising.load_data
 
 # Configure addthis.com widget
 if ENABLE_BOOKMARKING_WIDGET
@@ -196,7 +196,7 @@ Annotations::Config.attribute_name_transform_for_identifier = Proc.new { |name|
 tag_annotation_value_factory = Proc.new { |v|
   case v
     when String, Symbol
-      namespace, term_keyword = BioCatalogue::Tags::split_ontology_term_uri(v.to_s)
+      namespace, term_keyword = ServiceCatalographer::Tags::split_ontology_term_uri(v.to_s)
       Tag.find_or_create_by_label_and_name(term_keyword, v.to_s)
     else
       v
@@ -260,7 +260,7 @@ SERVICE_RATINGS_CATEGORIES = { "rating.documentation" => [ "Documentation",  "Ra
 
 #ExceptionNotifier.view_path = 'app/views/error'
 
-BioCatalogue::Application.config.middleware.use ExceptionNotifier,
+ServiceCatalographer::Application.config.middleware.use ExceptionNotifier,
                                                 :email => {
                                                     :send_email_error_codes => %W( 400 405 500 501 503 ),
                                                     :view_path => 'app/views/error'

@@ -1,4 +1,4 @@
-# BioCatalogue: app/models/category.rb
+# ServiceCatalographer: app/models/category.rb
 #
 # Copyright (c) 2009-2011, University of Manchester, The European Bioinformatics
 # Institute (EMBL-EBI) and the University of Southampton.
@@ -148,17 +148,17 @@ private
   def category_hash(cat, make_inline=false, include_count=true)
     data = {
       "category" => {
-        "name" => BioCatalogue::Util.display_name(cat)
+        "name" => ServiceCatalographer::Util.display_name(cat)
       }
     }
     
-    data["category"]["total_items_count"] = BioCatalogue::Categorising.number_of_services_for_category(cat) if include_count
+    data["category"]["total_items_count"] = ServiceCatalographer::Categorising.number_of_services_for_category(cat) if include_count
 
     unless make_inline
-      data["category"]["self"] = BioCatalogue::Api.uri_for_object(cat)
+      data["category"]["self"] = ServiceCatalographer::Api.uri_for_object(cat)
 			return data
     else
-      data["category"]["resource"] = BioCatalogue::Api.uri_for_object(cat)
+      data["category"]["resource"] = ServiceCatalographer::Api.uri_for_object(cat)
 			return data["category"]
     end
   end

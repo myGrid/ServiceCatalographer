@@ -1,4 +1,4 @@
-# BioCatalogue: app/helpers/application_helper.rb
+# ServiceCatalographer: app/helpers/application_helper.rb
 #
 # Copyright (c) 2009, University of Manchester, The European Bioinformatics 
 # Institute (EMBL-EBI) and the University of Southampton.
@@ -16,7 +16,7 @@ require_dependency Rails.root.to_s + '/lib/favourites/lib/app/helpers/applicatio
 
 module ApplicationHelper
   
-  EXCLUDED_FLAG_CODES = BioCatalogue::Resource.EXCLUDED_FLAG_CODES
+  EXCLUDED_FLAG_CODES = ServiceCatalographer::Resource.EXCLUDED_FLAG_CODES
 
   def markaby(&block)
     Markaby::Builder.new({}, self, &block)
@@ -27,7 +27,7 @@ module ApplicationHelper
   # -----------------
   
   def icon_filename_for(thing)
-    BioCatalogue::Resource.icon_filename_for(thing).html_safe
+    ServiceCatalographer::Resource.icon_filename_for(thing).html_safe
   end
   
   def generic_icon_for(thing, style='', tooltip_text=thing.to_s.titleize)
@@ -139,7 +139,7 @@ module ApplicationHelper
   end
   
   def flag_icon_path(code)
-    BioCatalogue::Resource.flag_icon_path(code)
+    ServiceCatalographer::Resource.flag_icon_path(code)
   end
 
   #==================
@@ -190,7 +190,7 @@ module ApplicationHelper
 
     text = ''
 
-    city, country = BioCatalogue::Util.city_and_country_from_geoloc(geo_loc)
+    city, country = ServiceCatalographer::Util.city_and_country_from_geoloc(geo_loc)
 
     unless city.blank?
       text = text + "#{h(city)}, "
@@ -369,7 +369,7 @@ module ApplicationHelper
     return ''
     
 #    #stat = tresult.service_test.latest_status
-#    stat = BioCatalogue::MonitoringStatus::TestStatus.new(tresult)
+#    stat = ServiceCatalographer::MonitoringStatus::TestStatus.new(tresult)
 #    tooltip_text = "#{attribute}  "  
 #    tooltip_text = tooltip_text + " (last checked #{distance_of_time_in_words_to_now(tresult.created_at)} ago)" unless stat.status_label.downcase == "unchecked"
 #    if history
@@ -454,7 +454,7 @@ module ApplicationHelper
       end
       
       # Alternative names
-      name_annotations = BioCatalogue::Annotations.annotations_for_service_by_attribute(service, "alternative_name")
+      name_annotations = ServiceCatalographer::Annotations.annotations_for_service_by_attribute(service, "alternative_name")
       unless name_annotations.blank?
         output << content_tag(:p) do
           x = "<b>Alternate names:</b> "
@@ -574,7 +574,7 @@ module ApplicationHelper
       
       output << "<p><b>Tags:</b></p>"
       
-      tag_annotations = BioCatalogue::Annotations.get_tag_annotations_for_annotatable(service)
+      tag_annotations = ServiceCatalographer::Annotations.get_tag_annotations_for_annotatable(service)
       
       if tag_annotations.blank?
         output << content_tag(:p, "<i>No tags yet</i>", :style => "color:#666;")
@@ -582,7 +582,7 @@ module ApplicationHelper
         output << content_tag(:p, :style => "margin-left: 20px;") do
           x = ''
           tag_annotations.each do |ann|
-             x << link_to(BioCatalogue::Tags.split_ontology_term_uri(ann.value_content)[1], BioCatalogue::Tags.generate_tag_show_uri(ann.value_content))
+             x << link_to(ServiceCatalographer::Tags.split_ontology_term_uri(ann.value_content)[1], ServiceCatalographer::Tags.generate_tag_show_uri(ann.value_content))
              x << "&nbsp;&nbsp;"
           end
           x
@@ -765,7 +765,7 @@ module ApplicationHelper
   end
 
   def take_responsibility_action (service, current_user)
-    if BioCatalogue::Auth.allow_user_to_claim_thing?(current_user, service)
+    if ServiceCatalographer::Auth.allow_user_to_claim_thing?(current_user, service)
        link_to(image_tag(icon_filename_for(:curator)) + content_tag(:span, ' Request Responsibility'),
 		                        new_responsibility_request_url(:service_id => @service.id),
                             :style => "text-decoration:none" )

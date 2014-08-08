@@ -1,4 +1,4 @@
-# BioCatalogue: app/models/soaplab_server.rb
+# ServiceCatalographer: app/models/soaplab_server.rb
 #
 # Copyright (c) 2008, University of Manchester, The European Bioinformatics 
 # Institute (EMBL-EBI) and the University of Southampton.
@@ -170,7 +170,7 @@ class SoaplabServer < ActiveRecord::Base
     
     relationship = Relationship.new(:subject_type => service.class.to_s,
                                     :subject_id   => service.id, 
-                                    :predicate    => "BioCatalogue:memberOf", 
+                                    :predicate    => "ServiceCatalogue:memberOf",
                                     :object_type  => self.class.to_s,
                                     :object_id    => self.id)
     relationship.save!
@@ -232,7 +232,7 @@ class SoaplabServer < ActiveRecord::Base
   
   def update_descriptions_from_soaplab!
     self.services.each do |service|
-      Delayed::Job.enqueue(BioCatalogue::Jobs::UpdateSoaplabServiceDescription.new(service.id))
+      Delayed::Job.enqueue(ServiceCatalographer::Jobs::UpdateSoaplabServiceDescription.new(service.id))
     end
   end
   
@@ -257,7 +257,7 @@ class SoaplabServer < ActiveRecord::Base
   # those services should not be deleted.
   def delete_services
     self.services.each do |service|
-      if BioCatalogue::Auth.allow_user_to_curate_thing?(self.submitter, service)
+      if ServiceCatalographer::Auth.allow_user_to_curate_thing?(self.submitter, service)
         service.destroy
       end
     end

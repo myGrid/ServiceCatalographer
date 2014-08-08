@@ -1,4 +1,4 @@
-# BioCatalogue: app/models/service_version.rb
+# ServiceCatalographer: app/models/service_version.rb
 #
 # Copyright (c) 2008, University of Manchester, The European Bioinformatics 
 # Institute (EMBL-EBI) and the University of Southampton.
@@ -39,7 +39,7 @@ class ServiceVersion < ActiveRecord::Base
   end
   
   def associated_service_id
-    @associated_service_id ||= BioCatalogue::Mapper.map_compound_id_to_associated_model_object_id(BioCatalogue::Mapper.compound_id_for(self.class.name, self.id), "Service")
+    @associated_service_id ||= ServiceCatalographer::Mapper.map_compound_id_to_associated_model_object_id(ServiceCatalographer::Mapper.compound_id_for(self.class.name, self.id), "Service")
   end
   
   def associated_service

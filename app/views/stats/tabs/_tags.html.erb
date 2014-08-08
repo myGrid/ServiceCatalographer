@@ -39,7 +39,7 @@
                show_row = row_class.blank?
             %>
             <tr class="<%= row_class -%>" style="<%= show_row ? "" : "display: none;" -%>">
-              <td><%= link_to(h(tag), BioCatalogue::Tags.generate_tag_show_uri(tag), :popup => true) -%></td>
+              <td><%= link_to(h(tag), ServiceCatalographer::Tags.generate_tag_show_uri(tag), :popup => true) -%></td>
               <td class="value center"><%= counts[:all] -%></td>
               <!--<td class="value center"><%= counts[:services] -%></td>-->
             </tr>

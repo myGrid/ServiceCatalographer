@@ -1,4 +1,4 @@
-# BioCatalogue: app/models/service_test.rb
+# ServiceCatalographer: app/models/service_test.rb
 #
 # Copyright (c) 2009-2010, University of Manchester, The European Bioinformatics
 # Institute (EMBL-EBI) and the University of Southampton.
@@ -45,7 +45,7 @@ class ServiceTest < ActiveRecord::Base
   end
   
   def latest_status
-    BioCatalogue::Monitoring::ServiceTestStatus.new(self)
+    ServiceCatalographer::Monitoring::ServiceTestStatus.new(self)
   end
   
   def activated?
@@ -93,8 +93,8 @@ class ServiceTest < ActiveRecord::Base
       when 1
         return true
       when 2
-        stat1 = BioCatalogue::Monitoring::TestResultStatus.new(results[0])
-        stat2 = BioCatalogue::Monitoring::TestResultStatus.new(results[1])
+        stat1 = ServiceCatalographer::Monitoring::TestResultStatus.new(results[0])
+        stat2 = ServiceCatalographer::Monitoring::TestResultStatus.new(results[1])
         if stat1.label == stat2.label
           return false
         end
@@ -125,7 +125,7 @@ class ServiceTest < ActiveRecord::Base
                                         :order => 'created_at ASC')
         
           if next_failed.nil?
-            BioCatalogue::Util.yell "ServiceTest#failing_since (for ServiceTest with ID: #{self.id}) caused an error that SHOULD not have happened!" + 
+            ServiceCatalographer::Util.yell "ServiceTest#failing_since (for ServiceTest with ID: #{self.id}) caused an error that SHOULD not have happened!" +
                       "Check the integrity of the TestResults collection for this ServiceTest!"
           else
             return next_failed.created_at
@@ -277,16 +277,16 @@ protected
         "created_at" => self.created_at.iso8601,
         "activated" => self.activated?,
         "activated_at" => self.activated? ? self.activated_at.iso8601 : nil,
-        "status" => BioCatalogue::Api::Json.monitoring_status(self.latest_status),
+        "status" => ServiceCatalographer::Api::Json.monitoring_status(self.latest_status),
         "test_type" => JSON(self.test.to_json)
       }
     }
     
     unless make_inline
-      data["service_test"]["self"] = BioCatalogue::Api.uri_for_object(self)
+      data["service_test"]["self"] = ServiceCatalographer::Api.uri_for_object(self)
       return data.to_json
     else
-      data["service_test"]["resource"] = BioCatalogue::Api.uri_for_object(self)
+      data["service_test"]["resource"] = ServiceCatalographer::Api.uri_for_object(self)
       return data["service_test"].to_json
     end
   end # generate_json_with_collections

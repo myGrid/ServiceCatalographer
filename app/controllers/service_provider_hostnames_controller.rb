@@ -1,4 +1,4 @@
-# BioCatalogue: app/controllers/service_provider_hostnames_controller.rb
+# ServiceCatalographer: app/controllers/service_provider_hostnames_controller.rb
 #
 # Copyright (c) 2008-2010, University of Manchester, The European Bioinformatics 
 # Institute (EMBL-EBI) and the University of Southampton.
@@ -64,7 +64,7 @@ class ServiceProviderHostnamesController < ApplicationController
 protected
   
   def authorise
-    unless BioCatalogue::Auth.allow_user_to_curate_thing?(current_user, @hostname)
+    unless ServiceCatalographer::Auth.allow_user_to_curate_thing?(current_user, @hostname)
       error_to_back_or_home("You are not allowed to perform this action")
       return false
     end

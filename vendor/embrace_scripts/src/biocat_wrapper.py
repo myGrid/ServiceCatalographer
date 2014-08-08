@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-# BioCatalogue: vendor/embrace_scripts/biocat_wrapper.py
+# ServiceCatalographer: vendor/embrace_scripts/biocat_wrapper.py
 #
 # Copyright (c) 2010, University of Manchester, The European Bioinformatics 
 # Institute (EMBL-EBI) and the University of Southampton.

@@ -1,4 +1,4 @@
-# BioCatalogue: app/models/observers/annotation_observer.rb
+# ServiceCatalographer: app/models/observers/annotation_observer.rb
 #
 # Copyright (c) 2009-2011, University of Manchester, The European Bioinformatics 
 # Institute (EMBL-EBI) and the University of Southampton.
@@ -6,7 +6,7 @@
 
 class AnnotationObserver < ActiveRecord::Observer
   
-  include BioCatalogue::CacheHelper::Expires
+  include ServiceCatalographer::CacheHelper::Expires
   
   def after_create(annotation)
     expire_caches(annotation)
@@ -33,10 +33,10 @@ class AnnotationObserver < ActiveRecord::Observer
       expire_service_index_tag_cloud
       
       # annotations tags_flat cache
-      model_names = [ "Service", "ServiceDeployment", "ServiceVersion" ] + BioCatalogue::Mapper::SERVICE_TYPE_ROOT_MODELS.map{|t| t.name}
+      model_names = [ "Service", "ServiceDeployment", "ServiceVersion" ] + ServiceCatalographer::Mapper::SERVICE_TYPE_ROOT_MODELS.map{|t| t.name}
       if model_names.include?(annotation.annotatable_type)
-        compound_id = BioCatalogue::Mapper.compound_id_for(annotation.annotatable_type, annotation.annotatable_id)
-        parent_service_id = BioCatalogue::Mapper.map_compound_id_to_associated_model_object_id(compound_id, "Service")
+        compound_id = ServiceCatalographer::Mapper.compound_id_for(annotation.annotatable_type, annotation.annotatable_id)
+        parent_service_id = ServiceCatalographer::Mapper.map_compound_id_to_associated_model_object_id(compound_id, "Service")
         expire_annotations_tags_flat_partial(annotation.annotatable_type, parent_service_id)
       end
       
@@ -53,10 +53,10 @@ class AnnotationObserver < ActiveRecord::Observer
     # Name aliases
     if attrib_name == "alternative_name"
       # ... in service listing
-      model_names = [ "Service", "ServiceDeployment", "ServiceVersion" ] + BioCatalogue::Mapper::SERVICE_TYPE_ROOT_MODELS.map{|t| t.name}
+      model_names = [ "Service", "ServiceDeployment", "ServiceVersion" ] + ServiceCatalographer::Mapper::SERVICE_TYPE_ROOT_MODELS.map{|t| t.name}
       if model_names.include?(annotation.annotatable_type)
-        compound_id = BioCatalogue::Mapper.compound_id_for(annotation.annotatable_type, annotation.annotatable_id)
-        parent_service_id = BioCatalogue::Mapper.map_compound_id_to_associated_model_object_id(compound_id, "Service")
+        compound_id = ServiceCatalographer::Mapper.compound_id_for(annotation.annotatable_type, annotation.annotatable_id)
+        parent_service_id = ServiceCatalographer::Mapper.map_compound_id_to_associated_model_object_id(compound_id, "Service")
         expire_name_aliases_in_service_listing(parent_service_id)
       end
     end
@@ -64,10 +64,10 @@ class AnnotationObserver < ActiveRecord::Observer
     # Descriptions
     if attrib_name == "description"
       # ... in service listing
-      model_names = [ "Service", "ServiceDeployment", "ServiceVersion" ] + BioCatalogue::Mapper::SERVICE_TYPE_ROOT_MODELS.map{|t| t.name}
+      model_names = [ "Service", "ServiceDeployment", "ServiceVersion" ] + ServiceCatalographer::Mapper::SERVICE_TYPE_ROOT_MODELS.map{|t| t.name}
       if model_names.include?(annotation.annotatable_type)
-        compound_id = BioCatalogue::Mapper.compound_id_for(annotation.annotatable_type, annotation.annotatable_id)
-        parent_service_id = BioCatalogue::Mapper.map_compound_id_to_associated_model_object_id(compound_id, "Service")
+        compound_id = ServiceCatalographer::Mapper.compound_id_for(annotation.annotatable_type, annotation.annotatable_id)
+        parent_service_id = ServiceCatalographer::Mapper.map_compound_id_to_associated_model_object_id(compound_id, "Service")
         expire_descriptions_in_service_listing(parent_service_id)
       end
     end

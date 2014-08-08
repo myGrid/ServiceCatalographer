@@ -1,4 +1,4 @@
-# BioCatalogue: app/models/soap_service_change.rb
+# ServiceCatalographer: app/models/soap_service_change.rb
 #
 # Copyright (c) 2010, University of Manchester, The European Bioinformatics 
 # Institute (EMBL-EBI) and the University of Southampton.

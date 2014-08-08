@@ -1,4 +1,4 @@
-# BioCatalogue: app/helpers/service_test_helper.rb
+# ServiceCatalographer: app/helpers/service_test_helper.rb
 #
 # Copyright (c) 2009-2010, University of Manchester, The European Bioinformatics 
 # Institute (EMBL-EBI) and the University of Southampton.
@@ -50,7 +50,7 @@ module ServiceTestsHelper
   def add_monitoring_endpoint_by_popup_link(parent_service_instance, *args)
     return '' unless parent_service_instance.class == RestService
     
-    return '' unless BioCatalogue::Auth.allow_user_to_curate_thing?(current_user, parent_service_instance)
+    return '' unless ServiceCatalographer::Auth.allow_user_to_curate_thing?(current_user, parent_service_instance)
     
     return '' unless parent_service_instance.service.has_capacity_for_new_monitoring_endpoint?
     
@@ -101,7 +101,7 @@ module ServiceTestsHelper
     return '' unless service_test.class == ServiceTest
     return '' unless service_test.is_custom_endpoint_monitor? 
     
-    return '' unless BioCatalogue::Auth.allow_user_to_curate_thing?(current_user, service_test.service)
+    return '' unless ServiceCatalographer::Auth.allow_user_to_curate_thing?(current_user, service_test.service)
     
     options = args.extract_options!
     

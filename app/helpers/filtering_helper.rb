@@ -1,4 +1,4 @@
-# BioCatalogue: app/helpers/filtering_helper.rb
+# ServiceCatalographer: app/helpers/filtering_helper.rb
 #
 # Copyright (c) 2009, University of Manchester, The European Bioinformatics 
 # Institute (EMBL-EBI) and the University of Southampton.
@@ -24,8 +24,8 @@ module FilteringHelper
     is_ontology_term = false
     
     # Special processing for tags
-    if BioCatalogue::Filtering::TAG_FILTER_KEYS.include?(filter_type)
-      base_uri, term = BioCatalogue::Tags.split_ontology_term_uri(text)
+    if ServiceCatalographer::Filtering::TAG_FILTER_KEYS.include?(filter_type)
+      base_uri, term = ServiceCatalographer::Tags.split_ontology_term_uri(text)
       text = term
       is_ontology_term = true unless base_uri.blank?
     end
@@ -42,7 +42,7 @@ module FilteringHelper
   def get_tooltip_text_for_filter_value(filter_type, filter_id, filter_name, is_selected=false)
     case filter_type
       when :cat
-        return (is_selected ? BioCatalogue::Categorising.category_hierachy_text(Category.find_by_id(filter_id)) : "<b>#{h(filter_name)}</b>")
+        return (is_selected ? ServiceCatalographer::Categorising.category_hierachy_text(Category.find_by_id(filter_id)) : "<b>#{h(filter_name)}</b>")
       else
         return h(h(filter_name))
     end
@@ -120,7 +120,7 @@ module FilteringHelper
   end
   
   def display_name_for_filter(filter_type, filter_id)
-    return BioCatalogue::Filtering.display_name_for_filter(filter_type, filter_id)
+    return ServiceCatalographer::Filtering.display_name_for_filter(filter_type, filter_id)
   end
   
   def show_tag_filters?
@@ -130,13 +130,13 @@ module FilteringHelper
   def service_index_tag_filters_on_off_link
     output = ''
     
-    params_dup = BioCatalogue::Util.duplicate_params(params)
+    params_dup = ServiceCatalographer::Util.duplicate_params(params)
     
     if show_tag_filters?
       text = "Disable tag filters"
       tooltip_text = "This will disable filtering by tags on services, operations, inputs and outputs. (This will likely improve the loading of this page)."
       params_dup.delete(:tag_filters)
-      BioCatalogue::Filtering::TAG_FILTER_KEYS.each do |key|
+      ServiceCatalographer::Filtering::TAG_FILTER_KEYS.each do |key|
         params_dup.delete(key)
       end
     else

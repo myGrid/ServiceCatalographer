@@ -1,4 +1,4 @@
-# BioCatalogue: app/models/tag.rb
+# ServiceCatalographer: app/models/tag.rb
 #
 # Copyright (c) 2011, University of Manchester, The European Bioinformatics
 # Institute (EMBL-EBI) and the University of Southampton.

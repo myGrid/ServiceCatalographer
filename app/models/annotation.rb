@@ -1,4 +1,4 @@
-# BioCatalogue: app/models/annotation.rb
+# ServiceCatalographer: app/models/annotation.rb
 #
 # Copyright (c) 2009-2011, University of Manchester, The European Bioinformatics 
 # Institute (EMBL-EBI) and the University of Southampton.
@@ -71,11 +71,11 @@ end
     data = case self.value_type
       when 'Category'
         {
-          "resource" => BioCatalogue::Api.uri_for_object(self.value),
+          "resource" => ServiceCatalographer::Api.uri_for_object(self.value),
         }
       when 'Tag'
         {
-          "resource" => BioCatalogue::Api.uri_for_path(BioCatalogue::Tags.generate_tag_show_uri(self.value.name)),
+          "resource" => ServiceCatalographer::Api.uri_for_path(ServiceCatalographer::Tags.generate_tag_show_uri(self.value.name)),
         }
       else
         {
@@ -102,7 +102,7 @@ end
                 :value => self.value)   # TODO: this copies over the *reference* to the actual annotation value object. Is this okay behaviour? 
     
     if !new_ann.nil? and new_ann.valid? 
-      Relationship.create(:subject => new_ann, :object => self, :predicate => "BioCatalogue:copiedFrom")
+      Relationship.create(:subject => new_ann, :object => self, :predicate => "ServiceCatalogue:copiedFrom")
     else
       new_ann = nil
     end
@@ -111,7 +111,7 @@ end
   end
 
   def associated_service_id
-    @associated_service_id ||= BioCatalogue::Mapper.map_compound_id_to_associated_model_object_id(BioCatalogue::Mapper.compound_id_for(self.class.name, self.id), "Service")
+    @associated_service_id ||= ServiceCatalographer::Mapper.map_compound_id_to_associated_model_object_id(ServiceCatalographer::Mapper.compound_id_for(self.class.name, self.id), "Service")
   end
   
   def associated_service
@@ -151,7 +151,7 @@ end
   end
   
   def associated_service_provider_id
-    @associated_service_provider_id ||= BioCatalogue::Mapper.map_compound_id_to_associated_model_object_id(BioCatalogue::Mapper.compound_id_for(self.class.name, self.id), "ServiceProvider")
+    @associated_service_provider_id ||= ServiceCatalographer::Mapper.map_compound_id_to_associated_model_object_id(ServiceCatalographer::Mapper.compound_id_for(self.class.name, self.id), "ServiceProvider")
   end
 
   def associated_service_provider
@@ -159,7 +159,7 @@ end
   end
   
   def associated_user_id
-    @associated_user_id ||= BioCatalogue::Mapper.map_compound_id_to_associated_model_object_id(BioCatalogue::Mapper.compound_id_for(self.class.name, self.id), "User")
+    @associated_user_id ||= ServiceCatalographer::Mapper.map_compound_id_to_associated_model_object_id(ServiceCatalographer::Mapper.compound_id_for(self.class.name, self.id), "User")
   end
 
   def associated_user
@@ -167,7 +167,7 @@ end
   end
   
   def associated_registry_id
-    @associated_registry_id ||= BioCatalogue::Mapper.map_compound_id_to_associated_model_object_id(BioCatalogue::Mapper.compound_id_for(self.class.name, self.id), "Registry")
+    @associated_registry_id ||= ServiceCatalographer::Mapper.map_compound_id_to_associated_model_object_id(ServiceCatalographer::Mapper.compound_id_for(self.class.name, self.id), "Registry")
   end
 
   def associated_registry
@@ -199,17 +199,17 @@ protected
       "annotation" => {
         "version" => self.version,
         "annotatable" => {
-          "resource" => BioCatalogue::Api.uri_for_object(self.annotatable),
+          "resource" => ServiceCatalographer::Api.uri_for_object(self.annotatable),
           "type" => self.annotatable_type,
-          "name" => BioCatalogue::Util.display_name(self.annotatable)
+          "name" => ServiceCatalographer::Util.display_name(self.annotatable)
         },
         "source" => {
-          "resource" => BioCatalogue::Api.uri_for_object(self.source),
+          "resource" => ServiceCatalographer::Api.uri_for_object(self.source),
           "type" => self.source_type,
-          "name" => BioCatalogue::Util.display_name(self.source)
+          "name" => ServiceCatalographer::Util.display_name(self.source)
         },
         "attribute" => {
-          "resource" => BioCatalogue::Api.uri_for_object(self.attribute),
+          "resource" => ServiceCatalographer::Api.uri_for_object(self.attribute),
           "name" => self.attribute.name.downcase,
           "identifier" => self.attribute.identifier.downcase
         },
@@ -221,10 +221,10 @@ protected
     data["annotation"]["modified"] = self.updated_at.iso8601 unless self.created_at == self.updated_at
 
     unless make_inline
-      data["annotation"]["self"] = BioCatalogue::Api.uri_for_object(self)
+      data["annotation"]["self"] = ServiceCatalographer::Api.uri_for_object(self)
 			return data.to_json
     else
-      data["annotation"]["resource"] = BioCatalogue::Api.uri_for_object(self)
+      data["annotation"]["resource"] = ServiceCatalographer::Api.uri_for_object(self)
 			return data["annotation"].to_json
     end
   end # generate_json_and_make_inline

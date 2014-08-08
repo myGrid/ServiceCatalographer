@@ -1,4 +1,4 @@
-# BioCatalogue: app/controllers/users_controller.rb
+# ServiceCatalographer: app/controllers/users_controller.rb
 #
 # Copyright (c) 2008-2010, University of Manchester, The European Bioinformatics
 # Institute (EMBL-EBI) and the University of Southampton.
@@ -63,8 +63,8 @@ class UsersController < ApplicationController
     respond_to do |format|
       format.html # index.html.erb
       format.xml # index.xml.builder
-      format.json { render :json => BioCatalogue::Api::Json.index("users", json_api_params, @users).to_json }
-      format.bljson { render :json => BioCatalogue::Api::Bljson.index("users", @users).to_json }
+      format.json { render :json => ServiceCatalographer::Api::Json.index("users", json_api_params, @users).to_json }
+      format.bljson { render :json => ServiceCatalographer::Api::Bljson.index("users", @users).to_json }
     end
   end
 
@@ -90,7 +90,7 @@ class UsersController < ApplicationController
                                                 :order => "created_at DESC")
 
       @users_paged_annotated_services_ids = @user.annotated_service_ids.paginate(:page => @page, :per_page => @per_page)
-      @users_paged_annotated_services = BioCatalogue::Mapper.item_ids_to_model_objects(@users_paged_annotated_services_ids, "Service").paginate(:page => @page, :per_page => @per_page)
+      @users_paged_annotated_services = ServiceCatalographer::Mapper.item_ids_to_model_objects(@users_paged_annotated_services_ids, "Service").paginate(:page => @page, :per_page => @per_page)
 
 
       @users_services_responsible_for = @user.other_services_responsible(@page, @per_page)
@@ -344,7 +344,7 @@ class UsersController < ApplicationController
     respond_to do |format|
       format.html { disable_action }
       format.xml # filters.xml.builder
-      format.json { render :json => BioCatalogue::Api::Json.filter_groups(@filter_groups).to_json }
+      format.json { render :json => ServiceCatalographer::Api::Json.filter_groups(@filter_groups).to_json }
     end
   end
     
@@ -500,7 +500,7 @@ class UsersController < ApplicationController
       order = "users.#{order_field} #{order_direction}"
     end
 
-    conditions, joins = BioCatalogue::Filtering::Users.generate_conditions_and_joins_from_filters(@current_filters, params[:q])
+    conditions, joins = ServiceCatalographer::Filtering::Users.generate_conditions_and_joins_from_filters(@current_filters, params[:q])
     #TODO merge conditions using 'where' rather than deprecated 'merge_conditions' method
     #conditions = User.merge_conditions(conditions, "activated_at IS NOT NULL") unless include_deactivated?
     conditions_string = User.send(:sanitize_sql, conditions) # naughty was of doing things but things only works if we pass the conditions as a string

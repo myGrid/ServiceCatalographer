@@ -1,4 +1,4 @@
-# BioCatalogue: app/controllers/rest_methods_controller.rb
+# ServiceCatalographer: app/controllers/rest_methods_controller.rb
 #
 # Copyright (c) 2009-2010, University of Manchester, The European Bioinformatics 
 # Institute (EMBL-EBI) and the University of Southampton.
@@ -156,8 +156,8 @@ class RestMethodsController < ApplicationController
     respond_to do |format|
       format.html { disable_action }
       format.xml # index.xml.builder
-      format.json { render :json => BioCatalogue::Api::Json.index("rest_methods", json_api_params, @rest_methods).to_json }
-      format.bljson { render :json => BioCatalogue::Api::Bljson.index("rest_methods", @rest_methods).to_json }
+      format.json { render :json => ServiceCatalographer::Api::Json.index("rest_methods", json_api_params, @rest_methods).to_json }
+      format.bljson { render :json => ServiceCatalographer::Api::Bljson.index("rest_methods", @rest_methods).to_json }
     end
   end
 
@@ -293,14 +293,14 @@ class RestMethodsController < ApplicationController
     respond_to do |format|
       format.html { disable_action }
       format.xml # filters.xml.builder
-      format.json { render :json => BioCatalogue::Api::Json.filter_groups(@filter_groups).to_json }
+      format.json { render :json => ServiceCatalographer::Api::Json.filter_groups(@filter_groups).to_json }
     end
   end
   
 protected # ========================================
 
   def authorise
-    unless BioCatalogue::Auth.allow_user_to_curate_thing?(current_user, @rest_method)
+    unless ServiceCatalographer::Auth.allow_user_to_curate_thing?(current_user, @rest_method)
       error_to_back_or_home("You are not allowed to perform this action")
       return false
     end
@@ -360,7 +360,7 @@ private # ========================================
     
     # Filtering
     
-    conditions, joins = BioCatalogue::Filtering::RestMethods.generate_conditions_and_joins_from_filters(@current_filters, params[:q])
+    conditions, joins = ServiceCatalographer::Filtering::RestMethods.generate_conditions_and_joins_from_filters(@current_filters, params[:q])
     
     if @sort_by=="name"
       joins << :rest_resource

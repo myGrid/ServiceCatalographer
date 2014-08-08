@@ -1,4 +1,4 @@
-BioCatalogue::Application.configure do
+ServiceCatalographer::Application.configure do
 
   Delayed::Worker.destroy_failed_jobs = false
   Delayed::Worker.sleep_delay = 3

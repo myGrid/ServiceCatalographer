@@ -1,4 +1,4 @@
-# BioCatalogue: app/views/services/api/_summary.xml.builder
+# ServiceCatalographer: app/views/services/api/_summary.xml.builder
 #
 # Copyright (c) 2009-2010, University of Manchester, The European Bioinformatics 
 # Institute (EMBL-EBI) and the University of Southampton.
@@ -88,8 +88,8 @@ parent_xml.tag! "summary",
   end
   
   # <tag> *
-  BioCatalogue::Annotations.get_tag_annotations_for_annotatable(service).each do |ann|
-    parent_xml.tag ann.value_content, xlink_attributes(uri_for_path(BioCatalogue::Tags.generate_tag_show_uri(ann.value.name)), :title => xlink_title("Tag - #{ann.value_content}")), :resourceType => "Tag"
+  ServiceCatalographer::Annotations.get_tag_annotations_for_annotatable(service).each do |ann|
+    parent_xml.tag ann.value_content, xlink_attributes(uri_for_path(ServiceCatalographer::Tags.generate_tag_show_uri(ann.value.name)), :title => xlink_title("Tag - #{ann.value_content}")), :resourceType => "Tag"
   end
   
   # <cost> *

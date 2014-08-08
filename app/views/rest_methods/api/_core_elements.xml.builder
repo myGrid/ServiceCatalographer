@@ -1,4 +1,4 @@
-# BioCatalogue: app/views/rest_methods/api/_core_elements.xml.builder
+# ServiceCatalographer: app/views/rest_methods/api/_core_elements.xml.builder
 #
 # Copyright (c) 2010, University of Manchester, The European Bioinformatics 
 # Institute (EMBL-EBI) and the University of Southampton.
@@ -17,7 +17,7 @@ parent_xml.endpointLabel rest_method.display_endpoint
 parent_xml.httpMethodType rest_method.method_type
 
 # <urlTemplate>
-parent_xml.urlTemplate BioCatalogue::Util.generate_rest_endpoint_url_template(rest_method) 
+parent_xml.urlTemplate ServiceCatalographer::Util.generate_rest_endpoint_url_template(rest_method)
 
 # <description>
 dc_xml_tag parent_xml, :description, rest_method.preferred_description

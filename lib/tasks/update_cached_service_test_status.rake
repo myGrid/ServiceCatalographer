@@ -1,10 +1,10 @@
-# BioCatalogue: lib/tasks/update_test_success_rates.rake
+# ServiceCatalographer: lib/tasks/update_test_success_rates.rake
 #
 # Copyright (c) 2010, University of Manchester, The European Bioinformatics 
 # Institute (EMBL-EBI) and the University of Southampton.
 # See license.txt for details
 
-namespace :biocatalogue do
+namespace :service_catalographer do
   namespace :monitoring do
     desc "update cached service test status"
     task :update_cached_service_test_status => :environment do

@@ -1,6 +1,6 @@
 <%
   
-  # BioCatalogue: app/views/service_tests/_urlmonitor_show.html.erb
+  # ServiceCatalographer: app/views/service_tests/_urlmonitor_show.html.erb
   #
   # Copyright (c) 2010, University of Manchester, The European Bioinformatics 
   # Institute (EMBL-EBI) and the University of Southampton.
@@ -10,11 +10,11 @@
 
 <div id="tab-availability" class="tabbertab">
 	<div>
-		<% if service_test.activated? || logged_in? || (logged_in? && BioCatalogue::Auth.allow_user_to_curate_thing?(current_user, service_test.service)) -%>		
+		<% if service_test.activated? || logged_in? || (logged_in? && ServiceCatalographer::Auth.allow_user_to_curate_thing?(current_user, service_test.service)) -%>
 			<div class="monitoring_section">
 				
 				<div style="text-align: right;">
-					<%if logged_in? && BioCatalogue::Auth.allow_user_to_curate_thing?(current_user, service_test.service) %>						
+					<%if logged_in? && ServiceCatalographer::Auth.allow_user_to_curate_thing?(current_user, service_test.service) %>
 						<% if ( service_test.activated? ) %>
 							<%= link_to("Disable", disable_service_test_url(service_test), :method => :put, :confirm => "Are you sure you want to disable this test?", :class => "button_slim", :style => "float:right;") -%>
 						<% else %>
@@ -38,12 +38,12 @@
 							<% if service_test.test.parent_type =="Annotation" -%>
 								<%= h(service_test.test.parent.attribute.name.titleize) -%> :
 								<% annotation_value = service_test.test.parent.send(service_test.test.property) %>
-								<% pingable_item = BioCatalogue::Monitoring.pingable_url(annotation_value) %>
+								<% pingable_item = ServiceCatalographer::Monitoring.pingable_url(annotation_value) %>
 								<% if pingable_item.nil? %>
 									<span class="none_text">No valid URL for monitoring could be found</span>
 								<% else %>
 									<% if service_test.is_custom_endpoint_monitor? %>
-										<% if BioCatalogue::Auth.allow_user_to_curate_thing?(current_user, service_test.service) %>
+										<% if ServiceCatalographer::Auth.allow_user_to_curate_thing?(current_user, service_test.service) %>
 											<%=h pingable_item -%>
 										<% else %>
 											<span class="none_text">Not available for public viewing</span>

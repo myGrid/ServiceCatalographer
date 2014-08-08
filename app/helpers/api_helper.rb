@@ -1,4 +1,4 @@
-# BioCatalogue: app/helpers/api_helper.rb
+# ServiceCatalographer: app/helpers/api_helper.rb
 #
 # Copyright (c) 2008-2009, University of Manchester, The European Bioinformatics 
 # Institute (EMBL-EBI) and the University of Southampton.
@@ -18,21 +18,21 @@ module ApiHelper
   end
   
   def uri_for_path(path, *args)
-    BioCatalogue::Api.uri_for_path(path, *args)
+    ServiceCatalographer::Api.uri_for_path(path, *args)
   end
   
   def uri_for_collection(resource_name, *args)
-    BioCatalogue::Api.uri_for_collection(resource_name, *args)
+    ServiceCatalographer::Api.uri_for_collection(resource_name, *args)
   end
   
   def uri_for_object(resource_obj, *args)
-    BioCatalogue::Api.uri_for_object(resource_obj, *args)
+    ServiceCatalographer::Api.uri_for_object(resource_obj, *args)
   end
   
   def xml_for_filters(builder, filters, filter_key, results_resource_type)
     return nil if builder.nil? or filters.blank?
     
-    filter_key_humanised = BioCatalogue::Filtering.filter_type_to_display_name(filter_key).singularize.downcase
+    filter_key_humanised = ServiceCatalographer::Filtering.filter_type_to_display_name(filter_key).singularize.downcase
     
     filters.each do |f|
       

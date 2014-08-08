@@ -1,4 +1,4 @@
-# BioCatalogue: app/views/tags/index.xml.builder
+# ServiceCatalographer: app/views/tags/index.xml.builder
 #
 # Copyright (c) 2009-2010, University of Manchester, The European Bioinformatics 
 # Institute (EMBL-EBI) and the University of Southampton.
@@ -48,7 +48,7 @@ xml.tag! "tags",
     
     # <tag> *
     @tags.each do |t|
-      render :partial => "tags/api/result_item", :locals => { :parent_xml => xml, :tag_name => t['name'], :tag_display_name => BioCatalogue::Tags.split_ontology_term_uri(t['name'])[1], :total_items_count => t['count'] }
+      render :partial => "tags/api/result_item", :locals => { :parent_xml => xml, :tag_name => t['name'], :tag_display_name => ServiceCatalographer::Tags.split_ontology_term_uri(t['name'])[1], :total_items_count => t['count'] }
     end
     
   end

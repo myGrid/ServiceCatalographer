@@ -1,5 +1,5 @@
 #!/usr/bin/python
-#BioCatalogue : /vendor/embrace_scripts/src/testscript_runner.py
+# ServiceCatalographer: /vendor/embrace_scripts/src/testscript_runner.py
 #
 # Copyright (c) 2010, University of Manchester, The European Bioinformatics 
 # Institute (EMBL-EBI) and the University of Southampton.

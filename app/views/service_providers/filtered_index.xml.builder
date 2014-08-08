@@ -1,4 +1,4 @@
-# BioCatalogue: app/views/service_providers/filtered_index.xml.builder
+# ServiceCatalographer: app/views/service_providers/filtered_index.xml.builder
 #
 # Copyright (c) 2010, University of Manchester, The European Bioinformatics 
 # Institute (EMBL-EBI) and the University of Southampton.
@@ -57,7 +57,7 @@ xml.tag! "serviceProviders",
   # <related>
   xml.related do
     
-    params_clone = BioCatalogue::Util.duplicate_params(params)
+    params_clone = ServiceCatalographer::Util.duplicate_params(params)
     
     # Pagination previous next links
     render :partial => "api/pagination/previous_next_links", 

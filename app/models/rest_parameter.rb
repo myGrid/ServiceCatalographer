@@ -1,4 +1,4 @@
-# BioCatalogue: app/models/rest_parameter.rb
+# ServiceCatalographer: app/models/rest_parameter.rb
 #
 # Copyright (c) 2009-2010, University of Manchester, The European Bioinformatics
 # Institute (EMBL-EBI) and the University of Southampton.
@@ -78,7 +78,7 @@ class RestParameter < ActiveRecord::Base
   end
   
   def associated_service_id
-    @associated_service_id ||= BioCatalogue::Mapper.map_compound_id_to_associated_model_object_id(BioCatalogue::Mapper.compound_id_for(self.class.name, self.id), "Service")
+    @associated_service_id ||= ServiceCatalographer::Mapper.map_compound_id_to_associated_model_object_id(ServiceCatalographer::Mapper.compound_id_for(self.class.name, self.id), "Service")
   end
   
   def associated_service
@@ -86,7 +86,7 @@ class RestParameter < ActiveRecord::Base
   end
 
   def associated_rest_method_id
-    @associated_rest_method_id ||= BioCatalogue::Mapper.map_compound_id_to_associated_model_object_id(BioCatalogue::Mapper.compound_id_for(self.class.name, self.id), "RestMethod")
+    @associated_rest_method_id ||= ServiceCatalographer::Mapper.map_compound_id_to_associated_model_object_id(ServiceCatalographer::Mapper.compound_id_for(self.class.name, self.id), "RestMethod")
   end
   
   def associated_rest_method
@@ -126,17 +126,17 @@ private
         "default_value" => self.default_value,
         "is_optional" => !self.required,
         "constrained_values" => self.constrained_options.reject { |x| x.blank? },
-        "submitter" => BioCatalogue::Api.uri_for_object(self.submitter),
+        "submitter" => ServiceCatalographer::Api.uri_for_object(self.submitter),
         "created_at" => self.created_at.iso8601,
         "archived_at" => self.archived? ? self.archived_at.iso8601 : nil
       }
     }
 
     unless make_inline
-      data["rest_parameter"]["self"] = BioCatalogue::Api.uri_for_object(self)
+      data["rest_parameter"]["self"] = ServiceCatalographer::Api.uri_for_object(self)
 			return data.to_json
     else
-      data["rest_parameter"]["resource"] = BioCatalogue::Api.uri_for_object(self)
+      data["rest_parameter"]["resource"] = ServiceCatalographer::Api.uri_for_object(self)
 			return data["rest_parameter"].to_json
     end
   end # generate_json_and_make_inline

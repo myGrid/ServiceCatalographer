@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
 # Based on: http://wiki.github.com/tobi/delayed_job/running-delayedworker-as-a-daemon,
-# but modified by Jits, for BioCatalogue.
+# but modified by Jits.
 
 require 'rubygems'
 require 'daemons'
@@ -30,7 +30,7 @@ optparse.parse!
 
 #pp daemon_options
 
-Daemons.run_proc('biocatalogue_worker', daemon_options) do
+Daemons.run_proc('servicecatalographer_worker', daemon_options) do
   if ARGV.include?('--')
     ARGV.slice! 0..ARGV.index('--')
   else
@@ -43,9 +43,9 @@ Daemons.run_proc('biocatalogue_worker', daemon_options) do
   # So if you are testing locally (in development mode) then then you should pass
   # the environment variable as a command line option.
   # Example : script/worker start --environment=development
-  RAILS_ENV=daemon_options[:environment]
-  
-  puts "Starting in Rails #{RAILS_ENV} mode"
+  Rails.env = ActiveSupport::StringInquirer.new(daemon_options[:environment])
+
+  puts "Starting in Rails #{Rails.env} mode"
 
   require File.join('./config', 'environment')
 

@@ -1,4 +1,4 @@
-# BioCatalogue: app/helpers/services_helper.rb
+# ServiceCatalographer: app/helpers/services_helper.rb
 #
 # Copyright (c) 2009, University of Manchester, The European Bioinformatics 
 # Institute (EMBL-EBI) and the University of Southampton.
@@ -6,15 +6,15 @@
 
 module ServicesHelper
   def metadata_counts_for_service(service)
-    BioCatalogue::Annotations.metadata_counts_for_service(service)
+    ServiceCatalographer::Annotations.metadata_counts_for_service(service)
   end
   
   def total_number_of_annotations_for_service(service, source_type="all")
-    BioCatalogue::Annotations.total_number_of_annotations_for_service(service, source_type)
+    ServiceCatalographer::Annotations.total_number_of_annotations_for_service(service, source_type)
   end
   
   def all_alternative_name_annotations_for_service(service)
-    BioCatalogue::Annotations.annotations_for_service_by_attribute(service, "alternative_name")
+    ServiceCatalographer::Annotations.annotations_for_service_by_attribute(service, "alternative_name")
   end
   
   def service_type_badges(service_types)

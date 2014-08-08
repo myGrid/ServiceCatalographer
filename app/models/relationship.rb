@@ -1,4 +1,4 @@
-# BioCatalogue: app/models/relationship.rb
+# ServiceCatalographer: app/models/relationship.rb
 #
 # Copyright (c) 2009, University of Manchester, The European Bioinformatics 
 # Institute (EMBL-EBI) and the University of Southampton

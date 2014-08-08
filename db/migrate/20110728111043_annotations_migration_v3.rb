@@ -51,7 +51,7 @@ class AnnotationsMigrationV3 < ActiveRecord::Migration
     add_index :number_value_versions, [ :number_value_id ]
     
     # ====================================
-    # Additional models for the BioCat app
+    # Additional models for the ServiceCatalogue app
     # ------------------------------------
     
     create_table :tags, :force => true do |t|
@@ -69,7 +69,7 @@ class AnnotationsMigrationV3 < ActiveRecord::Migration
     # ------------------------------------------------
     # 
     # This will use the custom migration defined in:
-    # /lib/bio_catalogue/annotations/custom_migration_to_v3.rb
+    # /lib/service_catalographer/annotations/custom_migration_to_v3.rb
     
     Annotation::reset_column_information
     Annotation::reload_versioned_columns_info

@@ -1,4 +1,4 @@
-# BioCatalogue: app/controllers/agents_controller.rb
+# ServiceCatalographer: app/controllers/agents_controller.rb
 #
 # Copyright (c) 2009-2010, University of Manchester, The European Bioinformatics 
 # Institute (EMBL-EBI) and the University of Southampton.
@@ -21,7 +21,7 @@ class AgentsController < ApplicationController
     respond_to do |format|
       format.html # index.html.erb
       format.xml  # index.xml.builder
-      format.json { render :json => BioCatalogue::Api::Json.index("agents", json_api_params, @agents).to_json }
+      format.json { render :json => ServiceCatalographer::Api::Json.index("agents", json_api_params, @agents).to_json }
     end
   end
 
@@ -34,7 +34,7 @@ class AgentsController < ApplicationController
                                                 
       agents_annotated_service_ids = @agent.annotated_service_ids 
       @agents_paged_annotated_services_ids = agents_annotated_service_ids.paginate(:page => @page, :per_page => @per_page)
-      @agents_paged_annotated_services = BioCatalogue::Mapper.item_ids_to_model_objects(@agents_paged_annotated_services_ids, "Service")
+      @agents_paged_annotated_services = ServiceCatalographer::Mapper.item_ids_to_model_objects(@agents_paged_annotated_services_ids, "Service")
     end
                                                         
     respond_to do |format|

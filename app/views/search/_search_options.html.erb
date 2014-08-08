@@ -19,8 +19,8 @@
             <%= render :partial => "listing_type_switcher_link", :locals => {:result_scope => result_scope} %>
           </div>
 
-          <% params_dup = BioCatalogue::Util.duplicate_params(params) %>
-          <% params_dup = BioCatalogue::Util.remove_rails_special_params_from(params_dup) %>
+          <% params_dup = ServiceCatalographer::Util.duplicate_params(params) %>
+          <% params_dup = ServiceCatalographer::Util.remove_rails_special_params_from(params_dup) %>
           <div class="search_option">
             <%= link_to("Filter services", services_path(params_dup.merge(:q => @query)), :class => "button_slim") %>
           </div>

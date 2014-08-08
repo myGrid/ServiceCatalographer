@@ -29,7 +29,7 @@ Television, Televisions, TV, TVs
 # Synonym mappings can be used for spelling correction too
 pixima => pixma
 
-# BEGIN BioCatalogue Pseudo Synonyms
+# BEGIN ServiceCatalogue Pseudo Synonyms
 
 # Synonymns from service categories:
 
@@ -81,7 +81,7 @@ Tertiary Structure,Tertiary_Structure => Tertiary Structure,Tertiary_Structure,S
 Transcription Factors,Transcription_Factors => Transcription Factors,Transcription_Factors,Sequence Analysis,Sequence_Analysis,Nucleotide_Sequence_Analysis,Nucleotide Sequence Analysis,Nucleotide_Analysis,Nucleotide Analysis
 
 
-# BioCatalogue specific pseudo-synonyms:
+# ServiceCatalogue specific pseudo-synonyms:
 
 ABI_graph_plot,ABI graph plot => ABI_graph_plot,ABI graph plot,nucleotide_sequence_feature,nucleotide sequence feature,nucleotide,sequence
 ABI_sequence_trace,ABI sequence trace => ABI_sequence_trace,ABI sequence trace,nucleotide_sequence_feature,nucleotide sequence feature
@@ -264,4 +264,4 @@ word_match_sequence_algorithm,word match sequence algorithm => word_match_sequen
 WormBase => WormBase,gene_analysis,gene,genome_analysis,genome analysis,genome, genomics
 Zebrafish_Information_Network_ZFIN,Zebrafish Information Network ZFIN => Zebrafish_Information_Network_ZFIN,Zebrafish Information Network ZFIN,gene_analysis,gene analysis,gene,genome_analysis,genome analysis,genome, genomics
 
-# END BioCatalogue Pseudo Synonyms
+# END ServiceCatalogue Pseudo Synonyms

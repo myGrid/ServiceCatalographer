@@ -1,4 +1,4 @@
-# BioCatalogue: app/models/service_deployment.rb
+# ServiceCatalographer: app/models/service_deployment.rb
 #
 # Copyright (c) 2008-2010, University of Manchester, The European Bioinformatics 
 # Institute (EMBL-EBI) and the University of Southampton.
@@ -125,7 +125,7 @@ class ServiceDeployment < ActiveRecord::Base
   end
   
   def associated_service_id
-    @associated_service_id ||= BioCatalogue::Mapper.map_compound_id_to_associated_model_object_id(BioCatalogue::Mapper.compound_id_for(self.class.name, self.id), "Service")
+    @associated_service_id ||= ServiceCatalographer::Mapper.map_compound_id_to_associated_model_object_id(ServiceCatalographer::Mapper.compound_id_for(self.class.name, self.id), "Service")
   end
   
   def associated_service
@@ -140,7 +140,7 @@ private
   end
 
   def mail_admins_if_required    
-    # send emails to biocat admins
+    # send emails to admins
     if self.provider.services.empty?
       recipients = []
       User.admins.each { |user| recipients << user.email }
@@ -152,20 +152,20 @@ private
   def generate_json_and_make_inline(make_inline)
     data = {
       "service_deployment" => {
-        "submitter" => BioCatalogue::Api.uri_for_object(self.submitter),
+        "submitter" => ServiceCatalographer::Api.uri_for_object(self.submitter),
         "endpoint" => self.endpoint,
         "created_at" => self.created_at.iso8601,
-        "location" => BioCatalogue::Api::Json.location(self.country, self.city),
+        "location" => ServiceCatalographer::Api::Json.location(self.country, self.city),
         "provider" => JSON(self.provider.to_inline_json)
       }
     }
   
     unless make_inline
       data["service_deployment"]["provided_variant"] = JSON(self.service_version.service_versionified.to_inline_json) 
-      data["service_deployment"]["self"] = BioCatalogue::Api.uri_for_object(self)
+      data["service_deployment"]["self"] = ServiceCatalographer::Api.uri_for_object(self)
 			return data.to_json
     else
-      data["service_deployment"]["resource"] = BioCatalogue::Api.uri_for_object(self)
+      data["service_deployment"]["resource"] = ServiceCatalographer::Api.uri_for_object(self)
 			return data["service_deployment"].to_json
     end
   end # generate_json_and_make_inline

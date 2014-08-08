@@ -1,10 +1,10 @@
-# BioCatalogue: app/views/api/pagination/_previous_next_links.xml.builder
+# ServiceCatalographer: app/views/api/pagination/_previous_next_links.xml.builder
 #
 # Copyright (c) 2010, University of Manchester, The European Bioinformatics 
 # Institute (EMBL-EBI) and the University of Southampton.
 # See license.txt for details
 
-params_clone = BioCatalogue::Util.duplicate_params(params) unless local_assigns.has_key?(:params_clone)
+params_clone = ServiceCatalographer::Util.duplicate_params(params) unless local_assigns.has_key?(:params_clone)
 
 # <previous>
 unless page == 1

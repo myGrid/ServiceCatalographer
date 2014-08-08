@@ -1,4 +1,4 @@
-# BioCatalogue: app/controllers/soaplab_servers_controller.rb
+# ServiceCatalographer: app/controllers/soaplab_servers_controller.rb
 #
 # Copyright (c) 2008, University of Manchester, The European Bioinformatics 
 # Institute (EMBL-EBI) and the University of Southampton.
@@ -71,7 +71,7 @@ class SoaplabServersController < ApplicationController
     
     respond_to do |format|
       if @soaplab_server.save
-        Delayed::Job.enqueue BioCatalogue::Jobs::SubmitSoaplabServices.new(@soaplab_server, current_user)
+        Delayed::Job.enqueue ServiceCatalographer::Jobs::SubmitSoaplabServices.new(@soaplab_server, current_user)
         if existing_server
           flash[:notice] = "This Soaplab server is known to #{SITE_NAME}. Any additional services will be registered."
         else
@@ -131,9 +131,9 @@ class SoaplabServersController < ApplicationController
       @soap_service = SoapService.new(:wsdl_location => wsdl_location)
       @soaplab_server = SoaplabServer.new(:location =>wsdl_location)
       begin
-        @wsdl_info, err_msgs, wsdl_file = BioCatalogue::WsdlParser.parse(@soap_service.wsdl_location)
+        @wsdl_info, err_msgs, wsdl_file = ServiceCatalographer::WsdlParser.parse(@soap_service.wsdl_location)
         @wsdl_info["tools"] = @soaplab_server.services_factory().values.flatten.collect{ |v| v['name']}.sort
-        @wsdl_geo_location = BioCatalogue::Util.url_location_lookup(wsdl_location)
+        @wsdl_geo_location = ServiceCatalographer::Util.url_location_lookup(wsdl_location)
       rescue Exception => ex
         @error_message = err_text
         logger.error("Failed to load WSDL from location - #{wsdl_location}. Exception:")

@@ -1,4 +1,4 @@
-# BioCatalogue: app/controllers/soap_operations_controller.rb
+# ServiceCatalographer: app/controllers/soap_operations_controller.rb
 #
 # Copyright (c) 2010, University of Manchester, The European Bioinformatics 
 # Institute (EMBL-EBI) and the University of Southampton.
@@ -26,8 +26,8 @@ class SoapOperationsController < ApplicationController
     respond_to do |format|
       format.html { disable_action }
       format.xml # index.xml.builder
-      format.json { render :json => BioCatalogue::Api::Json.index("soap_operations", json_api_params, @soap_operations).to_json }
-      format.bljson { render :json => BioCatalogue::Api::Bljson.index("soap_operations", @soap_operations).to_json }
+      format.json { render :json => ServiceCatalographer::Api::Json.index("soap_operations", json_api_params, @soap_operations).to_json }
+      format.bljson { render :json => ServiceCatalographer::Api::Bljson.index("soap_operations", @soap_operations).to_json }
     end
   end
 
@@ -83,7 +83,7 @@ class SoapOperationsController < ApplicationController
     respond_to do |format|
       format.html { disable_action }
       format.xml # filters.xml.builder
-      format.json { render :json => BioCatalogue::Api::Json.filter_groups(@filter_groups).to_json }
+      format.json { render :json => ServiceCatalographer::Api::Json.filter_groups(@filter_groups).to_json }
     end
   end
 
@@ -133,7 +133,7 @@ protected
     
     # Filtering
     
-    conditions, joins = BioCatalogue::Filtering::SoapOperations.generate_conditions_and_joins_from_filters(@current_filters, params[:q])
+    conditions, joins = ServiceCatalographer::Filtering::SoapOperations.generate_conditions_and_joins_from_filters(@current_filters, params[:q])
 
     if self.request.format == :bljson
       
@@ -166,7 +166,7 @@ private
     # TODO: implement ?include=inputs,outputs
     
     # Add SoapOperation filter
-    new_params = BioCatalogue::Filtering.add_filter_to_params(params, :asop, @soap_operation.id)
+    new_params = ServiceCatalographer::Filtering.add_filter_to_params(params, :asop, @soap_operation.id)
     
     # Now add any other filters, if specified by "also=..."
     
@@ -174,7 +174,7 @@ private
       # Old Rails 2 style
       #@soap_operation.soap_inputs.all(:select => "id").each do |input|
       @soap_operation.soap_inputs.select("id").each do |input|
-          new_params = BioCatalogue::Filtering.add_filter_to_params(new_params, :asin, input.id)
+          new_params = ServiceCatalographer::Filtering.add_filter_to_params(new_params, :asin, input.id)
       end
     end
     
@@ -182,7 +182,7 @@ private
       # Old Rails 2 style
       #@soap_operation.soap_outputs.all(:select => "id").each do |output|
       @soap_operation.soap_outputs.select("id").each do |output|
-        new_params = BioCatalogue::Filtering.add_filter_to_params(new_params, :asout, output.id)
+        new_params = ServiceCatalographer::Filtering.add_filter_to_params(new_params, :asout, output.id)
       end
     end
     

@@ -1,4 +1,4 @@
-# BioCatalogue: app/views/soap_outputs/api/_soap_output.xml.builder
+# ServiceCatalographer: app/views/soap_outputs/api/_soap_output.xml.builder
 #
 # Copyright (c) 2010, University of Manchester, The European Bioinformatics 
 # Institute (EMBL-EBI) and the University of Southampton.

@@ -1,6 +1,6 @@
 <%
 
-# BioCatalogue: app/views/test_scripts/_about_testscripts.html.erb
+# ServiceCatalographer: app/views/test_scripts/_about_testscripts.html.erb
 #
 # Copyright (c) 2010, University of Manchester, The European Bioinformatics 
 # Institute (EMBL-EBI) and the University of Southampton.
@@ -13,20 +13,20 @@
 		<b>About Test Scripts</b>
 	</p>
 	<p>
-		Test scripts are simple clients to web services which can be uploaded to <%= SITE_NAME -%>.
+		Test scripts are simple clients to Web services which can be uploaded to the <%= SITE_NAME -%>.
 		The aims of the test scripts are to provide the users with sample clients of how to use the service
 		and also to enable the <%= SITE_NAME -%> system to monitor the status of the services by running these sample clients regularly. <br />
 		
 		Allowed test scripts are those written in python, perl or ruby. Also <%= link_to 'soapUI', 'http://www.soapui.org/'-%>  test suites
-		(xml project files) can be submitted.		
+		(XML project files) can be submitted.
 	</p>
 	
 	<p>
-		Please ensure that you read and understand the information made available on the <%=link_to "#{SITE_NAME} Wiki", 'http://www.biocatalogue.org/wiki/doku.php?id=development:testscripts_in_biocatalogue' %> before submitting a test script.
+		Please ensure that you read and understand the information about the test scripts made available on the <%=link_to "ServiceCatalographer's Wiki", 'http://www.biocatalogue.org/wiki/doku.php?id=development:testscripts_in_biocatalogue' %> before submitting a test script.
 	</p>
 	
 	<p>
-		General help on the <%= SITE_NAME -%> is available at <%= link_to "#{SITE_NAME} Help ", 'http://www.biocatalogue.org/wiki/doku.php?id=public:help' %> 
+		General help on using the ServiceCatalographer software is available at <%= link_to 'Help', 'http://www.biocatalogue.org/wiki/doku.php?id=public:help' %>
 	<p/>
 	
 </div>

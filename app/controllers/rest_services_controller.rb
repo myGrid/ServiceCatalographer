@@ -1,4 +1,4 @@
-# BioCatalogue: app/controllers/rest_services_controller.rb
+# ServiceCatalographer: app/controllers/rest_services_controller.rb
 #
 # Copyright (c) 2009-2010, University of Manchester, The European Bioinformatics 
 # Institute (EMBL-EBI) and the University of Southampton.
@@ -31,7 +31,7 @@ class RestServicesController < ApplicationController
     respond_to do |format|
       format.html { disable_action }
       format.xml # index.xml.builder
-      format.json { render :json => BioCatalogue::Api::Json.index("rest_services", json_api_params, @rest_services).to_json }
+      format.json { render :json => ServiceCatalographer::Api::Json.index("rest_services", json_api_params, @rest_services).to_json }
     end
   end
 
@@ -79,7 +79,7 @@ class RestServicesController < ApplicationController
     endpoint.strip!
     if !endpoint.blank? && endpoint =~ /^http[s]?:\/\/\S+/
       endpoint = Addressable::URI.parse(endpoint).normalize.to_s unless endpoint.blank?
-      status = BioCatalogue::AvailabilityCheck::URLCheck.new(endpoint).available?
+      status = ServiceCatalographer::AvailabilityCheck::URLCheck.new(endpoint).available?
       if !status
         message = 'The URL you have provided could not be reached. Please ensure the URL is correct and that your service is running.'
         endpoint = ''
@@ -104,7 +104,7 @@ class RestServicesController < ApplicationController
         params[:annotations] ||= {}
         params[:annotations][:categories] ||= []
         
-        params[:annotations][:categories].compact.each { |cat| category_ids << BioCatalogue::Api.object_for_uri(cat.to_s).id if BioCatalogue::Api.object_for_uri(cat.to_s) }
+        params[:annotations][:categories].compact.each { |cat| category_ids << ServiceCatalographer::Api.object_for_uri(cat.to_s).id if ServiceCatalographer::Api.object_for_uri(cat.to_s) }
         params[:annotations][:categories] = category_ids
       end
 
@@ -261,7 +261,7 @@ protected # ========================================
   end
     
   def authorise
-    unless BioCatalogue::Auth.allow_user_to_curate_thing?(current_user, @service_deployment)
+    unless ServiceCatalographer::Auth.allow_user_to_curate_thing?(current_user, @service_deployment)
       error_to_back_or_home("You are not allowed to perform this action")
       return false
     end

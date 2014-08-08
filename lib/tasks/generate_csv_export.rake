@@ -1,4 +1,4 @@
-namespace :biocatalogue do
+namespace :service_catalographer do
   desc 'Generate a new CSV export'
   task :generate_csv_export => :environment do
     include CurationHelper

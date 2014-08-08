@@ -1,4 +1,4 @@
-# BioCatalogue: app/controllers/rest_representations_controller.rb
+# ServiceCatalographer: app/controllers/rest_representations_controller.rb
 #
 # Copyright (c) 2009-2010, University of Manchester, The European Bioinformatics 
 # Institute (EMBL-EBI) and the University of Southampton.
@@ -88,8 +88,8 @@ class RestRepresentationsController < ApplicationController
   protected
   
   def authorise    
-    auth_on_meth = BioCatalogue::Auth.allow_user_to_curate_thing?(current_user, @rest_method)
-    auth_on_rep = BioCatalogue::Auth.allow_user_to_curate_thing?(current_user, @rest_representation, :rest_method => RestMethod.find(params[:rest_method_id]))
+    auth_on_meth = ServiceCatalographer::Auth.allow_user_to_curate_thing?(current_user, @rest_method)
+    auth_on_rep = ServiceCatalographer::Auth.allow_user_to_curate_thing?(current_user, @rest_representation, :rest_method => RestMethod.find(params[:rest_method_id]))
     
     unless auth_on_rep || auth_on_meth
       error_to_back_or_home("You are not allowed to perform this action")

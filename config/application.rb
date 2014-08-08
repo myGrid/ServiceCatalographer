@@ -11,7 +11,7 @@ if defined?(Bundler)
   # Bundler.require(:default, :assets, Rails.env)
 end
 
-module BioCatalogue
+module ServiceCatalographer
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
@@ -129,7 +129,7 @@ begin
       if forked
         # We're in smart spawning mode.
         # Reset caches..
-        BioCatalogue::CacheHelper.reset_caches
+        ServiceCatalographer::CacheHelper.reset_caches
       else
         # We're in conservative spawning mode. We don't need to do anything.
       end

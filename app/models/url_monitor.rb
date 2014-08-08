@@ -1,4 +1,4 @@
-# BioCatalogue: app/models/url_monitor.rb
+# ServiceCatalographer: app/models/url_monitor.rb
 #
 # Copyright (c) 2009-2010, University of Manchester, The European Bioinformatics
 # Institute (EMBL-EBI) and the University of Southampton.
@@ -41,8 +41,8 @@ class UrlMonitor < ActiveRecord::Base
   def to_json
     {
       "url_monitor" => {
-        "url" => BioCatalogue::Monitoring.pingable_url(self.url),
-        "resource" => BioCatalogue::Api.uri_for_object(self.parent)
+        "url" => ServiceCatalographer::Monitoring.pingable_url(self.url),
+        "resource" => ServiceCatalographer::Api.uri_for_object(self.parent)
       }
     }.to_json
   end

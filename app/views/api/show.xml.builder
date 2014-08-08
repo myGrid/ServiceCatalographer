@@ -1,4 +1,4 @@
-# BioCatalogue: app/views/api/show.xml.builder
+# ServiceCatalographer: app/views/api/show.xml.builder
 #
 # Copyright (c) 2009-2010, University of Manchester, The European Bioinformatics 
 # Institute (EMBL-EBI) and the University of Southampton.
@@ -7,16 +7,16 @@
 # <?xml>
 xml.instruct! :xml
 
-# <biocatalogue>
-xml.tag! "biocatalogue", 
-         xlink_attributes(uri_for_collection("/"), :title => "The BioCatalogue"), 
+# <servicecatalogue>
+xml.tag! "servicecatalogue",
+         xlink_attributes(uri_for_collection("/"), :title => "The ServiceCatalogue"),
          xml_root_attributes,
-         :version => BioCatalogue::VERSION,
-         :apiVersion => BioCatalogue::API_VERSION,
-         :resourceType => "BioCatalogue" do
+         :version => ServiceCatalographer::VERSION,
+         :apiVersion => ServiceCatalographer::API_VERSION,
+         :resourceType => "ServiceCatalogue" do
   
   # <documentation>
-  xml.documentation xlink_attributes("http://apidocs.biocatalogue.org", :title => "Documentation for the BioCatalogue APIs")
+  xml.documentation xlink_attributes("https://www.biocatalogue.org/wiki/doku.php?id=public:api", :title => "Documentation for the ServiceCatalographer's API")
   
   # <collections>
   xml.collections do
@@ -54,7 +54,7 @@ xml.tag! "biocatalogue",
                  :resourceType => "RestServices"
 
     # <search>
-    xml.search xlink_attributes(uri_for_collection("search"), :title => xlink_title("Search everything in the BioCatalogue")),
+    xml.search xlink_attributes(uri_for_collection("search"), :title => xlink_title("Search everything in the ServiceCatalogue")),
                :resourceType => "Search"
 
     # <serviceProviders>

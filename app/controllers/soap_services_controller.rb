@@ -1,4 +1,4 @@
-# BioCatalogue: app/controllers/soap_services_controller.rb
+# ServiceCatalographer: app/controllers/soap_services_controller.rb
 #
 # Copyright (c) 2008-2010, University of Manchester, The European Bioinformatics 
 # Institute (EMBL-EBI) and the University of Southampton.
@@ -23,7 +23,7 @@ class SoapServicesController < ApplicationController
     respond_to do |format|
       format.html { disable_action }
       format.xml # index.xml.builder
-      format.json { render :json => BioCatalogue::Api::Json.index("soap_services", json_api_params, @soap_services).to_json }
+      format.json { render :json => ServiceCatalographer::Api::Json.index("soap_services", json_api_params, @soap_services).to_json }
     end
   end
 
@@ -100,7 +100,7 @@ class SoapServicesController < ApplicationController
               params[:annotations] ||= {}
               params[:annotations][:categories] ||= []
               
-              params[:annotations][:categories].compact.each { |cat| category_ids << BioCatalogue::Api.object_for_uri(cat.to_s).id if BioCatalogue::Api.object_for_uri(cat.to_s) }
+              params[:annotations][:categories].compact.each { |cat| category_ids << ServiceCatalographer::Api.object_for_uri(cat.to_s).id if ServiceCatalographer::Api.object_for_uri(cat.to_s) }
               params[:annotations][:categories] = category_ids
             end
 
@@ -160,7 +160,7 @@ class SoapServicesController < ApplicationController
       
       begin
         Rails.logger.info("Parsing WSDL doc at:  #{@soap_service.wsdl_location}")
-        @wsdl_info, err_msgs, wsdl_file = BioCatalogue::WsdlParser.parse(@soap_service.wsdl_location)
+        @wsdl_info, err_msgs, wsdl_file = ServiceCatalographer::WsdlParser.parse(@soap_service.wsdl_location)
 
         # Check for a duplicate
         @existing_service = SoapService.check_duplicate(wsdl_location, @wsdl_info["endpoint"]) unless @wsdl_info.blank?
@@ -172,14 +172,14 @@ class SoapServicesController < ApplicationController
               @error_message = nil
               
               # Try and find location of the service from the url of the endpoint
-              @wsdl_geo_location = BioCatalogue::Util.url_location_lookup(@wsdl_info["endpoint"])
+              @wsdl_geo_location = ServiceCatalographer::Util.url_location_lookup(@wsdl_info["endpoint"])
             else
               @error_message = err_text
               @error_message_details = err_msgs.to_sentence.html_safe
             end
           else
             # Submit a job to run the service updater
-            BioCatalogue::ServiceUpdater.submit_job_to_run_service_updater(@existing_service.id)
+            ServiceCatalographer::ServiceUpdater.submit_job_to_run_service_updater(@existing_service.id)
           end
         else
           @error_message = err_text
@@ -188,7 +188,7 @@ class SoapServicesController < ApplicationController
       rescue Exception => ex
         @error_message = err_text
         @error_message_details = ex.message
-        BioCatalogue::Util.yell("Failed to load WSDL from URL - #{wsdl_location}.\nException: #{ex.message}.\nStack trace: #{ex.backtrace.join('\n')}".html_safe)
+        ServiceCatalographer::Util.yell("Failed to load WSDL from URL - #{wsdl_location}.\nException: #{ex.message}.\nStack trace: #{ex.backtrace.join('\n')}".html_safe)
       end
     end
     respond_to do |format|
@@ -284,7 +284,7 @@ class SoapServicesController < ApplicationController
     respond_to do |format|
       format.html { disable_action }
       format.xml  # wsdl_locations.xml.builder
-      format.json { render :json => BioCatalogue::Api::Json.wsdl_locations(@wsdl_locations).to_json }
+      format.json { render :json => ServiceCatalographer::Api::Json.wsdl_locations(@wsdl_locations).to_json }
     end
   end
   

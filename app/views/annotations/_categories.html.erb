@@ -1,6 +1,6 @@
 <%
 
-# BioCatalogue: app/views/annotations/_categories.html.erb
+# ServiceCatalographer: app/views/annotations/_categories.html.erb
 #
 # Copyright (c) 2009-2011, University of Manchester, The European Bioinformatics 
 # Institute (EMBL-EBI) and the University of Southampton.
@@ -43,7 +43,7 @@
 																	:title => tooltip_title_attrib(category_hierachy_text(category))) -%>
 										
 											<% if show_modify_options %>
-												<% if BioCatalogue::Auth.allow_user_to_curate_thing?(current_user, category_annotation) %>
+												<% if ServiceCatalographer::Auth.allow_user_to_curate_thing?(current_user, category_annotation) %>
 													<span style="margin-left: 0.2em;">
 														<%= link_to(icon_faded_with_hover(:delete), 
 																				annotation_path(category_annotation), 

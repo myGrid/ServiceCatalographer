@@ -1,4 +1,4 @@
-# BioCatalogue: app/models/wsdl_file.rb
+# ServiceCatalographer: app/models/wsdl_file.rb
 #
 # Copyright (c) 2009-2010, University of Manchester, The European Bioinformatics 
 # Institute (EMBL-EBI) and the University of Southampton.

@@ -1,4 +1,4 @@
-# BioCatalogue: app/views/annotation_attributes/api/_annotation_attribute.xml.builder
+# ServiceCatalographer: app/views/annotation_attributes/api/_annotation_attribute.xml.builder
 #
 # Copyright (c) 2010, University of Manchester, The European Bioinformatics 
 # Institute (EMBL-EBI) and the University of Southampton.

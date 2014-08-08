@@ -1,4 +1,4 @@
-# BioCatalogue: app/models/responsibility_request.rb
+# ServiceCatalographer: app/models/responsibility_request.rb
 #
 # Copyright (c) 2010, University of Manchester, The European Bioinformatics
 # Institute (EMBL-EBI) and the University of Southampton.

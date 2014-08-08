@@ -1,4 +1,4 @@
-# BioCatalogue: app/controllers/annotation_attributes_controller.rb
+# ServiceCatalographer: app/controllers/annotation_attributes_controller.rb
 #
 # Copyright (c) 2010, University of Manchester, The European Bioinformatics
 # Institute (EMBL-EBI) and the University of Southampton.
@@ -16,7 +16,7 @@ class AnnotationAttributesController < ApplicationController
     respond_to do |format|
       format.html { disable_action }
       format.xml # index.xml.builder
-      format.json { render :json => BioCatalogue::Api::Json.index("annotation_attributes", json_api_params, @annotation_attributes).to_json }
+      format.json { render :json => ServiceCatalographer::Api::Json.index("annotation_attributes", json_api_params, @annotation_attributes).to_json }
     end
   end
   

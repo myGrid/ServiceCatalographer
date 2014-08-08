@@ -1,4 +1,4 @@
-# BioCatalogue: app/controllers/search_controller.rb
+# ServiceCatalographer: app/controllers/search_controller.rb
 #
 # Copyright (c) 2008-2010, University of Manchester, The European Bioinformatics 
 # Institute (EMBL-EBI) and the University of Southampton.
@@ -22,7 +22,7 @@ class SearchController < ApplicationController
     if @query.blank?
 
       if is_api_request?
-        error("Please provide a search query using the URL query parameter 'q'. E.g.: #{BioCatalogue::Api.uri_for_collection("search", :params => {:q => "blast"})}")
+        error("Please provide a search query using the URL query parameter 'q'. E.g.: #{ServiceCatalographer::Api.uri_for_collection("search", :params => {:q => "blast"})}")
       else
         respond_to do |format|
           format.html # show.html.erb
@@ -32,7 +32,7 @@ class SearchController < ApplicationController
     else
 
       begin
-        @results, @scope_for_results = BioCatalogue::Search.sunspot_search(@query, @scope, @include_archived)
+        @results, @scope_for_results = ServiceCatalographer::Search.sunspot_search(@query, @scope, @include_archived)
         raise "nil @results object returned" if @results.nil?
       rescue Exception => ex
         error("Sorry, search didn't work this time. Try with different keyword(s). Please <a href='#{contact_url}'>report this</a> if it fails for other searches too.".html_safe)
@@ -48,7 +48,7 @@ class SearchController < ApplicationController
           items = @results.paginate(:page => @page, :per_page => @per_page)
           local_json_api_params = json_api_params
           local_json_api_params[:query] = @query
-          render :json => BioCatalogue::Api::Json.index("search", local_json_api_params, items).to_json
+          render :json => ServiceCatalographer::Api::Json.index("search", local_json_api_params, items).to_json
         }
       end
     end
@@ -68,7 +68,7 @@ class SearchController < ApplicationController
     @query_fragment = '';
     @query_fragment = params[:q] unless params[:q].blank?
 
-    @queries = BioCatalogue::Search.get_query_suggestions(@query_fragment, 50)
+    @queries = ServiceCatalographer::Search.get_query_suggestions(@query_fragment, 50)
 
     render :inline => "<%= auto_complete_result @queries, 'name', @query_fragment %>", :layout => false
   end
@@ -108,9 +108,9 @@ class SearchController < ApplicationController
         end
 
         if @search_type == "input"
-          @results=BioCatalogue::SearchByData.get_matching_input_ports_for_data(@query, @limit)
+          @results=ServiceCatalographer::SearchByData.get_matching_input_ports_for_data(@query, @limit)
         elsif @search_type == "output"
-          @results=BioCatalogue::SearchByData.get_matching_output_ports_for_data(@query, @limit)
+          @results=ServiceCatalographer::SearchByData.get_matching_output_ports_for_data(@query, @limit)
         end
       end
 
@@ -128,7 +128,7 @@ class SearchController < ApplicationController
 
   def validate_and_setup_search
     # First check that search is on
-    unless BioCatalogue::Search.on?
+    unless ServiceCatalographer::Search.on?
       error('Search is unavailable at this time', :status => 404)
       return false
     end
@@ -163,21 +163,21 @@ class SearchController < ApplicationController
 
       # Normalise scope
       if scope.blank?
-        scope = BioCatalogue::Search::ALL_SCOPE_SYNONYMS[0]
+        scope = ServiceCatalographer::Search::ALL_SCOPE_SYNONYMS[0]
       else
 
         # Can be a single scope or a list of scopes...
 
         if scope =~ /,/
-          scope = scope.split(',').compact.map { |s| s.strip.downcase }.reject { |s| !BioCatalogue::Search::VALID_SEARCH_SCOPES_INCL_ALL.include?(s) }
+          scope = scope.split(',').compact.map { |s| s.strip.downcase }.reject { |s| !ServiceCatalographer::Search::VALID_SEARCH_SCOPES_INCL_ALL.include?(s) }
         else
           scope = scope.strip.downcase
-          scope = BioCatalogue::Search::ALL_SCOPE_SYNONYMS[0] if BioCatalogue::Search::ALL_SCOPE_SYNONYMS.include?(scope)
+          scope = ServiceCatalographer::Search::ALL_SCOPE_SYNONYMS[0] if ServiceCatalographer::Search::ALL_SCOPE_SYNONYMS.include?(scope)
 
           # Check that a valid scope has been provided
-          unless BioCatalogue::Search::VALID_SEARCH_SCOPES_INCL_ALL.include?(scope)
+          unless ServiceCatalographer::Search::VALID_SEARCH_SCOPES_INCL_ALL.include?(scope)
             flash[:error] = "'#{scope}' is an invalid search scope; it has been ignored."
-            scope = BioCatalogue::Search::ALL_SCOPE_SYNONYMS[0]
+            scope = ServiceCatalographer::Search::ALL_SCOPE_SYNONYMS[0]
           end
         end
 
@@ -186,7 +186,7 @@ class SearchController < ApplicationController
       # Scope(s) is fine
       @scope = scope
 
-      @visible_search_type = BioCatalogue::Search.scope_to_visible_search_type(@scope) unless is_api_request?
+      @visible_search_type = ServiceCatalographer::Search.scope_to_visible_search_type(@scope) unless is_api_request?
 
       @results = nil
 

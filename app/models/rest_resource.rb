@@ -1,4 +1,4 @@
-# BioCatalogue: app/models/rest_resource.rb
+# ServiceCatalographer: app/models/rest_resource.rb
 #
 # Copyright (c) 2009-2010, University of Manchester, The European Bioinformatics
 # Institute (EMBL-EBI) and the University of Southampton.
@@ -91,7 +91,7 @@ class RestResource < ActiveRecord::Base
   end 
 
   def associated_service_id
-    @associated_service_id ||= BioCatalogue::Mapper.map_compound_id_to_associated_model_object_id(BioCatalogue::Mapper.compound_id_for(self.class.name, self.id), "Service")
+    @associated_service_id ||= ServiceCatalographer::Mapper.map_compound_id_to_associated_model_object_id(ServiceCatalographer::Mapper.compound_id_for(self.class.name, self.id), "Service")
   end
   
   def associated_service
@@ -104,18 +104,18 @@ private
     data = {
       "rest_resource" => {
         "path" => self.path,
-        "submitter" => BioCatalogue::Api.uri_for_object(self.submitter),
+        "submitter" => ServiceCatalographer::Api.uri_for_object(self.submitter),
         "created_at" => self.created_at.iso8601,
         "archived_at" => self.archived? ? self.archived_at.iso8601 : nil
       }
     }
     
     unless make_inline
-      data["rest_resource"]["methods"] = BioCatalogue::Api::Json.collection(self.rest_methods)
-      data["rest_resource"]["self"] = BioCatalogue::Api.uri_for_object(self)
+      data["rest_resource"]["methods"] = ServiceCatalographer::Api::Json.collection(self.rest_methods)
+      data["rest_resource"]["self"] = ServiceCatalographer::Api.uri_for_object(self)
 			return data.to_json
     else
-      data["rest_resource"]["resource"] = BioCatalogue::Api.uri_for_object(self)
+      data["rest_resource"]["resource"] = ServiceCatalographer::Api.uri_for_object(self)
 			return data["rest_resource"].to_json
     end
   end # generate_json_and_make_inline

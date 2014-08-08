@@ -11,8 +11,8 @@ class LatestController < ApplicationController
   def load_feed
     unless is_api_request?
       ActivityLog.benchmark "ActivityLog entries for /home/latest", :level => :info, :silence => true do
-        @activity_logs_main = BioCatalogue::ActivityFeeds.activity_logs_for(:home, :style => :detailed)
-        @activity_logs_monitoring = BioCatalogue::ActivityFeeds.activity_logs_for(:monitoring, :style => :detailed)
+        @activity_logs_main = ServiceCatalographer::ActivityFeeds.activity_logs_for(:home, :style => :detailed)
+        @activity_logs_monitoring = ServiceCatalographer::ActivityFeeds.activity_logs_for(:monitoring, :style => :detailed)
       end
     end
   end

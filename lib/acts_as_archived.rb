@@ -1,10 +1,10 @@
-# BioCatalogue: lib/acts_as_archived.rb
+# ServiceCatalographer: lib/acts_as_archived.rb
 #
 # Copyright (c) 2010, University of Manchester, The European Bioinformatics 
 # Institute (EMBL-EBI) and the University of Southampton.
 # See license.txt for details
 
-module BioCatalogue
+module ServiceCatalographer
   module ActsAsArchived #:nodoc:
     def self.included(mod)
       mod.extend(ClassMethods)
@@ -44,4 +44,4 @@ module BioCatalogue
   end
 end
 
-ActiveRecord::Base.send(:include, BioCatalogue::ActsAsArchived)
+ActiveRecord::Base.send(:include, ServiceCatalographer::ActsAsArchived)

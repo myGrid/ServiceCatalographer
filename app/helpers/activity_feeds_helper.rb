@@ -1,4 +1,4 @@
-# BioCatalogue: app/helpers/application_helper.rb
+# ServiceCatalographer: app/helpers/application_helper.rb
 #
 # Copyright (c) 2009-2010, University of Manchester, The European Bioinformatics 
 # Institute (EMBL-EBI) and the University of Southampton.
@@ -24,7 +24,7 @@ module ActivityFeedsHelper
     results = [ ]
     
     # Get object cache for these activity_logs
-    object_cache = BioCatalogue::ActivityFeeds.build_object_cache_for(activity_logs)
+    object_cache = ServiceCatalographer::ActivityFeeds.build_object_cache_for(activity_logs)
 
     # We need to consider ordering of the grouped events!
     
@@ -58,7 +58,7 @@ module ActivityFeedsHelper
           data = [ entry_text, entry_type, al.created_at ]
           
           if entry_text.blank?
-            BioCatalogue::Util.say "Activity feed entry was blank for ActivityLog record: \n\t#{al.inspect}.\n It could be that the activity_loggable, culprit or referenced has been deleted or deactivated."
+            ServiceCatalographer::Util.say "Activity feed entry was blank for ActivityLog record: \n\t#{al.inspect}.\n It could be that the activity_loggable, culprit or referenced has been deleted or deactivated."
           else
             temp_results[classify_time_span(al.created_at, style)] << data
           end
@@ -139,7 +139,7 @@ module ActivityFeedsHelper
               
               # Special case for annotation values for certain kinds of attributes
               if item.attribute_name.downcase == "tag"
-                namespace, fragment = BioCatalogue::Tags.split_ontology_term_uri(item.value.name)
+                namespace, fragment = ServiceCatalographer::Tags.split_ontology_term_uri(item.value.name)
                 value_to_display = item.value.label
               end
               
@@ -239,8 +239,8 @@ module ActivityFeedsHelper
                 entry_type = "monitoring_status_change_unknown"
                 
                 unless current_result.nil?
-                  current_status = BioCatalogue::Monitoring::TestResultStatus.new(current_result)
-                  previous_status = BioCatalogue::Monitoring::TestResultStatus.new(previous_result)
+                  current_status = ServiceCatalographer::Monitoring::TestResultStatus.new(current_result)
+                  previous_status = ServiceCatalographer::Monitoring::TestResultStatus.new(previous_result)
                   
                   output << link_to(display_name(service), service_url(service))
                   output << " has a test "
@@ -256,7 +256,7 @@ module ActivityFeedsHelper
         
       end
     rescue Exception => ex
-      BioCatalogue::Util.log_exception(ex, :error, "Failed to run 'ActivityFeedsHelper#activity_feed_entry_for' for item: #{item.class.name} #{item.id}, action: #{action}, style: #{style}.")
+      ServiceCatalographer::Util.log_exception(ex, :error, "Failed to run 'ActivityFeedsHelper#activity_feed_entry_for' for item: #{item.class.name} #{item.id}, action: #{action}, style: #{style}.")
       output = ''
     end
     

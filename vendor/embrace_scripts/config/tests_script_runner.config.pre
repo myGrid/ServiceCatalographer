@@ -1,4 +1,4 @@
-# Config file for the BioCatalogue test Harness
+# Config file for the ServiceCatalographer test Harness
 
 # Path to the harness scripts
 harnessroot = /source/directory/of/the/harness/scripts
@@ -27,7 +27,7 @@ port     = <port number>
 result_url = http://myserver:port/test_results.xml
 
 # Authentication
-# Authenticate against the BioCatalogue instance to which results are submitted
+# Authenticate against the ServiceCatalographer instance to which results are submitted
 api_user = <user email>	
 api_pass = <user password>
 

@@ -1,4 +1,4 @@
-# BioCatalogue: app/controllers/annotations_controller.rb
+# ServiceCatalographer: app/controllers/annotations_controller.rb
 #
 # Copyright (c) 2009, University of Manchester, The European Bioinformatics 
 # Institute (EMBL-EBI) and the University of Southampton.
@@ -42,7 +42,7 @@ class AnnotationsController < ApplicationController
     respond_to do |format|
       format.html { disable_action }
       format.xml # index.xml.builder
-      format.json { render :json => BioCatalogue::Api::Json.index("annotations", json_api_params, @annotations).to_json }
+      format.json { render :json => ServiceCatalographer::Api::Json.index("annotations", json_api_params, @annotations).to_json }
     end
   end
 
@@ -156,7 +156,7 @@ class AnnotationsController < ApplicationController
   
   def promote_alternative_name
     if @annotation.attribute_name.downcase == "alternative_name" &&
-      BioCatalogue::Auth.allow_user_to_curate_thing?(current_user, @annotation.annotatable)
+      ServiceCatalographer::Auth.allow_user_to_curate_thing?(current_user, @annotation.annotatable)
       
       annotatable = @annotation.annotatable
       annotatable.name = @annotation.value_content
@@ -178,7 +178,7 @@ class AnnotationsController < ApplicationController
     respond_to do |format|
       format.html { disable_action }
       format.xml # filters.xml.builder
-      format.json { render :json => BioCatalogue::Api::Json.filter_groups(@filter_groups).to_json }
+      format.json { render :json => ServiceCatalographer::Api::Json.filter_groups(@filter_groups).to_json }
     end
   end
   
@@ -223,7 +223,7 @@ class AnnotationsController < ApplicationController
   # Note that the output will ONLY include the valid resources and successfully
   # created annotations.
   def bulk_create
-    results = BioCatalogue::Annotations.bulk_create(params["bulk_annotations"], current_user)
+    results = ServiceCatalographer::Annotations.bulk_create(params["bulk_annotations"], current_user)
     
     respond_to do |format|
       format.html { disable_action }
@@ -278,7 +278,7 @@ class AnnotationsController < ApplicationController
     
     # Filtering
     
-    conditions, joins = BioCatalogue::Filtering::Annotations.generate_conditions_and_joins_from_filters(@current_filters, params[:q])
+    conditions, joins = ServiceCatalographer::Filtering::Annotations.generate_conditions_and_joins_from_filters(@current_filters, params[:q])
     
     @annotations = Annotation.paginate(:page => @page,
                                        :per_page => @per_page,
@@ -295,7 +295,7 @@ class AnnotationsController < ApplicationController
       when "bulk_create"
         allowed = (current_user.is_curator? or current_user.is_admin?)
       else
-        allowed = BioCatalogue::Auth.allow_user_to_curate_thing?(current_user, @annotation)
+        allowed = ServiceCatalographer::Auth.allow_user_to_curate_thing?(current_user, @annotation)
     end
     
     unless allowed

@@ -1,4 +1,4 @@
-# BioCatalogue: app/helpers/search_helper.rb
+# ServiceCatalographer: app/helpers/search_helper.rb
 #
 # Copyright (c) 2008, University of Manchester, The European Bioinformatics 
 # Institute (EMBL-EBI) and the University of Southampton.
@@ -12,11 +12,11 @@ module SearchHelper
   
   # For a list of integer IDs
   def search_item_ids_to_objects(item_ids, result_type)
-    BioCatalogue::Mapper.item_ids_to_model_objects(item_ids, result_type)
+    ServiceCatalographer::Mapper.item_ids_to_model_objects(item_ids, result_type)
   end
   
   def search_item_compound_ids_to_objects(item_compound_ids)
-    BioCatalogue::Mapper.compound_ids_to_model_objects(item_compound_ids)
+    ServiceCatalographer::Mapper.compound_ids_to_model_objects(item_compound_ids)
   end
   
 end

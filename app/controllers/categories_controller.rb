@@ -1,4 +1,4 @@
-# BioCatalogue: app/controllers/categories_controller.rb
+# ServiceCatalographer: app/controllers/categories_controller.rb
 #
 # Copyright (c) 2009-2010, University of Manchester, The European Bioinformatics
 # Institute (EMBL-EBI) and the University of Southampton.
@@ -17,7 +17,7 @@ class CategoriesController < ApplicationController
     respond_to do |format|
       format.html { disable_action }
       format.xml # index.xml.builder
-      format.json { render :json => BioCatalogue::Api::Json.index("categories", json_api_params, @categories).to_json }
+      format.json { render :json => ServiceCatalographer::Api::Json.index("categories", json_api_params, @categories).to_json }
     end
   end
   

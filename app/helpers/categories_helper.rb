@@ -1,4 +1,4 @@
-# BioCatalogue: app/helpers/categories_helper.rb
+# ServiceCatalographer: app/helpers/categories_helper.rb
 #
 # Copyright (c) 2009, University of Manchester, The European Bioinformatics 
 # Institute (EMBL-EBI) and the University of Southampton.
@@ -7,11 +7,11 @@
 module CategoriesHelper
   
   def category_hierachy_text(category)
-    BioCatalogue::Categorising.category_hierachy_text(category)
+    ServiceCatalographer::Categorising.category_hierachy_text(category)
   end
   
   def category_with_parent_text(category)
-    BioCatalogue::Categorising.category_with_parent_text(category)
+    ServiceCatalographer::Categorising.category_with_parent_text(category)
   end
   
   def render_select_tag_for_category_options_on_service_submission(element_id, disabled, style='')

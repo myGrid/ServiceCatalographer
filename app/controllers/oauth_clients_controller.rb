@@ -1,4 +1,4 @@
-# BioCatalogue: app/controllers/oauth_clients_controller.rb
+# ServiceCatalographer: app/controllers/oauth_clients_controller.rb
 #
 # Copyright (c) 2010, University of Manchester, The European Bioinformatics 
 # Institute (EMBL-EBI) and the University of Southampton.
@@ -68,7 +68,7 @@ protected
 
   # TODO: is this really needed? @client_application is taken from the user's client application collection
   def authorise
-    unless BioCatalogue::Auth.allow_user_to_claim_thing?(current_user, @client_application)
+    unless ServiceCatalographer::Auth.allow_user_to_claim_thing?(current_user, @client_application)
       error_to_back_or_home("You are not allowed to perform this action")
       return false
     end

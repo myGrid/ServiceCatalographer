@@ -1,4 +1,4 @@
-# BioCatalogue: app/controllers/lookup_controller.rb
+# ServiceCatalographer: app/controllers/lookup_controller.rb
 #
 # Copyright (c) 2010, University of Manchester, The European Bioinformatics 
 # Institute (EMBL-EBI) and the University of Southampton.
@@ -7,7 +7,7 @@
 class LookupController < ApplicationController
   
   def show
-    obj = BioCatalogue::Util.lookup(params)
+    obj = ServiceCatalographer::Util.lookup(params)
     
     if obj
       respond_to do |format|

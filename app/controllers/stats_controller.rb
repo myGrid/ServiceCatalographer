@@ -1,4 +1,4 @@
-# BioCatalogue: app/controllers/stats_controller.rb
+# ServiceCatalographer: app/controllers/stats_controller.rb
 #
 # Copyright (c) 2009, University of Manchester, The European Bioinformatics
 # Institute (EMBL-EBI) and the University of Southampton.
@@ -20,7 +20,7 @@ class StatsController < ApplicationController
   def tags ;     end
   def search ;   end
 
-  include BioCatalogue::Stats
+  include ServiceCatalographer::Stats
 
   def index
     @service_count = Service.count
@@ -50,7 +50,7 @@ class StatsController < ApplicationController
   end
   
   def refresh
-    BioCatalogue::Stats.submit_job_to_refresh_stats
+    ServiceCatalographer::Stats.submit_job_to_refresh_stats
     
     respond_to do |format|
       flash[:notice] = "Latest statistics are now being generated. Please refresh this page after a few minutes..."

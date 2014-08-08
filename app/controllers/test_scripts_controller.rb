@@ -1,4 +1,4 @@
-# BioCatalogue: app/controllers/test_scripts_controller.rb
+# ServiceCatalographer: app/controllers/test_scripts_controller.rb
 #
 # Copyright (c) 2009, University of Manchester, The European Bioinformatics
 # Institute (EMBL-EBI) and the University of Southampton.
@@ -65,7 +65,7 @@ class TestScriptsController < ApplicationController
   end
   
   def authorise_on_script
-    unless BioCatalogue::Auth.allow_user_to_curate_thing?(current_user, @test_script)
+    unless ServiceCatalographer::Auth.allow_user_to_curate_thing?(current_user, @test_script)
       error_to_back_or_home("You are not allowed to perform this action")
       return false
     end
@@ -75,7 +75,7 @@ class TestScriptsController < ApplicationController
   
   def authorise_on_service
     @service = Service.find(params[:testable_id])
-    unless BioCatalogue::Auth.allow_user_to_curate_thing?(current_user, @service)
+    unless ServiceCatalographer::Auth.allow_user_to_curate_thing?(current_user, @service)
       error_to_back_or_home("You are not allowed to perform this action")
       return false
     end

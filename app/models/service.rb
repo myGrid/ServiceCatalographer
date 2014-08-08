@@ -1,4 +1,4 @@
-# BioCatalogue: app/models/service.rb
+# ServiceCatalographer: app/models/service.rb
 #
 # Copyright (c) 2008-2010, University of Manchester, The European Bioinformatics 
 # Institute (EMBL-EBI) and the University of Southampton.
@@ -229,7 +229,7 @@ class Service < ActiveRecord::Base
       service_ids = [ ]
       
       final_category_ids.each do |c_id|
-        service_ids.concat(BioCatalogue::Categorising.get_service_ids_with_category(c_id, false))
+        service_ids.concat(ServiceCatalographer::Categorising.get_service_ids_with_category(c_id, false))
       end
       
       service_ids = service_ids.uniq.reject{|i| i == self.id}
@@ -249,11 +249,11 @@ class Service < ActiveRecord::Base
     #rel = Relationship.first(
     #    :conditions => { :subject_type => "Service",
     #                     :subject_id => self.id,
-    #                     :predicate => "BioCatalogue:memberOf",
+    #                     :predicate => "ServiceCatalogue:memberOf",
     #                     :object_type => "SoaplabServer" })
     rel = Relationship.where(:subject_type => "Service",
                                              :subject_id => self.id, 
-                                             :predicate => "BioCatalogue:memberOf", 
+                                             :predicate => "ServiceCatalogue:memberOf",
                                              :object_type => "SoaplabServer").first
     rel.nil? ? rel : rel.object
   end
@@ -308,7 +308,7 @@ class Service < ActiveRecord::Base
   end
   
   def latest_status
-    BioCatalogue::Monitoring::ServiceStatus.new(self)
+    ServiceCatalographer::Monitoring::ServiceStatus.new(self)
   end
   
   def latest_test_results_for_all_service_tests(options ={})
@@ -374,7 +374,7 @@ class Service < ActiveRecord::Base
   def associated_object_ids(cache_refresh=false)
     object_ids = nil
       
-    cache_key = BioCatalogue::CacheHelper.cache_key_for(:associated_object_ids, "Service", self.id)
+    cache_key = ServiceCatalographer::CacheHelper.cache_key_for(:associated_object_ids, "Service", self.id)
   
     if cache_refresh
       Rails.cache.delete(cache_key)
@@ -471,7 +471,7 @@ class Service < ActiveRecord::Base
   # background.
   def submit_delete_job
     begin
-      Delayed::Job.enqueue(BioCatalogue::Jobs::ServiceDelete.new(self), :priority => 0, :run_at => 5.seconds.from_now)
+      Delayed::Job.enqueue(ServiceCatalographer::Jobs::ServiceDelete.new(self), :priority => 0, :run_at => 5.seconds.from_now)
       return true
     rescue Exception => ex
       logger.error(ex.to_s)
@@ -539,7 +539,7 @@ class Service < ActiveRecord::Base
 
   def get_service_tags
     list = []
-    BioCatalogue::Annotations.get_tag_annotations_for_annotatable(self).each { |ann| list << ann.value_content }
+    ServiceCatalographer::Annotations.get_tag_annotations_for_annotatable(self).each { |ann| list << ann.value_content }
     return list
   end
 
@@ -563,9 +563,9 @@ class Service < ActiveRecord::Base
   
   def tweet_create
     if ENABLE_TWITTER
-      BioCatalogue::Util.say "Called Service#tweet_create to submit job to tweet"
-      msg = "New #{self.service_types[0]} service: #{BioCatalogue::Util.display_name(self)} - #{BioCatalogue::Api.uri_for_object(self)}"
-      Delayed::Job.enqueue(BioCatalogue::Jobs::PostTweet.new(msg), :priority => 0, :run_at => 5.seconds.from_now)
+      ServiceCatalographer::Util.say "Called Service#tweet_create to submit job to tweet"
+      msg = "New #{self.service_types[0]} service: #{ServiceCatalographer::Util.display_name(self)} - #{ServiceCatalographer::Api.uri_for_object(self)}"
+      Delayed::Job.enqueue(ServiceCatalographer::Jobs::PostTweet.new(msg), :priority => 0, :run_at => 5.seconds.from_now)
     end
   end
   
@@ -598,29 +598,29 @@ private
         
     data = {
       "service" => {
-        "name" => BioCatalogue::Util.display_name(self),
+        "name" => ServiceCatalographer::Util.display_name(self),
         "description" => self.preferred_description,
-        "submitter" => BioCatalogue::Api.uri_for_object(self.submitter),
+        "submitter" => ServiceCatalographer::Api.uri_for_object(self.submitter),
         "created_at" => self.created_at.iso8601,
         "archived_at" => self.archived? ? self.archived_at.iso8601 : nil,
         "service_technology_types" => self.service_types,
-        "latest_monitoring_status" => BioCatalogue::Api::Json.monitoring_status(self.latest_status)
+        "latest_monitoring_status" => ServiceCatalographer::Api::Json.monitoring_status(self.latest_status)
       }
     }
 
     collections.each do |collection|
       case collection.downcase
         when "monitoring"
-          data["service"]["service_tests"] = BioCatalogue::Api::Json.collection(self.service_tests)
+          data["service"]["service_tests"] = ServiceCatalographer::Api::Json.collection(self.service_tests)
         when "variants"
           versions = []
           self.service_versions.each{ |v| versions << v.service_versionified }
-          data["service"]["variants"] = BioCatalogue::Api::Json.collection(versions)
+          data["service"]["variants"] = ServiceCatalographer::Api::Json.collection(versions)
         when "deployments"
-          data["service"]["deployments"] = BioCatalogue::Api::Json.collection(self.service_deployments)
+          data["service"]["deployments"] = ServiceCatalographer::Api::Json.collection(self.service_deployments)
         when "summary"
           metadata_counts = {}
-          BioCatalogue::Annotations.metadata_counts_for_service(self).each { |meta_type, meta_count| metadata_counts.merge!("by_#{meta_type}" => meta_count) }
+          ServiceCatalographer::Annotations.metadata_counts_for_service(self).each { |meta_type, meta_count| metadata_counts.merge!("by_#{meta_type}" => meta_count) }
                     
           data["service"]["summary"] = {
             "counts" => {
@@ -650,10 +650,10 @@ private
     end
 
     unless make_inline
-      data["service"]["self"] = BioCatalogue::Api.uri_for_object(self)
+      data["service"]["self"] = ServiceCatalographer::Api.uri_for_object(self)
 			return data.to_json
     else
-      data["service"]["resource"] = BioCatalogue::Api.uri_for_object(self)
+      data["service"]["resource"] = ServiceCatalographer::Api.uri_for_object(self)
 			return data["service"].to_json
     end
   end # generate_json_with_collections
@@ -664,23 +664,23 @@ private
     case attr.downcase
       when "providers"
         self.service_deployments.each { |item| list << item.provider }
-        list = BioCatalogue::Api::Json.collection(list, false)
+        list = ServiceCatalographer::Api::Json.collection(list, false)
       when "endpoints"
         self.service_deployments.each { |item| list << { "endpoint" => item.endpoint } }
       when "wsdls"
         soaps = service_version_instances_by_type("SoapService")
         soaps.each { |item| list << item.wsdl_location } unless soaps.blank?
       when "locations"
-        self.service_deployments.each { |item| list << BioCatalogue::Api::Json.location(item.country, item.city) }
+        self.service_deployments.each { |item| list << ServiceCatalographer::Api::Json.location(item.country, item.city) }
       when "tag"
-        BioCatalogue::Annotations.get_tag_annotations_for_annotatable(self).each { |ann| list << { "name" => ann.value_content } }
-        list = BioCatalogue::Api::Json.tags_collection(list)
+        ServiceCatalographer::Annotations.get_tag_annotations_for_annotatable(self).each { |ann| list << { "name" => ann.value_content } }
+        list = ServiceCatalographer::Api::Json.tags_collection(list)
       when "category"
         self.annotations_with_attribute("category").each do |ann| 
           list << JSON(ann.value.to_countless_inline_json) if ann.value_type == "Category"
         end
       else
-        BioCatalogue::Annotations.annotations_for_service_by_attribute(self, attr).each { |ann| list << ann.value_content }
+        ServiceCatalographer::Annotations.annotations_for_service_by_attribute(self, attr).each { |ann| list << ann.value_content }
     end
     
     return list

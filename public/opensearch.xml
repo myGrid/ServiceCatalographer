@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/"> 
 	<!-- xmlns:moz="http://www.mozilla.org/2006/browser/search/"> -->
-	<ShortName>BioCatalogue</ShortName>
-	<Description>The Life Science Web Services Registry</Description>
-	<Contact>contact@biocatalogue.org</Contact>
+	<ShortName>ServiceCatalographer</ShortName>
+	<Description>The Registry of Web Services in Sciences</Description>
+	<Contact>contact@servicecatalographer.org</Contact>
 	<Image height="16" width="16" type="image/x-icon">SERVER_BASE_URL/images/biocat_icon.png</Image>
 	<Url type="text/html" method="GET" template="SERVER_BASE_URL/search?q={searchTerms}"/>
 	<Attribution>
-		biocatalogue.org 
+      servicecatalographer.org
 	</Attribution>
 	<SyndicationRight>open</SyndicationRight>
 	<AdultContent>false</AdultContent>

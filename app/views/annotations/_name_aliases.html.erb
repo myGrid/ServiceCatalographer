@@ -1,6 +1,6 @@
 <%
 
-# BioCatalogue: app/views/annotations/_name_aliases.html.erb
+# ServiceCatalographer: app/views/annotations/_name_aliases.html.erb
 #
 # Copyright (c) 2009-2011, University of Manchester, The European Bioinformatics 
 # Institute (EMBL-EBI) and the University of Southampton.
@@ -24,7 +24,7 @@
 				<span class="faded_plus" style="vertical-align: baseline; font-size: 93%;">aka</span>
 				<span style="font-weight: bold; vertical-align: baseline;"><%= h(al.value_content) -%></span>
 				<% if show_modify_options %>
-					<% if show_promote_option and BioCatalogue::Auth.allow_user_to_curate_thing?(current_user, annotatable) %>
+					<% if show_promote_option and ServiceCatalographer::Auth.allow_user_to_curate_thing?(current_user, annotatable) %>
 						<span style="margin-left: 0.3em; vertical-align: baseline;">
 							<%= link_to(icon_faded_with_hover(:promote), 
 													promote_alternative_name_annotation_path(al),
@@ -34,7 +34,7 @@
 													:title => tooltip_title_attrib("Set this alternative name as the display name for this #{annotatable.class.name.humanize}")) -%>
 						</span>
 					<% end %>
-					<% if BioCatalogue::Auth.allow_user_to_curate_thing?(current_user, al) %>
+					<% if ServiceCatalographer::Auth.allow_user_to_curate_thing?(current_user, al) %>
 						<span style="margin-left: 0.3em; vertical-align: baseline;">
 							<%= link_to(icon_faded_with_hover(:delete),
 													annotation_path(al),

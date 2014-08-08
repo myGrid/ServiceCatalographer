@@ -1,4 +1,4 @@
-# BioCatalogue: app/models/rest_method.rb
+# ServiceCatalographer: app/models/rest_method.rb
 #
 # Copyright (c) 2009-2010, University of Manchester, The European Bioinformatics
 # Institute (EMBL-EBI) and the University of Southampton.
@@ -164,7 +164,7 @@ class RestMethod < ActiveRecord::Base
 
   def get_service_tags
     list = []
-    BioCatalogue::Annotations.get_tag_annotations_for_annotatable(self).each { |ann| list << ann.value_content }
+    ServiceCatalographer::Annotations.get_tag_annotations_for_annotatable(self).each { |ann| list << ann.value_content }
     return list.join("; ")
   end
 
@@ -422,7 +422,7 @@ class RestMethod < ActiveRecord::Base
   end
   
   def associated_service_id
-    @associated_service_id ||= BioCatalogue::Mapper.map_compound_id_to_associated_model_object_id(BioCatalogue::Mapper.compound_id_for(self.class.name, self.id), "Service")
+    @associated_service_id ||= ServiceCatalographer::Mapper.map_compound_id_to_associated_model_object_id(ServiceCatalographer::Mapper.compound_id_for(self.class.name, self.id), "Service")
   end
   
   def associated_service
@@ -564,8 +564,8 @@ private
         "name" => self.endpoint_name,
         "endpoint_label" => self.display_endpoint,
         "http_method_type" => self.method_type,
-        "url_template" => BioCatalogue::Util.generate_rest_endpoint_url_template(self),
-        "submitter" => BioCatalogue::Api.uri_for_object(self.submitter),
+        "url_template" => ServiceCatalographer::Util.generate_rest_endpoint_url_template(self),
+        "submitter" => ServiceCatalographer::Api.uri_for_object(self.submitter),
         "description" => self.preferred_description,
         "documentation_url" => self.documentation_url,
         "created_at" => self.created_at.iso8601,
@@ -577,22 +577,22 @@ private
       case collection.downcase
         when "inputs"
           data["rest_method"]["inputs"] = {
-            "parameters" => BioCatalogue::Api::Json.collection(self.request_parameters),
-            "representations" => BioCatalogue::Api::Json.collection(self.request_representations)            
+            "parameters" => ServiceCatalographer::Api::Json.collection(self.request_parameters),
+            "representations" => ServiceCatalographer::Api::Json.collection(self.request_representations)
           }
         when "outputs"
           data["rest_method"]["outputs"] = {
-            "parameters" => BioCatalogue::Api::Json.collection(self.response_parameters),
-            "representations" => BioCatalogue::Api::Json.collection(self.response_representations)            
+            "parameters" => ServiceCatalographer::Api::Json.collection(self.response_parameters),
+            "representations" => ServiceCatalographer::Api::Json.collection(self.response_representations)
           }
       end
     end
 
     unless make_inline
-      data["rest_method"]["self"] = BioCatalogue::Api.uri_for_object(self)
+      data["rest_method"]["self"] = ServiceCatalographer::Api.uri_for_object(self)
 			return data.to_json
     else
-      data["rest_method"]["resource"] = BioCatalogue::Api.uri_for_object(self)
+      data["rest_method"]["resource"] = ServiceCatalographer::Api.uri_for_object(self)
 			return data["rest_method"].to_json
     end
   end # generate_json_with_collections

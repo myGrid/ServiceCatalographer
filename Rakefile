@@ -4,4 +4,4 @@
 require File.expand_path('../config/application', __FILE__)
 require 'rake'
 
-BioCatalogue::Application.load_tasks
+ServiceCatalographer::Application.load_tasks

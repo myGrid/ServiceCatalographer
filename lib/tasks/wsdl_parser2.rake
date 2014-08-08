@@ -1,20 +1,20 @@
-# BioCatalogue: lib/tasks/check_wsdl_parse.rake
+# ServiceCatalographer: lib/tasks/check_wsdl_parse.rake
 #
 # Copyright (c) 2009, University of Manchester, The European Bioinformatics
 # Institute (EMBL-EBI) and the University of Southampton.
 # See license.txt for details
 
 
-namespace :biocatalogue do
+namespace :service_catalographer do
   namespace :wsdl_parser do
 
-    # A simple task that parses the WSDL URL (based on Taverna's wsdl-generic parser) passed as command line argument as rake biocatalogue:wsdl_parser:parse wsdl='http://blah.com?wsdl'
-    desc "Parse WSDL document using the new WSDL parsing utility based on Taverna's wsdl-generic. Pass WSDL URL as rake biocatalogue:wsdl_parser:parse_wsdlgeneric wsdl='http://blah.com?wsdl'"
+    # A simple task that parses the WSDL URL (based on Taverna's wsdl-generic parser) passed as command line argument as rake servicecatalographer:wsdl_parser:parse wsdl='http://blah.com?wsdl'
+    desc "Parse WSDL document using the new WSDL parsing utility based on Taverna's wsdl-generic. Pass WSDL URL as rake servicecatalographer:wsdl_parser:parse_wsdlgeneric wsdl='http://blah.com?wsdl'"
     task :parse_wsdlgeneric => :environment do
       wsdl_url = ENV['wsdl']
       puts("Parsing WSDL doc: #{wsdl_url} using Taverna's wsdl-generic.")
       if wsdl_url.blank?
-        puts('You have to specify WSDL URL as e.g. rake biocatalogue:wsdl_parser:parse_wsdlgeneric wsdl=http://blah.com?wsdl')
+        puts('You have to specify WSDL URL as e.g. rake servicecatalographer:wsdl_parser:parse_wsdlgeneric wsdl=http://blah.com?wsdl')
       else
         # Check is WSDL doc is reachable at all
         begin
@@ -27,7 +27,7 @@ namespace :biocatalogue do
         end
 
         begin
-          service_info, error_messages = BioCatalogue::WsdlParser.parse_via_tavernas_wsdl_generic(wsdl_url)
+          service_info, error_messages = ServiceCatalographer::WsdlParser.parse_via_tavernas_wsdl_generic(wsdl_url)
 
           if !service_info.blank?
             puts("Successfully parsed - see the resulting hash below: \n #{service_info}")
@@ -41,13 +41,13 @@ namespace :biocatalogue do
       end
     end
 
-    # A simple task that parses the WSDL URL (based on the old PHP WSDLUtils parser) passed as command line argument as rake biocatalogue:wsdl_parser:parse_old wsdl='http://blah.com?wsdl'
-    desc "Parse WSDL document using the old PHP WSDL parsing utility WSDLUtils. Pass WSDL URL as rake biocatalogue:wsdl_parser:parse_wsdlutils wsdl='http://blah.com?wsdl'"
+    # A simple task that parses the WSDL URL (based on the old PHP WSDLUtils parser) passed as command line argument as rake servicecatalographer:wsdl_parser:parse_old wsdl='http://blah.com?wsdl'
+    desc "Parse WSDL document using the old PHP WSDL parsing utility WSDLUtils. Pass WSDL URL as rake servicecatalographer:wsdl_parser:parse_wsdlutils wsdl='http://blah.com?wsdl'"
     task :parse_wsdlutils => :environment do
       wsdl_url = ENV['wsdl']
       puts("Parsing WSDL doc: #{wsdl_url} using WSDLUtils.")
       if wsdl_url.blank?
-        puts('You have to specify WSDL URL as e.g. rake biocatalogue:wsdl_parser:parse_wsdlutils wsdl=http://blah.com?wsdl')
+        puts('You have to specify WSDL URL as e.g. rake servicecatalographer:wsdl_parser:parse_wsdlutils wsdl=http://blah.com?wsdl')
       else
         # Check is WSDL doc is reachable at all
         begin
@@ -60,7 +60,7 @@ namespace :biocatalogue do
         end
 
         begin
-          service_info, error_messages = BioCatalogue::WsdlParser.parse_via_wsdlutils(wsdl_url)
+          service_info, error_messages = ServiceCatalographer::WsdlParser.parse_via_wsdlutils(wsdl_url)
 
           if !service_info.blank?
             puts("Successfully parsed - see the resulting hash below: \n #{service_info}")
@@ -118,8 +118,8 @@ namespace :biocatalogue do
           end
 
           begin
-            service_info, error_messages = BioCatalogue::WsdlParser.parse_via_tavernas_wsdl_generic(wsdl_url)
-            service_info_old, error_messages_old = BioCatalogue::WsdlParser.parse_via_wsdlutils(wsdl_url)
+            service_info, error_messages = ServiceCatalographer::WsdlParser.parse_via_tavernas_wsdl_generic(wsdl_url)
+            service_info_old, error_messages_old = ServiceCatalographer::WsdlParser.parse_via_wsdlutils(wsdl_url)
 
             if !service_info.blank?
               if !service_info_old.blank?
@@ -228,7 +228,7 @@ namespace :biocatalogue do
         end
 
         begin
-          service_info, error_messages, wsdl_file_contents = BioCatalogue::WsdlParser::parse(wsdl_url)
+          service_info, error_messages, wsdl_file_contents = ServiceCatalographer::WsdlParser::parse(wsdl_url)
 
           if !service_info.blank?
 
@@ -276,7 +276,7 @@ namespace :biocatalogue do
       end
       if (!last_no && !first_no && !all)
         puts "You need to pass configuation parameters. For example, to check the first 3 services in development do :"
-        puts "rake biocatalogue:wsdl_parser:check RAILS_ENV=development first=3"
+        puts "rake servicecatalographer:wsdl_parser:check RAILS_ENV=development first=3"
         exit(0)
       end
       info = check(services)
@@ -292,7 +292,7 @@ namespace :biocatalogue do
       services.each do |service|
         service.service_version_instances_by_type('SoapService').each do |soap|
           begin
-            info, error, data = BioCatalogue::WsdlUtils::ParserClient.parse(soap.wsdl_location)
+            info, error, data = ServiceCatalographer::WsdlUtils::ParserClient.parse(soap.wsdl_location)
             if info.empty?
               raise "wsdl info hash is empty! "
             end
@@ -338,7 +338,7 @@ namespace :biocatalogue do
     def test_tavernas_wsdl_generic_parser(wsdl_url)
       #wsdl_url = '/Users/alex/git/taverna-wsdl-generic/src/test/resources/testwsdls/menagerie-complex-rpc.wsdl'
       puts "Parsing #{wsdl_url}."
-      #service_info, error_messages, wsdl_doc_content = BioCatalogue::WsdlParser.parse_via_tavernas_wsdl_generic(wsdl_url)
+      #service_info, error_messages, wsdl_doc_content = ServiceCatalographer::WsdlParser.parse_via_tavernas_wsdl_generic(wsdl_url)
 
       taverna_wsdl_parser_class = Rjb::import('net.sf.taverna.wsdl.parser.WSDLParser')
       parsed_wsdl = taverna_wsdl_parser_class.new(wsdl_url)
@@ -371,7 +371,7 @@ namespace :biocatalogue do
           inp['name'] = input.getName()
           inp['description'] = input.getDocumentation()
           inp['computational_type'] = input.getType()
-          inp['computational_type_details'] = BioCatalogue::WsdlParser.build_message_type_details(input)
+          inp['computational_type_details'] = ServiceCatalographer::WsdlParser.build_message_type_details(input)
           operation['inputs'] << inp
           j += 1
         end

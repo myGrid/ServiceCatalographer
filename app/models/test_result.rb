@@ -1,4 +1,4 @@
-# BioCatalogue: app/models/test_result.rb
+# ServiceCatalographer: app/models/test_result.rb
 #
 # Copyright (c) 2009-2010, University of Manchester, The European Bioinformatics
 # Institute (EMBL-EBI) and the University of Southampton.
@@ -50,7 +50,7 @@ class TestResult < ActiveRecord::Base
   end
   
   def status
-    BioCatalogue::Monitoring::TestResultStatus.new(self)
+    ServiceCatalographer::Monitoring::TestResultStatus.new(self)
   end
   
   def responsible_emails
@@ -63,7 +63,7 @@ class TestResult < ActiveRecord::Base
   
   def submit_update_success_rate_job
     begin
-      Delayed::Job.enqueue(BioCatalogue::Jobs::UpdateServiceTestSuccessRate.new(self))
+      Delayed::Job.enqueue(ServiceCatalographer::Jobs::UpdateServiceTestSuccessRate.new(self))
     rescue Exception => ex
       logger.error("Could not submit job to update service test success rate")
       logger.error(ex)
@@ -96,14 +96,14 @@ class TestResult < ActiveRecord::Base
                            :activity_loggable => self.service_test,
                            :referenced => service)
           
-            current_status = BioCatalogue::Monitoring::TestResultStatus.new(self)
-            previous_status = BioCatalogue::Monitoring::TestResultStatus.new(previous)
+            current_status = ServiceCatalographer::Monitoring::TestResultStatus.new(self)
+            previous_status = ServiceCatalographer::Monitoring::TestResultStatus.new(previous)
           
           
             if ENABLE_TWITTER
-              BioCatalogue::Util.say "Called TestResult#update_status. A status change has occurred so submitting a job to tweet about..."
-              msg = "Service '#{BioCatalogue::Util.display_name(service)}' has a test change status from #{previous_status.label} to #{current_status.label} (#{self.created_at.strftime("%Y-%m-%d %H:%M %Z")})"
-              Delayed::Job.enqueue(BioCatalogue::Jobs::PostTweet.new(msg), :priority => 0, :run_at => 5.seconds.from_now)
+              ServiceCatalographer::Util.say "Called TestResult#update_status. A status change has occurred so submitting a job to tweet about..."
+              msg = "Service '#{ServiceCatalographer::Util.display_name(service)}' has a test change status from #{previous_status.label} to #{current_status.label} (#{self.created_at.strftime("%Y-%m-%d %H:%M %Z")})"
+              Delayed::Job.enqueue(ServiceCatalographer::Jobs::PostTweet.new(msg), :priority => 0, :run_at => 5.seconds.from_now)
             end
           
             unless MONITORING_STATUS_CHANGE_RECIPIENTS.empty?
@@ -112,10 +112,10 @@ class TestResult < ActiveRecord::Base
               if NOTIFY_SERVICE_RESPONSIBLE
                 status_recipients_emails = status_recipients_emails + self.responsible_emails
               end
-              BioCatalogue::Util.say "Called TestResult#update_status. A status change has occurred so emailing the special set of recipients about it..."
-              subject = "[#{SITE_NAME}] Service '#{BioCatalogue::Util.display_name(service)}' has a test change status from #{previous_status.label} to #{current_status.label}"
-              text = "A monitoring test status change has occurred! Service '#{BioCatalogue::Util.display_name(service)}' has a test (#{self.service_test.test_type}, ID: #{self.service_test.test_id}) change status from #{previous_status.label} to #{current_status.label}. Last test result message: #{current_status.message}. Go to Service: #{BioCatalogue::Api.uri_for_object(service)}"
-              Delayed::Job.enqueue(BioCatalogue::Jobs::StatusChangeEmails.new(subject, text, status_recipients_emails), :priority => 0, :run_at => 5.seconds.from_now)
+              ServiceCatalographer::Util.say "Called TestResult#update_status. A status change has occurred so emailing the special set of recipients about it..."
+              subject = "[#{SITE_NAME}] Service '#{ServiceCatalographer::Util.display_name(service)}' has a test change status from #{previous_status.label} to #{current_status.label}"
+              text = "A monitoring test status change has occurred! Service '#{ServiceCatalographer::Util.display_name(service)}' has a test (#{self.service_test.test_type}, ID: #{self.service_test.test_id}) change status from #{previous_status.label} to #{current_status.label}. Last test result message: #{current_status.message}. Go to Service: #{ServiceCatalographer::Api.uri_for_object(service)}"
+              Delayed::Job.enqueue(ServiceCatalographer::Jobs::StatusChangeEmails.new(subject, text, status_recipients_emails), :priority => 0, :run_at => 5.seconds.from_now)
             end
           
           end
@@ -143,15 +143,15 @@ private
         "test_action" => self.action,
         "result_code" => self.result,
         "created_at" => self.created_at.iso8601,
-        "status" => BioCatalogue::Api::Json.monitoring_status(self.status)
+        "status" => ServiceCatalographer::Api::Json.monitoring_status(self.status)
       }
     }
 
     unless make_inline
-      data["test_result"]["self"] = BioCatalogue::Api.uri_for_object(self)
+      data["test_result"]["self"] = ServiceCatalographer::Api.uri_for_object(self)
 			return data.to_json
     else
-      data["test_result"]["resource"] = BioCatalogue::Api.uri_for_object(self)
+      data["test_result"]["resource"] = ServiceCatalographer::Api.uri_for_object(self)
 			return data["test_result"].to_json
     end
   end # generate_json_and_make_inline

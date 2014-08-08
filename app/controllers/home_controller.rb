@@ -1,4 +1,4 @@
-# BioCatalogue: app/controllers/home_controller.rb
+# ServiceCatalographer: app/controllers/home_controller.rb
 #
 # Copyright (c) 2008-2010, University of Manchester, The European Bioinformatics 
 # Institute (EMBL-EBI) and the University of Southampton.
@@ -11,14 +11,14 @@ class HomeController < ApplicationController
   def index
     unless is_api_request?
       ActivityLog.benchmark "ActivityLog entries for /home", :level => :info, :silence => false do
-        @activity_logs_main = BioCatalogue::ActivityFeeds.activity_logs_for(:home, :style => :simple)
-        @activity_logs_monitoring = BioCatalogue::ActivityFeeds.activity_logs_for(:monitoring, :style => :simple, :items_limit => 5)
+        @activity_logs_main = ServiceCatalographer::ActivityFeeds.activity_logs_for(:home, :style => :simple)
+        @activity_logs_monitoring = ServiceCatalographer::ActivityFeeds.activity_logs_for(:monitoring, :style => :simple, :items_limit => 5)
       end
     end
     
     if self.request.format == :atom
       @feed_title = "#{SITE_NAME} - Latest Activity"
-      @activity_logs = BioCatalogue::ActivityFeeds.activity_logs_for(:home, :style => :detailed)
+      @activity_logs = ServiceCatalographer::ActivityFeeds.activity_logs_for(:home, :style => :detailed)
     end
     
     respond_to do |format|
@@ -32,8 +32,8 @@ class HomeController < ApplicationController
   def latest
     unless is_api_request?
       ActivityLog.benchmark "ActivityLog entries for /home/latest", :level => :info, :silence => true do
-        @activity_logs_main = BioCatalogue::ActivityFeeds.activity_logs_for(:home, :style => :detailed)
-        @activity_logs_monitoring = BioCatalogue::ActivityFeeds.activity_logs_for(:monitoring, :style => :detailed)
+        @activity_logs_main = ServiceCatalographer::ActivityFeeds.activity_logs_for(:home, :style => :detailed)
+        @activity_logs_monitoring = ServiceCatalographer::ActivityFeeds.activity_logs_for(:monitoring, :style => :detailed)
       end
     end
 
@@ -45,7 +45,7 @@ class HomeController < ApplicationController
   def status_changes
     if self.request.format == :atom
       @feed_title = "#{SITE_NAME} - Service Monitoring Test Status Changes"
-      @activity_logs = BioCatalogue::ActivityFeeds.activity_logs_for(:monitoring, :style => :detailed)
+      @activity_logs = ServiceCatalographer::ActivityFeeds.activity_logs_for(:monitoring, :style => :detailed)
     end
     
     respond_to do |format|

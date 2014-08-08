@@ -1,10 +1,10 @@
-# BioCatalogue: lib/tasks/remove_expired_sessions.rake
+# ServiceCatalographer: lib/tasks/remove_expired_sessions.rake
 #
 # Copyright (c) 2009, University of Manchester, The European Bioinformatics 
 # Institute (EMBL-EBI) and the University of Southampton.
 # See license.txt for details
 
-namespace :biocatalogue do
+namespace :service_catalographer do
   desc "Remove expired sessions from the database. Default expiry age for sessions is 3 days, but can be specified using AGE=x"
   task :remove_expired_sessions => :environment do
     
@@ -16,6 +16,6 @@ namespace :biocatalogue do
     rows_deleted = ActiveRecord::Base.connection.delete(sql)
     
     #Log/output number of sessions removed
-    BioCatalogue::Util.say "#{rows_deleted} expired sessions removed."
+    ServiceCatalographer::Util.say "#{rows_deleted} expired sessions removed."
   end
 end

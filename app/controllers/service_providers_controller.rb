@@ -1,4 +1,4 @@
-# BioCatalogue: app/controllers/service_providers_controller.rb
+# ServiceCatalographer: app/controllers/service_providers_controller.rb
 #
 # Copyright (c) 2008-2010, University of Manchester, The European Bioinformatics 
 # Institute (EMBL-EBI) and the University of Southampton.
@@ -38,8 +38,8 @@ class ServiceProvidersController < ApplicationController
     respond_to do |format|
       format.html # index.html.erb
       format.xml  # index.xml.builder
-      format.json { render :json => BioCatalogue::Api::Json.index("service_providers", json_api_params, @service_providers).to_json }
-      format.bljson { render :json => BioCatalogue::Api::Bljson.index("service_providers", @service_providers).to_json }
+      format.json { render :json => ServiceCatalographer::Api::Json.index("service_providers", json_api_params, @service_providers).to_json }
+      format.bljson { render :json => ServiceCatalographer::Api::Bljson.index("service_providers", @service_providers).to_json }
     end
   end
 
@@ -198,7 +198,7 @@ class ServiceProvidersController < ApplicationController
     respond_to do |format|
       format.html { disable_action }
       format.xml # filters.xml.builder
-      format.json { render :json => BioCatalogue::Api::Json.filter_groups(@filter_groups).to_json }
+      format.json { render :json => ServiceCatalographer::Api::Json.filter_groups(@filter_groups).to_json }
     end
   end
   
@@ -259,7 +259,7 @@ protected
       order = "service_providers.#{order_field} #{order_direction}"
     end
     
-    conditions, joins = BioCatalogue::Filtering::ServiceProviders.generate_conditions_and_joins_from_filters(@current_filters, params[:q])
+    conditions, joins = ServiceCatalographer::Filtering::ServiceProviders.generate_conditions_and_joins_from_filters(@current_filters, params[:q])
     
     if self.request.format == :bljson
       finder_options = {
@@ -284,7 +284,7 @@ protected
   end
   
   def authorise
-    unless BioCatalogue::Auth.allow_user_to_curate_thing?(current_user, @service_provider)
+    unless ServiceCatalographer::Auth.allow_user_to_curate_thing?(current_user, @service_provider)
       error_to_back_or_home("You are not allowed to perform this action")
       return false
     end

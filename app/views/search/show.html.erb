@@ -1,11 +1,11 @@
 <%
-   # BioCatalogue: app/views/search/show.html.erb
+   # ServiceCatalographer: app/views/search/show.html.erb
    #
    # Copyright (c) 2008, University of Manchester, The European Bioinformatics
    # Institute (EMBL-EBI) and the University of Southampton.
    # See license.txt for details
 %>
-<% all_search = BioCatalogue::Search::ALL_SCOPE_SYNONYMS.include?(@scope) %>
+<% all_search = ServiceCatalographer::Search::ALL_SCOPE_SYNONYMS.include?(@scope) %>
 <% if @query.blank? %>
     <h1>Search</h1>
 <% else %>
@@ -63,7 +63,7 @@
               <% @scope_for_results.each do |result_scope| %>
 
                   <% unless ["annotations"].include? result_scope %>
-                      <% visible_result_scope = BioCatalogue::Search.scope_to_visible_search_type(result_scope)
+                      <% visible_result_scope = ServiceCatalographer::Search.scope_to_visible_search_type(result_scope)
                          items = @results.select { |result| result.class.name.underscore.pluralize == result_scope }
                          count = items.count
                          items = items.paginate(:page => @page, :per_page => @per_page)

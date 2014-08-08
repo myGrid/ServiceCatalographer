@@ -1,4 +1,4 @@
-# BioCatalogue: app/helpers/service_providers_helper.rb
+# ServiceCatalographer: app/helpers/service_providers_helper.rb
 #
 # Copyright (c) 2008, University of Manchester, The European Bioinformatics 
 # Institute (EMBL-EBI) and the University of Southampton.
@@ -19,7 +19,7 @@ module ServiceProvidersHelper
   #  :class - any CSS class that need to be applied to the text.
   #    default: nil
   def edit_provider_by_popup(provider, *args)    
-    return '' unless BioCatalogue::Auth.allow_user_to_curate_thing?(current_user, provider)
+    return '' unless ServiceCatalographer::Auth.allow_user_to_curate_thing?(current_user, provider)
     
     return '' unless provider.class.name == "ServiceProvider"
 

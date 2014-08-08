@@ -1,7 +1,8 @@
-/* This file is intended to be used as a convenient way of replacing BioCatalogues main (green) colour scheme
-  To use, create a copy of the file with the ".pre" suffix removed, then alter the following RGB colour codes as needed.
-  header_colour and secondary_colour can be set to scales of the primary_colour by uncommenting the line below their definition
-*/
+/**
+ * This file is intended to be used as a convenient way of replacing the main (green) colour scheme.
+ * To use, create a copy of the file and remove the ".pre" suffix, then alter the following RGB colour codes as needed.
+ * header_colour and secondary_colour can be set to scales of the primary_colour by uncommenting the line below their definition.
+ */
 
 
 /* Main colour - Light */

@@ -1,4 +1,4 @@
-# BioCatalogue: app/models/soap_output.rb
+# ServiceCatalographer: app/models/soap_output.rb
 #
 # Copyright (c) 2009-2010, University of Manchester, The European Bioinformatics
 # Institute (EMBL-EBI) and the University of Southampton.
@@ -50,7 +50,7 @@ class SoapOutput < ActiveRecord::Base
   end
   
   def associated_service_id
-    @associated_service_id ||= BioCatalogue::Mapper.map_compound_id_to_associated_model_object_id(BioCatalogue::Mapper.compound_id_for(self.class.name, self.id), "Service")
+    @associated_service_id ||= ServiceCatalographer::Mapper.map_compound_id_to_associated_model_object_id(ServiceCatalographer::Mapper.compound_id_for(self.class.name, self.id), "Service")
   end
   
   def associated_service
@@ -68,7 +68,7 @@ class SoapOutput < ActiveRecord::Base
 protected
   
   def computational_type_details_for_solr
-    BioCatalogue::Util.all_values_from_hash(self.computational_type_details).collect {|i| i.downcase}.uniq.to_sentence(:words_connector => ' ', :last_word_connector => ' ', :two_words_connector => ' ')
+    ServiceCatalographer::Util.all_values_from_hash(self.computational_type_details).collect {|i| i.downcase}.uniq.to_sentence(:words_connector => ' ', :last_word_connector => ' ', :two_words_connector => ' ')
   end
   
 private
@@ -85,10 +85,10 @@ private
     }
 
     unless make_inline
-      data["soap_output"]["self"] = BioCatalogue::Api.uri_for_object(self)
+      data["soap_output"]["self"] = ServiceCatalographer::Api.uri_for_object(self)
 			return data.to_json
     else
-      data["soap_output"]["resource"] = BioCatalogue::Api.uri_for_object(self)
+      data["soap_output"]["resource"] = ServiceCatalographer::Api.uri_for_object(self)
 			return data["soap_output"].to_json
     end
   end # generate_json_and_make_inline

@@ -1,4 +1,4 @@
-# BioCatalogue: app/views/test_results/api/_test_result.xml.builder
+# ServiceCatalographer: app/views/test_results/api/_test_result.xml.builder
 #
 # Copyright (c) 2010, University of Manchester, The European Bioinformatics 
 # Institute (EMBL-EBI) and the University of Southampton.

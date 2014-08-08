@@ -1,7 +1,7 @@
 
 <%
 
-# BioCatalogue: app/views/curation/annotation_level.html.erb
+# ServiceCatalographer: app/views/curation/annotation_level.html.erb
 #
 # Copyright (c) 2010, University of Manchester, The European Bioinformatics 
 # Institute (EMBL-EBI) and the University of Southampton.
@@ -20,7 +20,7 @@
 			to the actual annotation coverage. The attributes
 			taken into account for the calculation are :
 			<div class="computational_type_details">
-				<%= from_list_to_html(BioCatalogue::Curation::AnnotationLevel.unique_ann_attribute_list) -%>
+				<%= from_list_to_html(ServiceCatalographer::Curation::AnnotationLevel.unique_ann_attribute_list) -%>
 			</div>
 	</div>
 </div>

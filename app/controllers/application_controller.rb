@@ -1,4 +1,4 @@
-# BioCatalogue: app/controllers/application_controller.rb
+# ServiceCatalographer: app/controllers/application_controller.rb
 #
 # Copyright (c) 2008-2011, University of Manchester, The European Bioinformatics
 # Institute (EMBL-EBI) and the University of Southampton.
@@ -24,7 +24,7 @@ class ApplicationController < ActionController::Base
   # ============================================
 
   before_filter { |controller|
-    BioCatalogue::CacheHelper.set_base_host(controller.base_host)
+    ServiceCatalographer::CacheHelper.set_base_host(controller.base_host)
   }
 
 
@@ -145,7 +145,7 @@ class ApplicationController < ActionController::Base
   helper_method :mine?
 
   def display_name(item, escape_html=true)
-    BioCatalogue::Util.display_name(item, escape_html)
+    ServiceCatalographer::Util.display_name(item, escape_html)
   end
   helper_method :display_name
 
@@ -154,12 +154,12 @@ class ApplicationController < ActionController::Base
   def url_for_web_interface(item)
     case item
       when Annotation, ServiceDeployment, ServiceVersion, SoapService, RestService
-        service_id = BioCatalogue::Mapper.map_compound_id_to_associated_model_object_id(BioCatalogue::Mapper.compound_id_for(item.class.name, item.id), "Service")
+        service_id = ServiceCatalographer::Mapper.map_compound_id_to_associated_model_object_id(ServiceCatalographer::Mapper.compound_id_for(item.class.name, item.id), "Service")
         return service_url(service_id) unless service_id.nil?
       when SoapInput, SoapOutput
         return soap_operation_url(item.soap_operation_id, :anchor => "#{item.class.name.underscore}_#{item.id}") unless item.soap_operation_id.nil?
       when RestParameter, RestRepresentation
-        service_id = BioCatalogue::Mapper.map_compound_id_to_associated_model_object_id(BioCatalogue::Mapper.compound_id_for(item.class.name, item.id), "Service")
+        service_id = ServiceCatalographer::Mapper.map_compound_id_to_associated_model_object_id(ServiceCatalographer::Mapper.compound_id_for(item.class.name, item.id), "Service")
         return service_url(service_id, :anchor => "endpoints") unless service_id.nil?
       when SoapService
         return service_url(item.service)
@@ -183,11 +183,11 @@ class ApplicationController < ActionController::Base
 protected
 
   def debug_messages
-    BioCatalogue::Util.say ""
-    BioCatalogue::Util.say "*** DEBUG MESSAGES ***"
-    BioCatalogue::Util.say "ActionController#request.format = #{self.request.format.inspect}"
-    BioCatalogue::Util.say "ActionController#request.format.html? = #{self.request.format.html?}"
-    BioCatalogue::Util.say ""
+    ServiceCatalographer::Util.say ""
+    ServiceCatalographer::Util.say "*** DEBUG MESSAGES ***"
+    ServiceCatalographer::Util.say "ActionController#request.format = #{self.request.format.inspect}"
+    ServiceCatalographer::Util.say "ActionController#request.format.html? = #{self.request.format.html?}"
+    ServiceCatalographer::Util.say ""
   end
 
   def disable_action
@@ -301,7 +301,7 @@ protected
     flash[:error] = messages.to_sentence
 
     if is_api_request?
-      messages << "See http://apidocs.biocatalogue.org/ for information about the BioCatalogue REST API"
+      messages << "See https://www.biocatalogue.org/wiki/doku.php?id=public:api for information about the ServiceCatalographer's REST API."
     end
 
     respond_to do |format|
@@ -411,7 +411,7 @@ protected
   # -------------------------------
 
   def parse_current_filters
-    @current_filters = BioCatalogue::Filtering.convert_params_to_filters(params, controller_name.downcase.to_sym)
+    @current_filters = ServiceCatalographer::Filtering.convert_params_to_filters(params, controller_name.downcase.to_sym)
     puts "*** @current_filters = #{@current_filters.inspect}"
   end
 
@@ -431,23 +431,23 @@ protected
   end
 
   def generate_include_filter_url(filter_type, filter_value, resource, format=nil)
-    new_params = BioCatalogue::Filtering.add_filter_to_params(params, filter_type, filter_value)
+    new_params = ServiceCatalographer::Filtering.add_filter_to_params(params, filter_type, filter_value)
     return generate_filter_url(new_params, resource, format)
   end
   helper_method :generate_include_filter_url
 
   def generate_exclude_filter_url(filter_type, filter_value, resource, format=nil)
-    new_params = BioCatalogue::Filtering.remove_filter_from_params(params, filter_type, filter_value)
+    new_params = ServiceCatalographer::Filtering.remove_filter_from_params(params, filter_type, filter_value)
     return generate_filter_url(new_params, resource, format)
   end
   helper_method :generate_exclude_filter_url
 
   # Note: the 'new_params' here MUST
-  # - be a mutable params hash (so don't use the global 'params', duplicate it first using BioCatalogue::Util.duplicate_params(..)).
+  # - be a mutable params hash (so don't use the global 'params', duplicate it first using ServiceCatalographer::Util.duplicate_params(..)).
   # - contain filter params in the required Filter params spec. See: generate_include_filter_url above for ref.
   def generate_filter_url(new_params, resource, format=nil)
     # Remove special params
-    new_params_cleaned = BioCatalogue::Util.remove_rails_special_params_from(new_params).reject{|k,v| [ "limit", "page", "namespace", "include", "also" ].include?(k.to_s.downcase) }
+    new_params_cleaned = ServiceCatalographer::Util.remove_rails_special_params_from(new_params).reject{|k,v| [ "limit", "page", "namespace", "include", "also" ].include?(k.to_s.downcase) }
 
     unless format.nil?
       if format == :html
@@ -464,12 +464,12 @@ protected
   helper_method :generate_filter_url
 
   def is_filter_selected(filter_type, filter_value)
-    return BioCatalogue::Filtering.is_filter_selected(@current_filters, filter_type, filter_value)
+    return ServiceCatalographer::Filtering.is_filter_selected(@current_filters, filter_type, filter_value)
   end
   helper_method :is_filter_selected
 
   def generate_sort_url(resource, sort_by, sort_order)
-    params_dup = BioCatalogue::Util.duplicate_params(params)
+    params_dup = ServiceCatalographer::Util.duplicate_params(params)
     params_dup[:sort_by] = sort_by.downcase
     params_dup[:sort_order] = sort_order.downcase
 
@@ -486,7 +486,7 @@ protected
   helper_method :is_sort_selected
 
   def get_filter_groups
-    @filter_groups = BioCatalogue::Filtering.get_all_filter_groups_for(self.controller_name.underscore.to_sym, @limit || nil, params[:q])
+    @filter_groups = ServiceCatalographer::Filtering.get_all_filter_groups_for(self.controller_name.underscore.to_sym, @limit || nil, params[:q])
   end
 
   def include_archived?
@@ -507,7 +507,7 @@ protected
   helper_method :include_archived?
 
   def generate_include_archived_url(resource, should_include_archived, current_tab=nil)
-    params_dup = BioCatalogue::Util.duplicate_params(params)
+    params_dup = ServiceCatalographer::Util.duplicate_params(params)
     params_dup[:include_archived] = should_include_archived.to_s
     params_dup.merge(:tab => current_tab) unless current_tab.blank?
 

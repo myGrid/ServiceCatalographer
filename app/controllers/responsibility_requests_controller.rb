@@ -1,4 +1,4 @@
-# BioCatalogue: app/controllers/responsibility_requests_controller.rb
+# ServiceCatalographer: app/controllers/responsibility_requests_controller.rb
 #
 # Copyright (c) 2010, University of Manchester, The European Bioinformatics 
 # Institute (EMBL-EBI) and the University of Southampton.
@@ -47,11 +47,11 @@ class ResponsibilityRequestsController < ApplicationController
         flash[:notice] = "You request was successfully received"
         
         # mail those responsible
-        Delayed::Job.enqueue(BioCatalogue::Jobs::ServiceOwnerRequestNotification.new(@service.all_responsibles,
+        Delayed::Job.enqueue(ServiceCatalographer::Jobs::ServiceOwnerRequestNotification.new(@service.all_responsibles,
                                                                                       base_host, @service, current_user ))
         # Send confirmation mail to user
         # logger.info("Sending confirmation mail to requester: #{current_user.email}")
-        Delayed::Job.enqueue(BioCatalogue::Jobs::ServiceClaimantRequestNotification.new(current_user, base_host, @service))
+        Delayed::Job.enqueue(ServiceCatalographer::Jobs::ServiceClaimantRequestNotification.new(current_user, base_host, @service))
       
         format.html { redirect_to(@service) }
         format.xml {disable_action}
@@ -86,7 +86,7 @@ class ResponsibilityRequestsController < ApplicationController
         flash[:notice] = "Responsibility request has been cancelled"
         
         # notify responsible(s) about cancellation
-        Delayed::Job.enqueue(BioCatalogue::Jobs::ServiceResponsibilityRequestCancellation.new( @service.all_responsibles, 
+        Delayed::Job.enqueue(ServiceCatalographer::Jobs::ServiceResponsibilityRequestCancellation.new( @service.all_responsibles,
                                                                                                   base_host, @service, current_user, @req))
         format.html { redirect_to responsibility_requests_url }
         format.xml  { head :ok }
@@ -105,7 +105,7 @@ class ResponsibilityRequestsController < ApplicationController
           message = message + " approved!"
           to_be_informed = @service.all_responsibles.dup
           to_be_informed << @req.user
-          Delayed::Job.enqueue(BioCatalogue::Jobs::ServiceResponsibilityRequestApproval.new(to_be_informed, 
+          Delayed::Job.enqueue(ServiceCatalographer::Jobs::ServiceResponsibilityRequestApproval.new(to_be_informed,
                                                                                             base_host, @service, current_user, @req))                                                                                          
         else
             message = message + " There was a problem approving this request!"
@@ -134,7 +134,7 @@ class ResponsibilityRequestsController < ApplicationController
         if @req.user_can_approve(current_user)
           if @req.turn_down!(current_user)
             message = message + " Done!"
-            Delayed::Job.enqueue(BioCatalogue::Jobs::ServiceResponsibilityRequestRefusal.new(@service.all_responsibles, 
+            Delayed::Job.enqueue(ServiceCatalographer::Jobs::ServiceResponsibilityRequestRefusal.new(@service.all_responsibles,
                                                                                                 base_host, current_user, @req))                                                                                              
           else
             message = message + " There was a problem while turning down this request!"
@@ -181,7 +181,7 @@ class ResponsibilityRequestsController < ApplicationController
 
   def authorise_approval
     @service = ResponsibilityRequest.find(params[:id]).subject
-    unless logged_in? && BioCatalogue::Auth.allow_user_to_curate_thing?(current_user, @service)
+    unless logged_in? && ServiceCatalographer::Auth.allow_user_to_curate_thing?(current_user, @service)
       flash[:error] = "You are not allowed to perform this action"
       redirect_to responsibility_requests_url
     end

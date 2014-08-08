@@ -1,4 +1,4 @@
-# BioCatalogue: app/controllers/api_controller.rb
+# ServiceCatalographer: app/controllers/api_controller.rb
 #
 # Copyright (c) 2009-2010, University of Manchester, The European Bioinformatics 
 # Institute (EMBL-EBI) and the University of Southampton.
@@ -10,7 +10,7 @@ class ApiController < ApplicationController
     respond_to do |format|
       format.html # show.html.erb
       format.xml  # show.xml.builder
-      format.json { render :json => BioCatalogue::Api::Json.api_endpoint.to_json }
+      format.json { render :json => ServiceCatalographer::Api::Json.api_endpoint.to_json }
     end
   end
   

@@ -1,4 +1,4 @@
-# BioCatalogue: app/views/soap_operations/api/_ancestors.xml.builder
+# ServiceCatalographer: app/views/soap_operations/api/_ancestors.xml.builder
 #
 # Copyright (c) 2010, University of Manchester, The European Bioinformatics 
 # Institute (EMBL-EBI) and the University of Southampton.

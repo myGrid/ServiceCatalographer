@@ -1,5 +1,5 @@
 /**
- * BioCatalogue: app/public/javascripts/application.js
+ * ServiceCatalographer: app/public/javascripts/application.js
  *
  * Copyright (c) 2008, University of Manchester, The European Bioinformatics 
  * Institute (EMBL-EBI) and the University of Southampton.

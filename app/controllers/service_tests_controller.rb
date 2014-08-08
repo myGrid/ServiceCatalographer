@@ -1,4 +1,4 @@
-# BioCatalogue: app/controllers/service_tests_controller.rb
+# ServiceCatalographer: app/controllers/service_tests_controller.rb
 #
 # Copyright (c) 2009-2010, University of Manchester, The European Bioinformatics
 # Institute (EMBL-EBI) and the University of Southampton.
@@ -99,7 +99,7 @@ class ServiceTestsController < ApplicationController
     
     respond_to do |format|      
       if error.nil?
-        flash[:notice] = "The monitoring endpoint for service '#{BioCatalogue::Util.display_name(@service)}' has been updated".html_safe
+        flash[:notice] = "The monitoring endpoint for service '#{ServiceCatalographer::Util.display_name(@service)}' has been updated".html_safe
       else
         flash[:error] = error
       end
@@ -152,7 +152,7 @@ class ServiceTestsController < ApplicationController
     respond_to do |format|      
       if error.nil?
         redirect_url = service_test_url(@service_test)
-        flash[:notice] = "A new monitoring endpoint has been created for service '#{BioCatalogue::Util.display_name(@service)}'".html_safe
+        flash[:notice] = "A new monitoring endpoint has been created for service '#{ServiceCatalographer::Util.display_name(@service)}'".html_safe
       else
         redirect_url = service_url(@service, :anchor => "monitoring")
         flash[:error] = error
@@ -200,7 +200,7 @@ class ServiceTestsController < ApplicationController
       if @service_test.deactivate!
         flash[:notice] = "<div class=\"flash_header\">Service test has been deactivated</div><div class=\"flash_body\">.</div>".html_safe
         format.html{redirect_to(service_test_url(@service_test)) }
-        Delayed::Job.enqueue(BioCatalogue::Jobs::ServiceTestDisableNotification.new(current_user, @service_test, 
+        Delayed::Job.enqueue(ServiceCatalographer::Jobs::ServiceTestDisableNotification.new(current_user, @service_test,
                                                                                       MONITORING_STATUS_CHANGE_RECIPIENTS, base_host))
         format.xml { disable_action }
       else
@@ -251,7 +251,7 @@ class ServiceTestsController < ApplicationController
   end
   
   def authorise
-    unless BioCatalogue::Auth.allow_user_to_curate_thing?(current_user, @service_test.service)
+    unless ServiceCatalographer::Auth.allow_user_to_curate_thing?(current_user, @service_test.service)
       flash[:error] = "You are not allowed to perform this action!".html_safe
       redirect_to @service_test.service
     end
@@ -260,14 +260,14 @@ class ServiceTestsController < ApplicationController
   def authorise_for_disabled
     return if is_api_request?
     
-    unless BioCatalogue::Auth.allow_user_to_curate_thing?(current_user, @service_test.service) || @service_test.enabled?
+    unless ServiceCatalographer::Auth.allow_user_to_curate_thing?(current_user, @service_test.service) || @service_test.enabled?
       flash[:error] = "Service test is disabled!".html_safe
       redirect_to @service_test.service
     end
   end
   
   def authorise_for_create
-    unless BioCatalogue::Auth.allow_user_to_curate_thing?(current_user, @service)
+    unless ServiceCatalographer::Auth.allow_user_to_curate_thing?(current_user, @service)
       flash[:error] = "You are not allowed to perform this action!".html_safe
       redirect_to @service
     end

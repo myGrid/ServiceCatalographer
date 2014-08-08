@@ -1,4 +1,4 @@
-# BioCatalogue: app/helpers/service_deployments_helper.rb
+# ServiceCatalographer: app/helpers/service_deployments_helper.rb
 #
 # Copyright (c) 2008, University of Manchester, The European Bioinformatics 
 # Institute (EMBL-EBI) and the University of Southampton.
@@ -10,7 +10,7 @@ module ServiceDeploymentsHelper
 
     return '' unless service_deployment.class.name == 'ServiceDeployment'
 
-    return '' unless BioCatalogue::Auth.allow_user_to_curate_thing?(current_user, service_deployment)
+    return '' unless ServiceCatalographer::Auth.allow_user_to_curate_thing?(current_user, service_deployment)
 
     options = args.extract_options!
 

@@ -1,4 +1,4 @@
-# BioCatalogue: app/controllers/services_controller.rb
+# ServiceCatalographer: app/controllers/services_controller.rb
 #
 # Copyright (c) 2009-2010, University of Manchester, The European Bioinformatics
 # Institute (EMBL-EBI) and the University of Southampton.
@@ -62,8 +62,8 @@ class ServicesController < ApplicationController
       format.html # index.html.erb
       format.xml  # index.xml.builder
       format.atom # index.atom.builder
-      format.json { render :json => BioCatalogue::Api::Json.index("services", json_api_params, @services).to_json }
-      format.bljson { render :json => BioCatalogue::Api::Bljson.index("services", @services).to_json }
+      format.json { render :json => ServiceCatalographer::Api::Json.index("services", json_api_params, @services).to_json }
+      format.bljson { render :json => ServiceCatalographer::Api::Bljson.index("services", @services).to_json }
     end
   end
 
@@ -194,7 +194,7 @@ class ServicesController < ApplicationController
     respond_to do |format|
       format.html # filters.html.erb
       format.xml # filters.xml.builder
-      format.json { render :json => BioCatalogue::Api::Json.filter_groups(@filter_groups).to_json }
+      format.json { render :json => ServiceCatalographer::Api::Json.filter_groups(@filter_groups).to_json }
       format.js { render :layout => false }
     end
   end
@@ -240,7 +240,7 @@ class ServicesController < ApplicationController
 
   def check_updates
     # Submit a job to run the service updater
-    BioCatalogue::ServiceUpdater.submit_job_to_run_service_updater(@service.id)
+    ServiceCatalographer::ServiceUpdater.submit_job_to_run_service_updater(@service.id)
 
     flash[:notice] = "The service updater has been scheduled to run. Any new updates found will be shown in the 'News' tab."
 
@@ -455,7 +455,7 @@ class ServicesController < ApplicationController
 
     # Filtering
 
-    conditions, joins = BioCatalogue::Filtering::Services.generate_conditions_and_joins_from_filters(@current_filters, params[:q])
+    conditions, joins = ServiceCatalographer::Filtering::Services.generate_conditions_and_joins_from_filters(@current_filters, params[:q])
 
     @filter_message = "The services index has been filtered" unless @current_filters.blank?
 
@@ -518,7 +518,7 @@ class ServicesController < ApplicationController
 
       # Set feed title
       @feed_title = "#{SITE_NAME} - "
-      @feed_title << if (text = BioCatalogue::Filtering.filters_text_if_filters_present(@current_filters)).blank?
+      @feed_title << if (text = ServiceCatalographer::Filtering.filters_text_if_filters_present(@current_filters)).blank?
         "Latest Services"
       else
         "Services - #{text}"
@@ -528,13 +528,13 @@ class ServicesController < ApplicationController
 
   def setup_for_activity_feed
     if !is_api_request? or self.request.format == :atom
-      @feed_title = "#{SITE_NAME} - Service '#{BioCatalogue::Util.display_name(@service, false)}' - Latest Activity"
-      @activity_logs = BioCatalogue::ActivityFeeds.activity_logs_for(:service, :style => :detailed, :scoped_object => @service, :since => Time.now.ago(120.days))
+      @feed_title = "#{SITE_NAME} - Service '#{ServiceCatalographer::Util.display_name(@service, false)}' - Latest Activity"
+      @activity_logs = ServiceCatalographer::ActivityFeeds.activity_logs_for(:service, :style => :detailed, :scoped_object => @service, :since => Time.now.ago(120.days))
     end
   end
 
   def set_page_title_suffix
-    @page_title_suffix = (BioCatalogue::Filtering.filters_text_if_filters_present(@current_filters) || "Browse All Services")
+    @page_title_suffix = (ServiceCatalographer::Filtering.filters_text_if_filters_present(@current_filters) || "Browse All Services")
   end
 
   def set_listing_type_local
@@ -544,7 +544,7 @@ class ServicesController < ApplicationController
   end
 
   def authorise
-    unless BioCatalogue::Auth.allow_user_to_curate_thing?(current_user, @service)
+    unless ServiceCatalographer::Auth.allow_user_to_curate_thing?(current_user, @service)
       error_to_back_or_home("You are not allowed to perform this action")
       return false
     end

@@ -1,4 +1,4 @@
-# BioCatalogue: app/views/api/filtering/_parameters.xml.builder
+# ServiceCatalographer: app/views/api/filtering/_parameters.xml.builder
 #
 # Copyright (c) 2010, University of Manchester, The European Bioinformatics 
 # Institute (EMBL-EBI) and the University of Southampton.
@@ -10,7 +10,7 @@ filters = @current_filters unless local_assigns.has_key?(:filters)
 parent_xml.filters do
 
   # <group> *
-  BioCatalogue::Filtering.filter_groups_from(filters, resource_type).each do |g|
+  ServiceCatalographer::Filtering.filter_groups_from(filters, resource_type).each do |g|
     parent_xml.group :name => g.name do
       
       # <type> *

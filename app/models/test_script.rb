@@ -1,4 +1,4 @@
-# BioCatalogue: app/models/test_script.rb
+# ServiceCatalographer: app/models/test_script.rb
 #
 # Copyright (c) 2009-2010, University of Manchester, The European Bioinformatics
 # Institute (EMBL-EBI) and the University of Southampton.
@@ -60,8 +60,8 @@ class TestScript < ActiveRecord::Base
         "content_type" => self.content_type,
         "programming_language" => self.prog_language,
         "executable_filename" => self.exec_name,
-        "download" => URI.parse(BioCatalogue::Api.uri_for_object(self).to_s.gsub(/\/$/, '') + "/download"),
-        "submitter" => BioCatalogue::Api.uri_for_object(self.submitter),
+        "download" => URI.parse(ServiceCatalographer::Api.uri_for_object(self).to_s.gsub(/\/$/, '') + "/download"),
+        "submitter" => ServiceCatalographer::Api.uri_for_object(self.submitter),
         "created_at" => self.created_at.iso8601,
         "activated_at" => (self.activated_at ? self.activated_at.iso8601 : nil)
       }
@@ -86,9 +86,9 @@ class TestScript < ActiveRecord::Base
       incoming_file.rewind
       self.filename     = incoming_file.original_filename
       self.content_type = incoming_file.content_type
-      BioCatalogue::Util.say "*****"
-      BioCatalogue::Util.say "incoming_file.content_type = #{incoming_file.content_type}"
-      BioCatalogue::Util.say "*****"
+      ServiceCatalographer::Util.say "*****"
+      ServiceCatalographer::Util.say "incoming_file.content_type = #{incoming_file.content_type}"
+      ServiceCatalographer::Util.say "*****"
       self.content_blob = ContentBlob.new({:data => incoming_file.read})
     rescue Exception => ex
       errors.add_to_base("Error uploading file: #{ex.backtrace.join("\n")}")

@@ -1,4 +1,4 @@
-# BioCatalogue: app/models/saved_search.rb
+# ServiceCatalographer: app/models/saved_search.rb
 #
 # Copyright (c) 2010, University of Manchester, The European Bioinformatics 
 # Institute (EMBL-EBI) and the University of Southampton.
@@ -99,12 +99,12 @@ private
     }
 
     unless make_inline
-      data["saved_search"]["self"] = BioCatalogue::Api.uri_for_object(self)
-      data["saved_search"]["scopes"] = BioCatalogue::Api::Json.collection(self.scopes)
-      data["saved_search"]["user"] = BioCatalogue::Api.uri_for_object(self.user)
+      data["saved_search"]["self"] = ServiceCatalographer::Api.uri_for_object(self)
+      data["saved_search"]["scopes"] = ServiceCatalographer::Api::Json.collection(self.scopes)
+      data["saved_search"]["user"] = ServiceCatalographer::Api.uri_for_object(self.user)
       return data.to_json
     else
-      data["saved_search"]["resource"] = BioCatalogue::Api.uri_for_object(self)
+      data["saved_search"]["resource"] = ServiceCatalographer::Api.uri_for_object(self)
       return data["saved_search"].to_json
     end
   end

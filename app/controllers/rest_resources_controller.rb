@@ -1,4 +1,4 @@
-# BioCatalogue: app/controllers/rest_resources_controller.rb
+# ServiceCatalographer: app/controllers/rest_resources_controller.rb
 #
 # Copyright (c) 2009-2010, University of Manchester, The European Bioinformatics 
 # Institute (EMBL-EBI) and the University of Southampton.
@@ -62,7 +62,7 @@ class RestResourcesController < ApplicationController
     respond_to do |format|
       format.html { disable_action }
       format.xml # index.xml.builder
-      format.json { render :json => BioCatalogue::Api::Json.index("rest_resources", json_api_params, @rest_resources).to_json }
+      format.json { render :json => ServiceCatalographer::Api::Json.index("rest_resources", json_api_params, @rest_resources).to_json }
     end
   end
 
@@ -110,7 +110,7 @@ protected # ========================================
   end
 
   def authorise    
-    unless BioCatalogue::Auth.allow_user_to_curate_thing?(current_user, @rest_service.service)
+    unless ServiceCatalographer::Auth.allow_user_to_curate_thing?(current_user, @rest_service.service)
       error_to_back_or_home("You are not allowed to perform this action.")
       return false
     end

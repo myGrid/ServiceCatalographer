@@ -1,4 +1,4 @@
-# BioCatalogue: app/views/search/by_data.xml.builder
+# ServiceCatalographer: app/views/search/by_data.xml.builder
 #
 # Copyright (c) 2010, University of Manchester, The European Bioinformatics 
 # Institute (EMBL-EBI) and the University of Southampton.

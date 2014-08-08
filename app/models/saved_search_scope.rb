@@ -1,4 +1,4 @@
-# BioCatalogue: app/models/saved_search_scope.rb
+# ServiceCatalographer: app/models/saved_search_scope.rb
 #
 # Copyright (c) 2010, University of Manchester, The European Bioinformatics 
 # Institute (EMBL-EBI) and the University of Southampton.
@@ -25,7 +25,7 @@ class SavedSearchScope < ActiveRecord::Base
     {
       "scope_resource_type" => self.resource_type.camelize.singularize,
       "scope_url_value" => self.resource_type.underscore.pluralize,
-      "scope_name" => BioCatalogue::Search.scope_to_visible_search_type(self.resource_type.underscore.pluralize),
+      "scope_name" => ServiceCatalographer::Search.scope_to_visible_search_type(self.resource_type.underscore.pluralize),
       "filters" => self.filters
     }.to_json
   end
@@ -40,13 +40,13 @@ private
     # make sure you store the name of the model as opposed to the url key
     self.resource_type = self.resource_type.camelize.singularize
 
-    valid = BioCatalogue::Search::VALID_SEARCH_SCOPES.include?(self.resource_type.underscore.pluralize)
+    valid = ServiceCatalographer::Search::VALID_SEARCH_SCOPES.include?(self.resource_type.underscore.pluralize)
     errors.add("resource_type", "has to be a valid search scope") unless valid    
   end
   
   def filters_are_valid_for_scope
     scope = self.resource_type.underscore.pluralize
-    valid = BioCatalogue::Filtering.are_filters_valid_for_scope?(self.filters, scope)
+    valid = ServiceCatalographer::Filtering.are_filters_valid_for_scope?(self.filters, scope)
     errors.add("filters", "have to be valid for the given scope: #{scope}") unless valid
   end
   

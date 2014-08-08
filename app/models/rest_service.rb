@@ -1,4 +1,4 @@
-# BioCatalogue: app/models/rest_service.rb
+# ServiceCatalographer: app/models/rest_service.rb
 #
 # Copyright (c) 2009-2010, University of Manchester, The European Bioinformatics
 # Institute (EMBL-EBI) and the University of Southampton.
@@ -273,7 +273,7 @@ class RestService < ActiveRecord::Base
   end
   
   def associated_service_id
-    @associated_service_id ||= BioCatalogue::Mapper.map_compound_id_to_associated_model_object_id(BioCatalogue::Mapper.compound_id_for(self.class.name, self.id), "Service")
+    @associated_service_id ||= ServiceCatalographer::Mapper.map_compound_id_to_associated_model_object_id(ServiceCatalographer::Mapper.compound_id_for(self.class.name, self.id), "Service")
   end
   
   def associated_service
@@ -435,8 +435,8 @@ private
         
     data = {
       "rest_service" => {
-        "name" => BioCatalogue::Util.display_name(self),
-        "submitter" => BioCatalogue::Api.uri_for_object(self.service_version.submitter),
+        "name" => ServiceCatalographer::Util.display_name(self),
+        "submitter" => ServiceCatalographer::Api.uri_for_object(self.service_version.submitter),
         "description" => self.preferred_description,
         "documentation_url" => self.preferred_documentation_url,
         "created_at" => self.created_at.iso8601
@@ -446,19 +446,19 @@ private
     collections.each do |collection|
       case collection.downcase
         when "deployments"
-          data["rest_service"]["deployments"] = BioCatalogue::Api::Json.collection(self.service_deployments)
+          data["rest_service"]["deployments"] = ServiceCatalographer::Api::Json.collection(self.service_deployments)
         when "rest_methods"
-          data["rest_service"]["methods"] = BioCatalogue::Api::Json.collection(self.rest_methods)
+          data["rest_service"]["methods"] = ServiceCatalographer::Api::Json.collection(self.rest_methods)
         when "rest_resources"
-          data["rest_service"]["resources"] = BioCatalogue::Api::Json.collection(self.rest_resources)
+          data["rest_service"]["resources"] = ServiceCatalographer::Api::Json.collection(self.rest_resources)
       end
     end
 
     unless make_inline
-      data["rest_service"]["self"] = BioCatalogue::Api.uri_for_object(self)
+      data["rest_service"]["self"] = ServiceCatalographer::Api.uri_for_object(self)
 			return data.to_json
     else
-      data["rest_service"]["resource"] = BioCatalogue::Api.uri_for_object(self)
+      data["rest_service"]["resource"] = ServiceCatalographer::Api.uri_for_object(self)
 			return data["rest_service"].to_json
     end
   end # generate_json_with_collections

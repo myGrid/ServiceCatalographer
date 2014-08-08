@@ -1,4 +1,4 @@
-# BioCatalogue: app/views/soap_services/wsdl_locations.xml.builder
+# ServiceCatalographer: app/views/soap_services/wsdl_locations.xml.builder
 #
 # Copyright (c) 2010, University of Manchester, The European Bioinformatics 
 # Institute (EMBL-EBI) and the University of Southampton.

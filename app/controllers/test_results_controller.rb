@@ -1,4 +1,4 @@
-# BioCatalogue: app/controllers/test_results_controller.rb
+# ServiceCatalographer: app/controllers/test_results_controller.rb
 #
 # Copyright (c) 2008, University of Manchester, The European Bioinformatics
 # Institute (EMBL-EBI) and the University of Southampton.
@@ -21,7 +21,7 @@ class TestResultsController < ApplicationController
     respond_to do |format|
       format.html { disable_action }
       format.xml # index.xml.builder
-      format.json { render :json => BioCatalogue::Api::Json.index("test_results", json_api_params, @test_results).to_json }
+      format.json { render :json => ServiceCatalographer::Api::Json.index("test_results", json_api_params, @test_results).to_json }
     end
   end
   

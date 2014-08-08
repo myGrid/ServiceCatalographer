@@ -1,4 +1,4 @@
-# BioCatalogue: app/controllers/service_responsibles_controller.rb
+# ServiceCatalographer: app/controllers/service_responsibles_controller.rb
 #
 # Copyright (c) 2010, University of Manchester, The European Bioinformatics
 # Institute (EMBL-EBI) and the University of Southampton.
@@ -62,7 +62,7 @@ class ServiceResponsiblesController < ApplicationController
   end
   
   def authorise
-    unless BioCatalogue::Auth.allow_user_to_curate_thing?(current_user, @service_responsible.service)
+    unless ServiceCatalographer::Auth.allow_user_to_curate_thing?(current_user, @service_responsible.service)
       flash[:error] = "You are not allowed to perform this action!"
       redirect_to @service_responsible.service
     end

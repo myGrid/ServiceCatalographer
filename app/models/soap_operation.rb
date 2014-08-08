@@ -1,4 +1,4 @@
-# BioCatalogue: app/models/soap_operation.rb
+# ServiceCatalographer: app/models/soap_operation.rb
 #
 # Copyright (c) 2008-2010, University of Manchester, The European Bioinformatics
 # Institute (EMBL-EBI) and the University of Southampton.
@@ -53,7 +53,7 @@ class SoapOperation < ActiveRecord::Base
   end
   
   def associated_service_id
-    @associated_service_id ||= BioCatalogue::Mapper.map_compound_id_to_associated_model_object_id(BioCatalogue::Mapper.compound_id_for(self.class.name, self.id), "Service")
+    @associated_service_id ||= ServiceCatalographer::Mapper.map_compound_id_to_associated_model_object_id(ServiceCatalographer::Mapper.compound_id_for(self.class.name, self.id), "Service")
   end
   
   def associated_service
@@ -122,7 +122,7 @@ class SoapOperation < ActiveRecord::Base
 
   def get_service_tags
     list = []
-    BioCatalogue::Annotations.get_tag_annotations_for_annotatable(self).each { |ann| list << ann.value_content }
+    ServiceCatalographer::Annotations.get_tag_annotations_for_annotatable(self).each { |ann| list << ann.value_content }
     return list.join("; ")
   end
 
@@ -207,17 +207,17 @@ private
     collections.each do |collection|
       case collection.downcase
         when "inputs"
-          data["soap_operation"]["inputs"] = BioCatalogue::Api::Json.collection(self.soap_inputs)
+          data["soap_operation"]["inputs"] = ServiceCatalographer::Api::Json.collection(self.soap_inputs)
         when "outputs"
-          data["soap_operation"]["outputs"] = BioCatalogue::Api::Json.collection(self.soap_outputs)
+          data["soap_operation"]["outputs"] = ServiceCatalographer::Api::Json.collection(self.soap_outputs)
       end
     end
 
     unless make_inline
-      data["soap_operation"]["self"] = BioCatalogue::Api.uri_for_object(self)
+      data["soap_operation"]["self"] = ServiceCatalographer::Api.uri_for_object(self)
 			return data.to_json
     else
-      data["soap_operation"]["resource"] = BioCatalogue::Api.uri_for_object(self)
+      data["soap_operation"]["resource"] = ServiceCatalographer::Api.uri_for_object(self)
 			return data["soap_operation"].to_json
     end
   end # generate_json_with_collections

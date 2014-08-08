@@ -1,4 +1,4 @@
-# BioCatalogue: app/helpers/rest_methods_helper.rb
+# ServiceCatalographer: app/helpers/rest_methods_helper.rb
 #
 # Copyright (c) 2008, University of Manchester, The European Bioinformatics 
 # Institute (EMBL-EBI) and the University of Southampton.
@@ -36,7 +36,7 @@ module RestMethodsHelper
     
     link_content = ''
     
-    if BioCatalogue::Auth.allow_user_to_curate_thing?(current_user, rest_method)
+    if ServiceCatalographer::Auth.allow_user_to_curate_thing?(current_user, rest_method)
       inner_html = image_tag("pencil.gif") + content_tag(:span, " " + options[:link_text])
       
       url_hash = {:controller => "rest_methods",

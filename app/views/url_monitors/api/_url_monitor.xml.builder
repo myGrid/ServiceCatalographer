@@ -1,4 +1,4 @@
-# BioCatalogue: app/views/url_monitors/api/_url_monitor.xml.builder
+# ServiceCatalographer: app/views/url_monitors/api/_url_monitor.xml.builder
 #
 # Copyright (c) 2010, University of Manchester, The European Bioinformatics 
 # Institute (EMBL-EBI) and the University of Southampton.
@@ -8,7 +8,7 @@
 parent_xml.tag! "urlMonitor" do
   
   # <url>
-  parent_xml.url BioCatalogue::Monitoring.pingable_url(url_monitor.url)
+  parent_xml.url ServiceCatalographer::Monitoring.pingable_url(url_monitor.url)
   
   # <resource>
   parent_xml.resource nil, 

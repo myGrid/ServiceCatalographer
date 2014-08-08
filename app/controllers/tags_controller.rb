@@ -1,4 +1,4 @@
-# BioCatalogue: app/controllers/tags_controller.rb
+# ServiceCatalographer: app/controllers/tags_controller.rb
 #
 # Copyright (c) 2008-2011, University of Manchester, The European Bioinformatics 
 # Institute (EMBL-EBI) and the University of Southampton.
@@ -19,7 +19,7 @@ class TagsController < ApplicationController
     respond_to do |format|
       format.html # index.html.erb
       format.xml  # index.xml.builder
-      format.json { render :json => BioCatalogue::Api::Json.index("tags", json_api_params, @tags, :total_tags_count => @total_tags_count, :total_pages => @total_pages).to_json }
+      format.json { render :json => ServiceCatalographer::Api::Json.index("tags", json_api_params, @tags, :total_tags_count => @total_tags_count, :total_pages => @total_pages).to_json }
     end
   end
   
@@ -27,7 +27,7 @@ class TagsController < ApplicationController
     respond_to do |format|
       format.html # show.html.erb
       format.xml  # show.xml.builder
-      format.json { render :json => BioCatalogue::Api::Json.tag(@tag.name, @tag.label, @total_items_count).to_json }
+      format.json { render :json => ServiceCatalographer::Api::Json.tag(@tag.name, @tag.label, @total_items_count).to_json }
     end
   end
   
@@ -40,7 +40,7 @@ class TagsController < ApplicationController
       @tag_fragment = params[:annotation][:value]
     end
     
-    @tags = BioCatalogue::Tags.get_tag_suggestions(@tag_fragment, 50)
+    @tags = ServiceCatalographer::Tags.get_tag_suggestions(@tag_fragment, 50)
                      
     render :inline => "<%= auto_complete_result @tags, 'name' %>", :layout => false
   end
@@ -62,8 +62,8 @@ class TagsController < ApplicationController
       
       unless existing.blank?
         existing.each do |a|
-          submitters = [ BioCatalogue::Mapper.compound_id_for_model_object(a.source) ]
-          if BioCatalogue::Auth.allow_user_to_curate_thing?(current_user, :tag, :tag_submitters => submitters)            
+          submitters = [ ServiceCatalographer::Mapper.compound_id_for_model_object(a.source) ]
+          if ServiceCatalographer::Auth.allow_user_to_curate_thing?(current_user, :tag, :tag_submitters => submitters)
             a.destroy
           end
         end
@@ -72,7 +72,7 @@ class TagsController < ApplicationController
     
     respond_to do |format|
       format.html { render :partial => 'annotations/tags_box_inner_tag_cloud', 
-                           :locals => { :tags => BioCatalogue::Annotations.get_tag_annotations_for_annotatable(annotatable),
+                           :locals => { :tags => ServiceCatalographer::Annotations.get_tag_annotations_for_annotatable(annotatable),
                                         :annotatable => annotatable } }
     end
   end
@@ -84,14 +84,14 @@ protected
     
     if is_api_request?
       @sort = :counts if @sort.blank? or ![ :counts, :name ].include?(@sort)
-      @tags = BioCatalogue::Tags.get_tags(:sort => @sort, :page => @page, :per_page => @per_page)
+      @tags = ServiceCatalographer::Tags.get_tags(:sort => @sort, :page => @page, :per_page => @per_page)
     else
       @sort = :name if @sort.blank? or ![ :counts, :name ].include?(@sort)
       # TODO: check this is the right behaviour and not too bad in terms of performance
-      @tags = BioCatalogue::Tags.get_tags(:sort => @sort)
+      @tags = ServiceCatalographer::Tags.get_tags(:sort => @sort)
     end
     
-    @total_tags_count = BioCatalogue::Tags.get_total_tags_count
+    @total_tags_count = ServiceCatalographer::Tags.get_total_tags_count
     
     # NOTE: there is an assumption here this index has not been 
     # filtered/restricted in any way apart from paging. 
@@ -102,9 +102,9 @@ protected
     if action_name == 'destroy_taggings'
       tag_name = params[:tag_name]
     else
-      dup_params = BioCatalogue::Util.duplicate_params(params)
+      dup_params = ServiceCatalographer::Util.duplicate_params(params)
       dup_params[:tag_keyword] = dup_params[:id]
-      tag_name = BioCatalogue::Tags.get_tag_name_from_params(dup_params)
+      tag_name = ServiceCatalographer::Tags.get_tag_name_from_params(dup_params)
     end
     @namespace = params[:namespace] || nil
     @tag = Tag.find_by_name(tag_name)
@@ -123,12 +123,12 @@ protected
 
       unless @tag.blank?
         @scope = params[:scope]
-        @visible_search_type = BioCatalogue::Search.scope_to_visible_search_type(@scope) unless is_api_request?
+        @visible_search_type = ServiceCatalographer::Search.scope_to_visible_search_type(@scope) unless is_api_request?
         @results = { }
         @count = 0
-        ids_for_results = BioCatalogue::Tags.get_service_ids_for_tag(@tag.name)
+        ids_for_results = ServiceCatalographer::Tags.get_service_ids_for_tag(@tag.name)
         ids_for_results.each do |scope, values|
-          result_models = BioCatalogue::Mapper.item_ids_to_model_objects(values,scope)
+          result_models = ServiceCatalographer::Mapper.item_ids_to_model_objects(values,scope)
           result_models.reject!{|result_model| !@include_archived && (result_model.try(:archived?) || result_model.try(:belongs_to_archived_service?))}
           @results[scope] = result_models unless result_models.nil?
 
@@ -144,7 +144,7 @@ protected
   
   def get_tag_items_count
     unless @tag.blank?
-      @total_items_count = BioCatalogue::Tags.get_total_items_count_for_tag_name(@tag.name)
+      @total_items_count = ServiceCatalographer::Tags.get_total_items_count_for_tag_name(@tag.name)
     end
   end
   

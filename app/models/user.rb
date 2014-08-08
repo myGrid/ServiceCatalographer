@@ -1,4 +1,4 @@
-# BioCatalogue: app/models/user.rb
+# ServiceCatalographer: app/models/user.rb
 #
 # Copyright (c) 2008-2010, University of Manchester, The European Bioinformatics
 # Institute (EMBL-EBI) and the University of Southampton.
@@ -239,7 +239,7 @@ class User < ActiveRecord::Base
   
   def annotated_service_ids
     service_ids = self.annotations_by.collect do |a|
-      BioCatalogue::Mapper.map_compound_id_to_associated_model_object_id(BioCatalogue::Mapper.compound_id_for(a.annotatable_type, a.annotatable_id), "Service")      
+      ServiceCatalographer::Mapper.map_compound_id_to_associated_model_object_id(ServiceCatalographer::Mapper.compound_id_for(a.annotatable_type, a.annotatable_id), "Service")
     end
     service_ids.compact.uniq
   end
@@ -380,26 +380,26 @@ private
         
     data =     {
       "user" => {
-        "name" => BioCatalogue::Util.display_name(self),
+        "name" => ServiceCatalographer::Util.display_name(self),
         "affiliation" => self.affiliation,
         "public_email" => self.public_email,
         "joined" => (self.activated_at ? self.activated_at.iso8601 : nil),
-        "location" => BioCatalogue::Api::Json.location(self.country)
+        "location" => ServiceCatalographer::Api::Json.location(self.country)
       }
     }
 
     collections.each do |collection|
       case collection.downcase
         when "saved_searches"
-          data["user"]["saved_searches"] = BioCatalogue::Api::Json.collection(self.saved_searches)
+          data["user"]["saved_searches"] = ServiceCatalographer::Api::Json.collection(self.saved_searches)
       end
     end
 
     unless make_inline
-      data["user"]["self"] = BioCatalogue::Api.uri_for_object(self)
+      data["user"]["self"] = ServiceCatalographer::Api.uri_for_object(self)
       return data.to_json
     else
-      data["user"]["resource"] = BioCatalogue::Api.uri_for_object(self)
+      data["user"]["resource"] = ServiceCatalographer::Api.uri_for_object(self)
       return data["user"].to_json
     end
   end # generate_json_with_collections

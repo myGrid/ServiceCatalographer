@@ -1,4 +1,4 @@
-# BioCatalogue: app/models/registry.rb
+# ServiceCatalographer: app/models/registry.rb
 #
 # Copyright (c) 2009-2010, University of Manchester, The European Bioinformatics
 # Institute (EMBL-EBI) and the University of Southampton.
@@ -70,7 +70,7 @@ class Registry < ActiveRecord::Base
   def generate_json_and_make_inline(make_inline)
     data = {
       "registry" => {
-        "name" => BioCatalogue::Util.display_name(self),
+        "name" => ServiceCatalographer::Util.display_name(self),
         "description" => self.preferred_description,
         "homepage" => self.homepage,
         "created_at" => self.created_at.iso8601
@@ -78,10 +78,10 @@ class Registry < ActiveRecord::Base
     }
 
     unless make_inline
-      data["registry"]["self"] = BioCatalogue::Api.uri_for_object(self)
+      data["registry"]["self"] = ServiceCatalographer::Api.uri_for_object(self)
 			return data.to_json
     else
-      data["registry"]["resource"] = BioCatalogue::Api.uri_for_object(self)
+      data["registry"]["resource"] = ServiceCatalographer::Api.uri_for_object(self)
 			return data["registry"].to_json
     end
   end # generate_json_and_make_inline

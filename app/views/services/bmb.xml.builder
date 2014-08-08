@@ -1,4 +1,4 @@
-# BioCatalogue: app/views/services/bmbs.xml.builder
+# ServiceCatalographer: app/views/services/bmbs.xml.builder
 #
 # Copyright (c) 2009-2013, University of Manchester, The European Bioinformatics
 # Institute (EMBL-EBI) and the University of Southampton.
@@ -32,7 +32,7 @@ xml.tag! "Tools" do
       xml.tag! "DocsEntry", service.documentation_url
       xml.tag! "WSDL", service.try(:wsdl_location)
       xml.tag! "Helpdesk", ""
-      xml.tag! "Source", "BioCatalogue"
+      xml.tag! "Source", "#{SITE_NAME}"
       #inputType
       #outputType
     end
@@ -52,6 +52,6 @@ Functions (use mapping resolver above)
 Interfaces (one of "REST API" or "SOAP API")
 DocsEntry (maybe? - ask Alex / look)
 WSDL
-Helpdesk (don't think BC have this)
-Source (always "BioCatalogue")
+Helpdesk (don't think ServiceCatalogue has this)
+Source (the name of the ServiceCatalogue's instance)
 =end

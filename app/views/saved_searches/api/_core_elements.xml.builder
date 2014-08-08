@@ -1,4 +1,4 @@
-# BioCatalogue: app/views/saved_searches/api/_core_elements.xml.builder
+# ServiceCatalographer: app/views/saved_searches/api/_core_elements.xml.builder
 #
 # Copyright (c) 2010, University of Manchester, The European Bioinformatics 
 # Institute (EMBL-EBI) and the University of Southampton.
@@ -22,7 +22,7 @@ if show_scopes
     saved_search.scopes.each { |scope| 
       scopes_node.scope do |s_node|
         # <scopeName>
-        s_node.scopeName BioCatalogue::Search.scope_to_visible_search_type(scope.resource_type.underscore.pluralize)
+        s_node.scopeName ServiceCatalographer::Search.scope_to_visible_search_type(scope.resource_type.underscore.pluralize)
         
         # <scopeUrlValue>
         s_node.scopeUrlValue scope.resource_type.underscore.pluralize

@@ -1,4 +1,4 @@
-# BioCatalogue: app/models/annotation_attribute.rb
+# ServiceCatalographer: app/models/annotation_attribute.rb
 #
 # Copyright (c) 2009-2010, University of Manchester, The European Bioinformatics 
 # Institute (EMBL-EBI) and the University of Southampton.
@@ -35,10 +35,10 @@ private
     }
 
     unless make_inline
-      data["annotation_attribute"]["self"] = BioCatalogue::Api.uri_for_object(self)
+      data["annotation_attribute"]["self"] = ServiceCatalographer::Api.uri_for_object(self)
 			return data.to_json
     else
-      data["annotation_attribute"]["resource"] = BioCatalogue::Api.uri_for_object(self)
+      data["annotation_attribute"]["resource"] = ServiceCatalographer::Api.uri_for_object(self)
 			return data["annotation_attribute"].to_json
     end
   end # generate_json_and_make_inline

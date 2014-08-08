@@ -1,4 +1,6 @@
-ENV["RAILS_ENV"] = "test"
+ENV['RAILS_ENV'] = 'test'
+Rails.env = ActiveSupport::StringInquirer.new('test')
+
 require File.expand_path(File.dirname(__FILE__) + "/../config/environment")
 #require File.expand_path(File.dirname(__FILE__) + "/factories/user.rb")
 require 'rails/test_help'

@@ -1,4 +1,4 @@
-# BioCatalogue: lib/array.rb
+# ServiceCatalographer: lib/array.rb
 
 # From: http://snippets.dzone.com/posts/show/2161
 

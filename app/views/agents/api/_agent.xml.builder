@@ -1,4 +1,4 @@
-# BioCatalogue: app/views/agents/api/_agent.xml.builder
+# ServiceCatalographer: app/views/agents/api/_agent.xml.builder
 #
 # Copyright (c) 2009-2010, University of Manchester, The European Bioinformatics 
 # Institute (EMBL-EBI) and the University of Southampton.

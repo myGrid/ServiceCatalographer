@@ -1,4 +1,4 @@
-# BioCatalogue: app/controllers/curation_controller.rb
+# ServiceCatalographer: app/controllers/curation_controller.rb
 #
 # Copyright (c) 2010, University of Manchester, The European Bioinformatics
 # Institute (EMBL-EBI) and the University of Southampton.
@@ -90,7 +90,7 @@ class CurationController < ApplicationController
   end
   
   def potential_duplicate_operations_within_service
-    @operations = BioCatalogue::Curation::Reports.potential_duplicate_operations_within_service
+    @operations = ServiceCatalographer::Curation::Reports.potential_duplicate_operations_within_service
     
     respond_to do |format|
       format.html # potential_duplicate_operations_within_service.html.erb
@@ -101,7 +101,7 @@ class CurationController < ApplicationController
     if params[:attribute_name].blank?
       @services = nil
     else
-      @services = BioCatalogue::Curation::Reports.services_missing_annotations(params[:attribute_name])
+      @services = ServiceCatalographer::Curation::Reports.services_missing_annotations(params[:attribute_name])
     end
     
     respond_to do |format|
@@ -117,7 +117,7 @@ class CurationController < ApplicationController
   end
     
   def providers_without_services
-    @service_providers = BioCatalogue::Curation::Reports.providers_without_services
+    @service_providers = ServiceCatalographer::Curation::Reports.providers_without_services
 
     respond_to do |format|
       format.html # providers_without_services.html.erb

@@ -1,4 +1,4 @@
-# BioCatalogue: app/helpers/annotations_helper.rb
+# ServiceCatalographer: app/helpers/annotations_helper.rb
 #
 # Copyright (c) 2008-2009, University of Manchester, The European Bioinformatics 
 # Institute (EMBL-EBI) and the University of Southampton.

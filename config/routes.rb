@@ -1,4 +1,4 @@
-BioCatalogue::Application.routes.draw do
+ServiceCatalographer::Application.routes.draw do
 
   resources :oauth_clients
 

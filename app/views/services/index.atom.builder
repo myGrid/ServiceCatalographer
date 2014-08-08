@@ -1,11 +1,11 @@
-# BioCatalogue: app/views/services/index.atom.builder
+# ServiceCatalographer: app/views/services/index.atom.builder
 #
 # Copyright (c) 2009, University of Manchester, The European Bioinformatics 
 # Institute (EMBL-EBI) and the University of Southampton.
 # See license.txt for details
 
-atom_feed :url => generate_filter_url(BioCatalogue::Util.duplicate_params(params), "services", :atom), 
-          :root_url => generate_filter_url(BioCatalogue::Util.duplicate_params(params), "services"),
+atom_feed :url => generate_filter_url(ServiceCatalographer::Util.duplicate_params(params), "services", :atom),
+          :root_url => generate_filter_url(ServiceCatalographer::Util.duplicate_params(params), "services"),
           :schema_date => "2009" do |feed|
   
   feed.title(@feed_title)

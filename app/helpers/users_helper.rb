@@ -1,4 +1,4 @@
-# BioCatalogue: app/helpers/users_helper.rb
+# ServiceCatalographer: app/helpers/users_helper.rb
 #
 # Copyright (c) 2008-2009, University of Manchester, The European Bioinformatics 
 # Institute (EMBL-EBI) and the University of Southampton.
@@ -47,7 +47,7 @@ module UsersHelper
   end
 
   def generate_include_deactivated_url(resource, should_include_deactivated)
-    params_dup = BioCatalogue::Util.duplicate_params(params)
+    params_dup = ServiceCatalographer::Util.duplicate_params(params)
     params_dup[:include_deactivated] = should_include_deactivated.to_s
 
     # Reset page param

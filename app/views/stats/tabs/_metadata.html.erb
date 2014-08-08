@@ -20,7 +20,7 @@
           <th>Min no. on services:</th>
         </tr>
 
-        <% BioCatalogue::Annotations.metadata_sources.concat([ :all ]).each do |type| %>
+        <% ServiceCatalographer::Annotations.metadata_sources.concat([ :all ]).each do |type| %>
             <%= render :partial => 'metadata_stats_for_type', :locals => { :type => type } -%>
         <% end %>
       </table>
@@ -43,7 +43,7 @@
           <thead>
           <tr>
             <th>Service:</th>
-            <% BioCatalogue::Annotations.metadata_sources.concat([ :all ]).each do |type| %>
+            <% ServiceCatalographer::Annotations.metadata_sources.concat([ :all ]).each do |type| %>
                 <th class="number">By <%= metadata_source_type_title_text(type) -%>:</th>
             <% end %>
           </tr>
@@ -62,7 +62,7 @@
                       (unknown service)
                   <% end %>
                 </td>
-                <% BioCatalogue::Annotations.metadata_sources.concat([ :all ]).each do |type| %>
+                <% ServiceCatalographer::Annotations.metadata_sources.concat([ :all ]).each do |type| %>
                     <td class="value center">
                       <%= @stats.metadata_counts_per_service[s_id][type] -%>
                     </td>

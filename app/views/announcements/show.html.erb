@@ -1,6 +1,6 @@
 <%
 
-# BioCatalogue: app/views/announcements/show.html.erb
+# ServiceCatalographer: app/views/announcements/show.html.erb
 #
 # Copyright (c) 2009-2010, University of Manchester, The European Bioinformatics 
 # Institute (EMBL-EBI) and the University of Southampton.
@@ -17,7 +17,7 @@
   </div>
 </h1>
 
-<% if BioCatalogue::Auth.allow_user_to_curate_thing?(current_user, :announcements) %>
+<% if ServiceCatalographer::Auth.allow_user_to_curate_thing?(current_user, :announcements) %>
     <div class="header_left_bar" style="float: none; position: static;" id="center">
         <span class="actions_button_row">
           <span class="actions_button">

@@ -1,5 +1,5 @@
 # Settings specified here will take precedence over those in config/environment.rb
-BioCatalogue::Application.configure do
+ServiceCatalographer::Application.configure do
 
   # The production environment is meant for finished, "live" apps.
 
@@ -8,7 +8,7 @@ BioCatalogue::Application.configure do
   ROTATE_LOGS = true
 
   # Use cronolog for log rotation in production
-  # Example CRONOLOG_PARAMS = "/usr/bin/cronolog /var/webapps/biocatalogue/log/production.log.%Y%m%d"
+  # Example CRONOLOG_PARAMS = "/usr/bin/cronolog /var/webapps/servicecatalogue/log/production.log.%Y%m%d"
   CRONOLOG_PARAMS = nil
 
   # Rotate logs when they reach a size of 20M and keep no more than 10 of these

@@ -1,11 +1,11 @@
 #!/usr/bin/python
-# BioCatalogue : /vendor/embrace_scripts/src/biocat_harness.py
+# ServiceCatalographer: /vendor/embrace_scripts/src/biocat_harness.py
 #
 # Copyright (c) 2010, University of Manchester, The European Bioinformatics 
 # Institute (EMBL-EBI) and the University of Southampton.
 # See license.txt for details
 #
-# This script uses a biocatalogue db to select test scripts to run.
+# This script uses a ServiceCatalographer instance's DB to select test scripts to run.
 # It is dependent on the scripts which create the run directories 
 # from the same database.[make_biocat_test_script_run_dirs.py]
 
@@ -55,7 +55,7 @@ parser.add_option("-l", "--log", dest="logfile",
 parser.add_option("-f", "--fromFile", dest="fromFile",
                   help="XML file containing the scripts to be run", metavar="FILE")
 parser.add_option("-d", "--database", dest="db", default=False,
-                  help="get the scripts to run from a Biocatalogue database")
+                  help="get the scripts to run from a ServiceCatalographer instance's database")
 
 
 (options, args) = parser.parse_args()
@@ -84,7 +84,7 @@ if options.logfile != None:
 
 # Booting
 print "*******************************************************************************"
-print "Booting BioCatalogue Test Harness"
+print "Booting ServiceCatalographer Test Harness"
 print "Start: %s"%time.ctime()
 print "*******************************************************************************"
 
@@ -149,7 +149,7 @@ if options.db:
         sys.exit(0)
 
 if (len(queue) + len(soapui_jobs)) == 0:
-    print "No test were configured. Either run against a BioCatalogue database with tests or provide a configuration file. "
+    print "No test were configured. Either run against a ServiceCatalographer instance's database with tests or provide a configuration file. "
     print "Sample configuration file is found in <Rails.root/vendor/embrace_script/config/script_listing.xml> \n"
     os.system('python '+ sys.argv[0] + "  --help")
     sys.exit(0)
@@ -282,7 +282,7 @@ print "*************************************************************************
       
 
 print "*******************************************************************************"
-print "BioCatalogue Test Harness Completed Successfully"
+print "ServiceCatalographer Test Harness Completed Successfully"
 print "End : %s"%time.ctime()
 print "*******************************************************************************"
 

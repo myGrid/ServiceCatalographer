@@ -1,4 +1,4 @@
-# BioCatalogue: app/models/announcement.rb
+# ServiceCatalographer: app/models/announcement.rb
 #
 # Copyright (c) 2009, University of Manchester, The European Bioinformatics 
 # Institute (EMBL-EBI) and the University of Southampton.
@@ -23,7 +23,7 @@ class Announcement < ActiveRecord::Base
   end
   
   def check_authorisation
-    if !self.user_id.blank? and BioCatalogue::Auth.allow_user_to_curate_thing?(self.user, :announcements)
+    if !self.user_id.blank? and ServiceCatalographer::Auth.allow_user_to_curate_thing?(self.user, :announcements)
       return true
     else
       errors.add_to_base("Only admins and curators can create announcements")

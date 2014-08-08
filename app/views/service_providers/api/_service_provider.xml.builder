@@ -1,4 +1,4 @@
-# BioCatalogue: app/views/service_providers/api/_service_provider.xml.builder
+# ServiceCatalographer: app/views/service_providers/api/_service_provider.xml.builder
 #
 # Copyright (c) 2009-2010, University of Manchester, The European Bioinformatics 
 # Institute (EMBL-EBI) and the University of Southampton.

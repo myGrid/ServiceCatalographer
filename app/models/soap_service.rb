@@ -1,4 +1,4 @@
-# BioCatalogue: app/models/soap_service.rb
+# ServiceCatalographer: app/models/soap_service.rb
 #
 # Copyright (c) 2008-2010, University of Manchester, The European Bioinformatics 
 # Institute (EMBL-EBI) and the University of Southampton.
@@ -192,7 +192,7 @@ class SoapService < ActiveRecord::Base
     
     if success
       # Old parser using the external WSDLUtils PHP services.
-      service_info, err_msgs, wsdl_file_contents = BioCatalogue::WsdlParser.parse(self.wsdl_location)
+      service_info, err_msgs, wsdl_file_contents = ServiceCatalographer::WsdlParser.parse(self.wsdl_location)
 
       if service_info.blank?
         errors.add_to_base("Failed to parse the WSDL file.")
@@ -274,7 +274,7 @@ class SoapService < ActiveRecord::Base
     
     begin
       transaction do
-        new_info, err_msgs, wsdl_file_contents = BioCatalogue::WsdlParser.parse(self.wsdl_location)
+        new_info, err_msgs, wsdl_file_contents = ServiceCatalographer::WsdlParser.parse(self.wsdl_location)
         
         if new_info.blank? or !err_msgs.empty?
           success = false
@@ -332,8 +332,8 @@ class SoapService < ActiveRecord::Base
 
           # Update ServiceDeployment locations
           self.service_deployments.each { |s|
-            wsdl_geoloc = BioCatalogue::Util.url_location_lookup(s.endpoint)
-            new_city, new_country = BioCatalogue::Util.city_and_country_from_geoloc(wsdl_geoloc)
+            wsdl_geoloc = ServiceCatalographer::Util.url_location_lookup(s.endpoint)
+            new_city, new_country = ServiceCatalographer::Util.city_and_country_from_geoloc(wsdl_geoloc)
             
             existing_city = s.city || ""
             new_city ||= ""
@@ -373,7 +373,7 @@ class SoapService < ActiveRecord::Base
               elsif existing_ports.length == 1
                 existing_ports.first
               else
-                BioCatalogue::Util.warn("Multiple SoapServicePort objects with the same name ('#{port['name']}') were found for SoapService (ID: #{self.id}). So only taking the first one.")
+                ServiceCatalographer::Util.warn("Multiple SoapServicePort objects with the same name ('#{port['name']}') were found for SoapService (ID: #{self.id}). So only taking the first one.")
                 existing_ports.first
               end
               
@@ -438,7 +438,7 @@ class SoapService < ActiveRecord::Base
               elsif existing_ops.length == 1
                 existing_ops.first
               else
-                BioCatalogue::Util.warn("Multiple SoapOperation objects with the same name ('#{operation['name']}') were found for SoapService (ID: #{self.id}). So only taking the first one.")
+                ServiceCatalographer::Util.warn("Multiple SoapOperation objects with the same name ('#{operation['name']}') were found for SoapService (ID: #{self.id}). So only taking the first one.")
                 existing_ops.first
               end
               
@@ -527,7 +527,7 @@ class SoapService < ActiveRecord::Base
                     if existing_op.parent_port_type != operation['parent_port_type'] or existing_op.soap_service_port.name != operation['parent_port_type']
                       new_port = self.soap_service_ports.find_by_name(operation['parent_port_type'])
                       if new_port.nil?
-                        BioCatalogue::Util.warn("No SoapServicePort exists for '#{operation['parent_port_type']}' for SoapOperation ID: #{existing_op.id}. It's possible that the WSDL Parser couldn't pick it up.")
+                        ServiceCatalographer::Util.warn("No SoapServicePort exists for '#{operation['parent_port_type']}' for SoapOperation ID: #{existing_op.id}. It's possible that the WSDL Parser couldn't pick it up.")
                         update_found = true
                         changes.add_entry("The parent port type for the operation '#{operation['name']}' has been updated from '#{existing_op.parent_port_type}' to '#{operation['parent_port_type']}'.")
                         existing_op.parent_port_type = operation['parent_port_type']
@@ -644,7 +644,7 @@ class SoapService < ActiveRecord::Base
         end
       end
     rescue Exception => ex
-      BioCatalogue::Util.log_exception(ex, :error, "Failed to run 'update_from_latest_wsdl!' for SoapService (ID: #{self.id})")
+      ServiceCatalographer::Util.log_exception(ex, :error, "Failed to run 'update_from_latest_wsdl!' for SoapService (ID: #{self.id})")
       success = false
       update_found = false
     end
@@ -692,7 +692,7 @@ class SoapService < ActiveRecord::Base
   end
   
   def associated_service_id
-    @associated_service_id ||= BioCatalogue::Mapper.map_compound_id_to_associated_model_object_id(BioCatalogue::Mapper.compound_id_for(self.class.name, self.id), "Service")
+    @associated_service_id ||= ServiceCatalographer::Mapper.map_compound_id_to_associated_model_object_id(ServiceCatalographer::Mapper.compound_id_for(self.class.name, self.id), "Service")
   end
   
   def associated_service
@@ -802,9 +802,9 @@ private
         
     data = {
       "soap_service" => {
-        "name" => BioCatalogue::Util.display_name(self),
+        "name" => ServiceCatalographer::Util.display_name(self),
         "wsdl_location" => self.wsdl_location,
-        "submitter" => BioCatalogue::Api.uri_for_object(self.service_version.submitter),
+        "submitter" => ServiceCatalographer::Api.uri_for_object(self.service_version.submitter),
         "description" => self.preferred_description,
         "documentation_url" => self.preferred_documentation_url,
         "created_at" => self.created_at.iso8601
@@ -814,17 +814,17 @@ private
     collections.each do |collection|
       case collection.downcase
         when "deployments"
-          data["soap_service"]["deployments"] = BioCatalogue::Api::Json.collection(self.service_deployments)
+          data["soap_service"]["deployments"] = ServiceCatalographer::Api::Json.collection(self.service_deployments)
         when "operations"
-          data["soap_service"]["operations"] = BioCatalogue::Api::Json.collection(self.soap_operations)
+          data["soap_service"]["operations"] = ServiceCatalographer::Api::Json.collection(self.soap_operations)
       end
     end
 
     unless make_inline
-      data["soap_service"]["self"] = BioCatalogue::Api.uri_for_object(self)
+      data["soap_service"]["self"] = ServiceCatalographer::Api.uri_for_object(self)
 			return data.to_json
     else
-      data["soap_service"]["resource"] = BioCatalogue::Api.uri_for_object(self)
+      data["soap_service"]["resource"] = ServiceCatalographer::Api.uri_for_object(self)
 			return data["soap_service"].to_json
     end
   end # generate_json_with_collections
