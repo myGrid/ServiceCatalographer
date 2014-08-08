@@ -33,15 +33,12 @@ gem "twitter"
 gem "memcache-client", :require => "memcache"
 gem "ruby-hmac"
 gem "seer"
-#Soap4r not supported on r1.9 so using a branch
-#gem "soap4r"
 gem 'mumboe-soap4r'
 gem "google_analytics"
 gem "oauth-plugin"
 gem "validates_existence"
 gem 'delayed_job_active_record'
 gem 'markaby'
-#gem "validates_url_format_of"  # incompatible with Rails 3
 gem "acts_as_trashable"
 gem "my_annotations", :git => 'git://github.com/myGrid/annotations.git'
 gem "will_paginate"
@@ -54,41 +51,26 @@ gem "dalli"
 gem 'redcarpet'
 gem "paperclip", "~> 4.1"
 gem 'rjb', '~> 1.4.9'
-
-group :test do
-# gem "webmock"
-  gem 'shoulda', '<3.2.0'
-end
-
 #Linked to SysMO Git repositories
 gem 'redbox', :git=>"git://github.com/SysMO-DB/redbox"
-#gem 'redbox', :path => "vendor/gems/redbox"
-
 gem "white_list", :git=>"https://github.com/neubloc/white_list.git"
-
 gem "tabs_on_rails"
-
 gem "haml"
 gem "hashie"
-
-# sunspot_rails has nokogiri as a dependancy and Nokogiri 1.6.0 uses r1.9
-# so we need to install this specific version here
+gem "version_info"
 gem 'nokogiri', '~>1.5.10'
 gem 'sunspot_rails'
 gem 'sunspot_solr'
 gem 'progress_bar'
 
-# Not used - disabled in config/initializers/biocat_local.rb
-#gem "onyx-cache-money", "0.2.6.1", :require => "cache_money", :path => "vendor/gems/onyx-cache-money-0.2.6.1"
-#gem "cache-money" #not sure how to test 
-
-# Frozen gems
-#New version_info requires ruby > 1.9.*  - leave frozen till Rails 3 upgrade
-gem "version_info", "0.7.1", :path => "vendor/gems/version_info-0.7.1"
-
 gem 'sass-rails',   '~> 3.2.3'
 group :assets do
   gem 'coffee-rails', '~> 3.2.1'
   gem 'uglifier', '>= 1.0.3'
+end
+
+group :test do
+# gem "webmock"
+  gem 'shoulda', '<3.2.0'
 end
 
