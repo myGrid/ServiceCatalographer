@@ -17,6 +17,4 @@ production:
   sessions: false
   debug: false
   namespace: biocat_prod
-  servers: 
-    - localhost:11211
-    - another.cache.server.com:11211
+  servers: localhost:11211
