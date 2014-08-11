@@ -1096,7 +1096,7 @@ body.sidebar-right #login_box {
     z-index: 10000;
     border: solid 1px #CCC;
     color: #000000;
-    background-color: #FFF99F;
+    background-color: $tooltip_colour;
     font-size: 93%;
     font-weight: normal;
     padding: 0.3em 0.6em;
@@ -1592,7 +1592,7 @@ ul.simple_list li {
     border-radius: 6px;
     -moz-border-radius: 6px;
     -webkit-border-radius: 6px;
-    background-image: url("../assets/transparency/lighten_bg.png");
+    #background-image: url("../assets/transparency/lighten_bg.png");
     background-color: $box_section_home;
     background-size: 100% 100%;
     border: 1px solid #CCC;
@@ -2121,7 +2121,7 @@ ul.tabbernav li.tabberactive a:hover {
 }
 
 .box_info {
-    background: $primary_colour;
+    background: $info_box;
     color: #333333;
     padding: 0.6em 1em;
     margin: 0;
@@ -3372,7 +3372,7 @@ div.resize-handle {
 .message_box .subject {
     font-size: 108%;
     font-weight: bold;
-    background-color: #FFFFCC;
+    background-color: $info_box;
     border: 1px solid #CCC;
     padding: 0.2em 0.5em;
     margin-bottom: 1em;
@@ -3630,7 +3630,7 @@ a.globalise_param_link {
 .rcontainer > .rbottom > div,
 .rcontainer > .rcontain,
 .biocat_green {
-    background-color: $primary_colour;
+    background-color: $info_box;
 }
 
 #header_container {

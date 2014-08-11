@@ -1,12 +1,30 @@
 /**
- * The main (green) colour scheme.
+ * The ServiceCatalographer's colour scheme.
  */
 
 /* Main colour - Light */
-$primary_colour: #E9F7CC;
+$primary_colour: #EFEFEF;
 
- /* Header colour - Slightly Darker */
-$header_colour: #D3F78A;
+/* Header colour - Slightly Darker */
+$header_colour: #CECECE;
 
-/* Secondary colour - used on tabs - Slightly Darker still */
-$secondary_colour: #BFE76F;
+/* Secondary colour - used on tabs */
+$secondary_colour: #bdb9fb;
+
+/* Light purple - used on info, annotation and description boxes */
+$info_box: #EAEEFB;
+
+/* Notice flash colour */
+$notice_flash: #bdb9fb;
+
+/* Error flash colour */
+$error_flash: #FFDFDF;
+
+/* Colours for right-hand column on each service page. */
+$box_section_service: #F8FCF0;
+
+/* Colours for boxes on left and right columns of home page */
+$box_section_home: #FCFEFA;
+
+/* Colour for tooltips */
+$tooltip_colour: $secondary_colour;
