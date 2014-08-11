@@ -1592,7 +1592,7 @@ ul.simple_list li {
     border-radius: 6px;
     -moz-border-radius: 6px;
     -webkit-border-radius: 6px;
-    #background-image: url("../assets/transparency/lighten_bg.png");
+    //background-image: url("../assets/transparency/lighten_bg.png");
     background-color: $box_section_home;
     background-size: 100% 100%;
     border: 1px solid #CCC;
@@ -3022,7 +3022,7 @@ ul.categories li span.main {
     display: -moz-inline-block;
     display: -moz-inline-box;
     display: inline-block;
-    background-color: #FFC;
+    background-color: $service_category;
     margin-bottom: 0.4em;
     margin-right: 0.5em;
     padding: 1px 4px;
@@ -3049,7 +3049,7 @@ ul.categories li span.main a.category:hover {
 }
 
 ul.categories li span.main:hover {
-    background-color: #F0E68C;
+    background-color: $service_category_hover;
 }
 
 /* END categories styles */

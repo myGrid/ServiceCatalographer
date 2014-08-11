@@ -24,7 +24,12 @@ $error_flash: #FFDFDF;
 $box_section_service: #F8FCF0;
 
 /* Colours for boxes on left and right columns of home page */
-$box_section_home: #FCFEFA;
+$box_section_home: #F8FCF0; //#FCFEFA;
 
 /* Colour for tooltips */
 $tooltip_colour: $secondary_colour;
+
+/* Colour for service categories */
+$service_category: #F8FCF0;
+
+$service_category_hover: $service_category * 0.9;

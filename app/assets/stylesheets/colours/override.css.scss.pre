@@ -1,5 +1,7 @@
 /**
- * The ServiceCatalographer's colour scheme.
+ * This file is intended to be used as a convenient way of replacing the main colour scheme.
+ * To use, create a copy of the file and remove the ".pre" suffix, then alter the following RGB colour codes as needed.
+ * Colours can also be set to scales of colours e.g. $header_colour: $primary_colour * 0.85;
  */
 
 /* Main colour - Light */
@@ -24,7 +26,12 @@ $error_flash: #FFDFDF;
 $box_section_service: #F8FCF0;
 
 /* Colours for boxes on left and right columns of home page */
-$box_section_home: #FCFEFA;
+$box_section_home: #F8FCF0; //#FCFEFA;
 
 /* Colour for tooltips */
 $tooltip_colour: $secondary_colour;
+
+/* Colour for service categories */
+$service_category: #F8FCF0;
+
+$service_category_hover: $service_category * 0.9;
