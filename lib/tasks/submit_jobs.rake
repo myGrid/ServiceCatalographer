@@ -7,7 +7,7 @@
 namespace :service_catalographer do
   namespace :submit do
     
-    desc 'Submits a job to recalculate the total annotation counts (including grouped totals) and cache them (see biocat_main.rb for cache time)'
+    desc 'Submits a job to recalculate the total annotation counts (including grouped totals) and cache them (see servicecatalographer_main.rb for cache time)'
     task :calculate_annotation_counts => :environment do
       Delayed::Job.enqueue(ServiceCatalographer::Jobs::CalculateAnnotationCountsJob.new)
     end

@@ -6,7 +6,7 @@ var/
 
 config/environments/production.rb
 config/database.yml
-config/initializers/biocat_local.rb
+config/initializers/servicecatalographer_local.rb
 config/initializers/geokit_local.rb
 config/initializers/mail.rb
 config/memcache.yml

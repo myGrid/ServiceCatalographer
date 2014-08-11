@@ -1,6 +1,6 @@
-# ServiceCatalographer: app/config/initializers/biocat_local.rb.pre
+# ServiceCatalographer: app/config/initializers/servicecatalographer_local.rb.pre
 #
-# Copyright (c) 2008-2010, University of Manchester, The European Bioinformatics 
+# Copyright (c) 2008-2010, University of Manchester, The European Bioinformatics
 # Institute (EMBL-EBI) and the University of Southampton.
 # See license.txt for details
 
@@ -9,8 +9,8 @@
 # This setting determines where trashing (via the acts_as_trashable plugin) is used.
 ENABLE_TRASHING = true
 
-# This setting determines whether search indexing is enabled or not. 
-ENABLE_SEARCH = false
+# This setting determines whether search indexing is enabled or not.
+ENABLE_SEARCH = true
 
 # Show the debug box at the end of the page or not.
 SHOW_DEBUG = false
@@ -21,22 +21,20 @@ USE_EVENT_LOG = true
 # Enable test scripts
 ENABLE_TEST_SCRIPTS = false
 
-# Render markdown in annotation
 MARKDOWN_ENABLED = true
-
 MARKDOWN_DOCUMENTATION_LINK = "http://dev.mygrid.org.uk/wiki/display/servicecatalographer/How+to+Annotate+using+Markdown"
-#MARKDOWN_DOCUMENTATION_LINK = "https://wiki.biovel.eu/display/doc/Markdown+Syntax"
 
+BIOVEL_ENABLED = true
 
 # Set a proxy for open-uri calls
-#If :proxy option is specified, the value should be String, 
-#URI, boolean or nil. When String or URI is given, 
-#it is treated as proxy URI. 
-#When true is given or the option itself is not specified, 
-#environment variable `scheme_proxy’ is examined. `scheme’ 
-#is replaced by `http’, `https’ or `ftp’. 
-#When false or nil is given, the environment variables 
-#are ignored and connection will be made to a server directly. 
+#If :proxy option is specified, the value should be String,
+#URI, boolean or nil. When String or URI is given,
+#it is treated as proxy URI.
+#When true is given or the option itself is not specified,
+#environment variable `scheme_proxy’ is examined. `scheme’
+#is replaced by `http’, `https’ or `ftp’.
+#When false or nil is given, the environment variables
+#are ignored and connection will be made to a server directly.
 HTTP_PROXY = true
 
 # Set the user agent for any URI open calls. Set this to something that
@@ -59,14 +57,14 @@ ServiceCatalographer::Application.config.middleware.use ExceptionNotifier,
 
                                                 :email => {
                                                     :email_prefix => "[APP-#{Rails.env.capitalize} ERROR]",
-                                                    :sender_address => %{"ServiceCatalogue Error" <servicecatalogue-errors@company.com>},
+                                                    :sender_address => %{"ServiceCatalogue Error" <ServiceCatalogue-errors@company.com>},
                                                     :exception_recipients => %w{exceptions@example.com}
                                                 }
 
 
 
 # defaults to exception.notifier@default.com
-#ExceptionNotifier.sender_address = %("ServiceCatalogue Errors" <servicecatalogue-errors@company.com>)
+#ExceptionNotifier.sender_address = %("ServiceCatalogue Errors" <ServiceCatalogue-errors@company.com>)
 
 # defaults to "[ERROR] "
 #ExceptionNotifier.email_prefix = "[APP-#{RAILS_ENV.capitalize} ERROR] "
@@ -79,8 +77,9 @@ ServiceCatalographer::Application.config.middleware.use ExceptionNotifier,
 
 # ==============================================================
 
+
 # The sender email address for emails sent from the application.
-SENDER_EMAIL_ADDRESS = "servicecatalogue-support@example.com"
+SENDER_EMAIL_ADDRESS = "ServiceCatalogue-support@example.com"
 
 # The email address used for sending feedback from users to.
 FEEDBACK_EMAIL_ADDRESS = "contact@example.com"
@@ -91,17 +90,17 @@ FEEDBACK_EMAIL_ADDRESS = "contact@example.com"
 ENABLE_CACHE_MONEY = false
 
 # reCAPTCHA settings:
-ENV["RECAPTCHA_PUBLIC_KEY"] = "123abc"
-ENV["RECAPTCHA_PRIVATE_KEY"] = "xyz456"
+ENV["RECAPTCHA_PUBLIC_KEY"] = ""
+ENV["RECAPTCHA_PRIVATE_KEY"] = ""
 
 
 # The site's base host URL (for times when the base host cannot be obtained from controllers):
-SITE_BASE_HOST = "http://www.servicecatalogue.org"
+SITE_BASE_HOST = "http://www.biocatalogue.org"
 
-# The name of this ServiceCatalographer instance, displayed across the site
+# The name of this BioCatalogue instance, displayed across the site
 SITE_NAME = "ServiceCatalogue"
 
-# A URL to the logo, displayed in the top left
+# an URL to the logo, displayed in the top left
 SITE_LOGO = "logo_small.png"
 
 # Twitter integration:
@@ -112,7 +111,7 @@ TWITTER_ACCOUNT_PASSWORD = "password"
 
 
 # Addthis.com bookmarking widget integration:
-ENABLE_BOOKMARKING_WIDGET = false
+ENABLE_BOOKMARKING_WIDGET = true
 ADDTHIS_USERNAME = "my_username"
 
 
@@ -123,22 +122,22 @@ GOOGLE_ANALYTICS_TRACKER_ID = 'xyz'
 
 # WSDLUtils base URI
 # E.g. WSDLUTILS_BASE_URI = 'http://localhost/WSDLUtils/WSDLUtils.php'
-WSDLUTILS_BASE_URI = 'base_uri_to_the_embrace_WSDLUtils_package'
+WSDLUTILS_BASE_URI = 'https://test.biocatalogue.org/WSDLUtils/WSDLUtils.php'
 
 
 # ====================================================
-# Configure local settings for the RPX Single Sign-On 
+# Configure local settings for the RPX Single Sign-On
 # (for OpenID, Twitter, Facebook, etc logins - see https://rpxnow.com/)
 # ----------------------------------------------------
 
-ENABLE_RPX = false
-RPX_REALM = 'myapp'
-RPX_API_KEY = 'xyz'
+ENABLE_RPX = true
+RPX_REALM = 'servicecatalogue'
+RPX_API_KEY = '5d662627dfdf36fb50444f8b0b6c09cf82bcb08b'
 
 # ====================================================
 
 
-# Setting to determine whether mappings (eg: "give me the relevant service provider that might be related to this annotation") 
+# Setting to determine whether mappings (eg: "give me the relevant service provider that might be related to this annotation")
 # are carried out after getting the raw results from Solr.
 # If set to true, this may cause search to be slower but has the best chance of returning all relevant results.
 # If set to false, it is crucial that all relevant associated object IDs are indexed together with the items, in Solr.
@@ -157,14 +156,17 @@ MONITORING_STATUS_CHANGE_RECIPIENTS = [ "tom@example.org", "dick@example.org", "
 
 # This setting determines whether notifications
 # about service status should be sent to service
-# submitters or anyone responsible for the service in 
+# submitters or anyone responsible for the service in
 # addition to those included in the status recipients list above.
 NOTIFY_SERVICE_RESPONSIBLE = false
 
+# This setting determines whether SSL (via the ssl_requirement plugin) is used.
+# ENABLE_SSL = false # not using this anymore - the whole app should be running under HTTPS
+
 # For cases where an 'identifier' is not set for new annotation attributes,
-# this config setting is be used as the default "catch all" template for generating 
+# this config setting is be used as the default "catch all" template for generating
 # an identifier.
-ANNOTATION_ATTRIBUTE_DEFAULT_IDENTIFIER_TEMPLATE = "http://servicecatalographer.org/attribute/%s"
+ANNOTATION_ATTRIBUTE_DEFAULT_IDENTIFIER_TEMPLATE = "http://biocatalogue.org/attribute/%s"
 
 # ====================================================
 
