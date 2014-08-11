@@ -10,7 +10,7 @@
 #
 #    -h, --help                       Show this help message.
 #
-# Depedencies:
+# Dependencies:
 # - All dependencies for the ServiceCatalogue application
 # - Haml
 # - Hashie

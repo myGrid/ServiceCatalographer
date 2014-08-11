@@ -12,7 +12,7 @@ module TestHelper
 
   include TestConfigHelper
   
-  HTTP_USER_AGENT = "BioCatalogue test bot; Ruby/#{RUBY_VERSION}".freeze
+  HTTP_USER_AGENT = "ServiceCatalographer test bot; Ruby/#{RUBY_VERSION}".freeze
   
   def make_url(path)
     URI.join(config["server"], path)
