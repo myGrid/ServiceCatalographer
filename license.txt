@@ -1,17 +1,20 @@
-The BioCatalogue code uses several libraries, especially from the myExperiment
-codebase. The licenses for BioCatalogue and myExperiment are given below.
+The ServiceCatalographer code makes use of several libraries - from the myExperiment
+codebase and other external sources. The licenses for ServiceCatalographer and
+myExperiment are given below.
 
-The license of other libraries used are available in their respective
-directories within the {app_home}/vendors/plugins/ directory.
+The license of other external libraries referenced from Gemfile are available in
+their respective source code repositories or on RubyGems (http://rubygems.org).
  
-The acceptance of the BioCatalogue license is also regarded as acceptance 
-of the licenses of myExperiment and the additional libraries.
+The acceptance of the ServiceCatalographer license is also regarded as acceptance
+of the licenses of myExperiment and the additional libraries used.
 
 ===============================================================================
-  BioCatalogue License:
+  ServiceCatalographer License:
 ===============================================================================
 
-Copyright (c) 2008-2010, Regents of the University of Manchester, The European 
+Copyright (c) 2010-2014, University of Manchester.
+
+Copyright (c) 2008-2010, Regents of the University of Manchester, the European
 Bioinformatics Institute (EMBL-EBI) and the University of Southampton.
 
 All rights reserved.
@@ -46,7 +49,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   myExperiment License:
 ===============================================================================
 
-Copyright (c) 2007-2010, University of Manchester and the University of Southampton.
+Copyright (c) 20014, University of Manchester.
+
+Copyright (c) 2007-2013, University of Manchester and the University of Southampton.
 
 All rights reserved.
 

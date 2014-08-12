@@ -1,12 +1,12 @@
 == ServiceCatalographer
 
-The ServiceCatalographer is a Web application that provides a registry of Web services. Its
-source code based on that of BioCatalogue - a registry of biological services
-(BioCatalogue, http://www.biocatalogue.org). The BioCatalogue was a BBSRC-funded project and
-has been running since 1st June 2008. The project was a joint venture between the University
-of Manchester (led by Carole Goble) and the EMBL-EBI (led by Rodrigo Lopez).
-ServiceCatalographer is, however, domain-independent and can be used for registering SOAP
-and REST services from any domain.
+The ServiceCatalographer is a Web application that provides a registry of Web services.
+Its source code based on that of BioCatalogue - a registry of life sciences Web services
+(BioCatalogue, http://www.biocatalogue.org). BioCatalogue was a BBSRC-funded project
+(grant numbers: BB/F01046X/1, BB/F010540/1) started in 2008 as a joint venture between
+the University of Manchester (led by Professor Carole Goble CBE) and the EMBL-EBI
+(led by Rodrigo Lopez). ServiceCatalographer is domain-independent and can be used for
+registering SOAP and REST Web services from any domain (and not just from life sciences).
 
 The goals of the ServiceCatalographer are:
 
@@ -19,5 +19,4 @@ and provide high quality annotations for services.
 maintainers of these services.
 
 You can stand up your own instance of ServiceCatalographer by following the installation instructions at:
-http://dev.mygrid.org.uk/wiki/display/servicecatalographer/Installation+Instructions+-+Production
-http://dev.mygrid.org.uk/wiki/display/servicecatalographer/Installation+Instructions+-+Development
+http://dev.mygrid.org.uk/wiki/display/servicecatalographer/Installation+Instructions
