@@ -1995,60 +1995,60 @@ ul.tabbernav li.tabberactive a:hover {
 }
 
 /* BEGIN tables styles */
-.biocat_table {
+.sc_table {
     border: 1px solid #DDD;
     border-collapse: collapse;
     line-height: 1.5;
     color: #333333;
 }
 
-.biocat_table th,
-.biocat_table td {
+.sc_table th,
+.sc_table td {
     padding: 0.2em 0.7em;
     vertical-align: middle;
     border: 1px solid #DDD;
 }
 
-.biocat_table th {
+.sc_table th {
     font-weight: bold;
     background: url(../assets/box_title_bkgd_green_14.gif) repeat-x;
     background-position: bottom;
     background-color: #DBF0AF;
 }
 
-.biocat_table th.center {
+.sc_table th.center {
     text-align: center;
 }
 
-.biocat_table .small_center {
+.sc_table .small_center {
     text-align: center;
     width: 40px;
 }
 
-.biocat_table tr.odd {
+.sc_table tr.odd {
     background-color: #f2fbe1;
 }
 
-.biocat_table td {
+.sc_table td {
 
 }
 
-.biocat_table tr.inner,
-.biocat_table td.inner {
+.sc_table tr.inner,
+.sc_table td.inner {
     background-color: #EED;
 }
 
-.biocat_table td.center {
+.sc_table td.center {
     text-align: center;
 }
 
-.biocat_table td.action_links a:link, .biocat_table td.action_links a:visited {
+.sc_table td.action_links a:link, .sc_table td.action_links a:visited {
     text-align: center;
     text-decoration: underline;
     font-size: 93%;
 }
 
-.biocat_table td.action_links a:hover {
+.sc_table td.action_links a:hover {
     background-color: #feffcf;
 }
 
