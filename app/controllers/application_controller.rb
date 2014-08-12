@@ -301,7 +301,7 @@ protected
     flash[:error] = messages.to_sentence
 
     if is_api_request?
-      messages << "See https://www.biocatalogue.org/wiki/doku.php?id=public:api for information about the ServiceCatalographer's REST API."
+      messages << "See http://dev.mygrid.org.uk/wiki/display/servicecatalographer/API for information about the ServiceCatalographer's API."
     end
 
     respond_to do |format|

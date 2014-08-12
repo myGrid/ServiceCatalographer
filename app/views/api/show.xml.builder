@@ -16,7 +16,7 @@ xml.tag! "servicecatalogue",
          :resourceType => "ServiceCatalogue" do
   
   # <documentation>
-  xml.documentation xlink_attributes("https://www.biocatalogue.org/wiki/doku.php?id=public:api", :title => "Documentation for the ServiceCatalographer's API")
+  xml.documentation xlink_attributes("http://dev.mygrid.org.uk/wiki/display/servicecatalographer/API", :title => "Documentation for the ServiceCatalographer's API")
   
   # <collections>
   xml.collections do

@@ -106,8 +106,8 @@ module ServiceCatalographer
             "api_version" => ServiceCatalographer::API_VERSION,
             "resource_type" => "ServiceCatalogue",
             "documentation" => {
-              "resource" => "http://apidocs.biocatalogue.org",
-              "description" => "Documentation for the ServiceCatalographer's APIs"
+              "resource" => "http://dev.mygrid.org.uk/wiki/display/servicecatalographer/API",
+              "description" => "Documentation for the ServiceCatalographer's API"
             },
             "collections" => [
               self.api_endpoint_item('agents', 'Agents', 'Agents index'),
