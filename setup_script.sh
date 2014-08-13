@@ -20,7 +20,7 @@ echo "Switching to branch $LOCAL_BRANCH"
 git checkout $LOCAL_BRANCH
 
 echo "Running bundle install..."
-bundle install
+bundle install --deployment
 
 [ ! -f ${APP_DIR}/config/database.yml ] && cp ${APP_DIR}/config/database.yml.pre ${APP_DIR}/config/database.yml && echo "Created ${APP_DIR}/config/database.yml"
 [ ! -f ${APP_DIR}/config/memcache.yml ] && cp ${APP_DIR}/config/memcache.yml.pre ${APP_DIR}/config/memcache.yml  && echo "Created ${APP_DIR}/config/memcache.yml"
