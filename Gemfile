@@ -57,8 +57,8 @@ gem "white_list", :git=>"https://github.com/neubloc/white_list.git"
 gem "tabs_on_rails"
 gem "haml"
 gem "hashie"
-gem "version_info"
-gem 'nokogiri', '~>1.5.10'
+gem "version_info", "~> 1.8.0"
+gem 'nokogiri', '~> 1.5.10'
 gem 'sunspot_rails'
 gem 'sunspot_solr'
 gem 'progress_bar'

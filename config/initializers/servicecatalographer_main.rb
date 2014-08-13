@@ -13,10 +13,12 @@ if "irb" == $0
   ActiveRecord::Base.logger = Logger.new(STDOUT)
 end
 
+VersionInfo.file_format= :yaml
 module ServiceCatalographer
   include VersionInfo
-  VERSION.file_name = File.expand_path("version_info.yml", ".")
-  
+  #VERSION.file_name = File.expand_path("version_info.yml", ".")
+  VERSION.file_name = File.join(Rails.root, 'version_info.yml')
+
   API_VERSION = "1.2.1"
 end
 
