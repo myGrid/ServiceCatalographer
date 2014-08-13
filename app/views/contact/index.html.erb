@@ -21,41 +21,6 @@
 			<b><%= mail_to "#{FEEDBACK_EMAIL_ADDRESS}", nil, { :subject => SITE_NAME, :encode => "hex" } %></b>
 		</p>
 	
-		<p style="text-align: center; margin: 0.5em 0;">
-			Click 
-			<b><%= link_to_function("here".html_safe + expand_image, visual_effect(:toggle_blind, "feedback_help", :duration => 0.3), :style => "text-decoration:none;") %></b>
-			for more info.
-		</p>
-		
-		<div id="feedback_help" style="display: none;">
-			<p>We would really appreciate feedback on your experiences with <%= SITE_NAME -%>, especially in the following areas:</p>
-			<ul>
-			  <li><b>User Interface:</b>  
-			    <ul>
-			      <li>How easy is it to navigate?</li>
-			      <li>How have you found submitting, searching, browsing, tagging, annotating and so on for Services?</li> 
-			      <li>Have you found any features difficult to use? Do you have any suggestions on how to make them easier to use?</li>
-			    </ul>
-			  </li>
-			  <li><b>Bug Reporting:</b>
-			    <ul>
-			      <li>Did any of the features you tried to use fail? Report them here and we will endeavour to fix them as quickly as possible.</li>
-			    </ul>
-			  </li>
-			  <li><b>Feature Requests:</b>
-			    <ul>
-			      <li>Are there any new features that you would like to see on the <%= SITE_NAME -%>? Tell us about them and we will see if we can implement them for you.</li>
-			    </ul>
-			  </li>
-			</ul>
-			<p>Please specify any URLs if your feedback / bug report is about particular parts of the site.</p>
-			
-			<p>
-				Thanks!<br/>
-				<b>The <%= SITE_NAME -%> Team</b>
-			</p>
-		</div>
-	
 	<% end %>
 	
 </div>
