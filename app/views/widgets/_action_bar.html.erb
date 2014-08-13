@@ -42,9 +42,10 @@
 	<span id="action_links">
 		<%= link_to(content_tag(:span, "Home", :class => "label"), home_path) -%>
 		<%= link_to(generic_icon_for(:services, 'margin-right: 0.4em;') + content_tag(:span, "Services", :class => "label"), services_path) -%>
-		<%= link_to(generic_icon_for(:submit_service, 'margin-right: 0.4em;') + content_tag(:span, "Register a Service", :class => "label"), new_service_path) -%>
-		<%= link_to(generic_icon_for(:providers, 'margin-right: 0.4em;') + content_tag(:span, "Service Providers", :class => "label"), service_providers_path) -%>
-		<%= link_to(generic_icon_for(:search_by_data, 'margin-right: 0.4em;') + content_tag(:span, "Search by Data", :class => "label"), search_by_data_url) -%>
+		<%= link_to(generic_icon_for(:submit_service, 'margin-right: 0.4em;') + content_tag(:span, "Register a service", :class => "label"), new_service_path) -%>
+		<%= link_to(generic_icon_for(:providers, 'margin-right: 0.4em;') + content_tag(:span, "Service providers", :class => "label"), service_providers_path) -%>
+        <%= link_to(generic_icon_for(:users, 'margin-right: 0.4em;') + content_tag(:span, "Members", :class => "label"), users_path) -%>
+        <%= link_to(generic_icon_for(:search_by_data, 'margin-right: 0.4em;') + content_tag(:span, "Search by data", :class => "label"), search_by_data_url) -%>
         <%= link_to(generic_icon_for(:latest, 'margin-right: 0.4em;') + content_tag(:span, "Latest", :class => "label"), latest_url ) -%>
 
 		<!--<span style="background: transparent url(/assets/transparency/separator.png) no-repeat left;">&nbsp;</span>-->
