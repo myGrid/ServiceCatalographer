@@ -41,7 +41,7 @@ class StatsController < ApplicationController
         Rails.cache.write('registry_stats', @stats)
       end
     else
-      flash[:error] = "No stats report found. Please contact #{SITE_NAME} administators for help"
+      flash[:error] = "No stats report found. Please contact #{SITE_NAME} team for help."
     end
 
     respond_to do |format|
