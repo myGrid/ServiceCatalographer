@@ -4,7 +4,7 @@
 	<ShortName>ServiceCatalographer</ShortName>
 	<Description>The Registry of Web Services in Sciences</Description>
 	<Contact>contact@servicecatalographer.org</Contact>
-	<Image height="16" width="16" type="image/x-icon">SERVER_BASE_URL/images/biocat_icon.png</Image>
+	<Image height="16" width="16" type="image/x-icon">SERVER_BASE_URL/images/servicecatalographer_icon.png</Image>
 	<Url type="text/html" method="GET" template="SERVER_BASE_URL/search?q={searchTerms}"/>
 	<Attribution>
       servicecatalographer.org

@@ -81,7 +81,7 @@ SITE_BASE_HOST = "http://www.servicecatalogue.org"
 SITE_NAME = "ServiceCatalogue"
 
 # A URL to the logo, displayed in the top left (relative to app/assets/images)
-SITE_LOGO = "logo_small.png"
+SITE_LOGO = "servicecatalographer_logo.png"
 
 # Twitter integration:
 ENABLE_TWITTER = false
