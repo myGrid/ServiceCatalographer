@@ -201,7 +201,7 @@ module ServiceCatalographer
           try_again if try_again?
           return success?
         rescue Exception => ex
-          Rails.logger.error("problem occured while checking availability of a url")
+          Rails.logger.error("Problem occurred while checking availability of a URL")
           Rails.logger.error(ex)
           return false
         end
