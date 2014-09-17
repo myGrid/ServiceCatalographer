@@ -27,12 +27,12 @@ class JsonTests < Test::Unit::TestCase
   end
   
   # --------------------
-  
+
   # root
   def test_root
     validate_data_from_path("/")
   end
-  
+
   # agent
   def test_agents
     validate_index_from_path("/agents")
@@ -40,21 +40,21 @@ class JsonTests < Test::Unit::TestCase
   end
 
   def test_agent
-    config["agent_ids"].each { |id| 
-      validate_agent_from_path("/agents/#{id}") 
+    config["agent_ids"].each { |id|
+      validate_agent_from_path("/agents/#{id}")
       validate_index_from_path("/agents/#{id}/annotations_by")
     }
   end
-  
+
   # annotation_attribute
   def test_annotation_attributes
     validate_index_from_path("/annotation_attributes")
     validate_index_from_path("/annotation_attributes?page=2")
   end
-  
+
   def test_annotation_attribute
     config["annotation_attribute_ids"].each { |id|
-      validate_annotation_attribute_from_path("/annotation_attributes/#{id}") 
+      validate_annotation_attribute_from_path("/annotation_attributes/#{id}")
       validate_index_from_path("/annotation_attributes/#{id}/annotations")
     }
   end
@@ -63,8 +63,8 @@ class JsonTests < Test::Unit::TestCase
   def test_annotations
     validate_index_from_path("/annotations")
     validate_index_from_path("/annotations?page=2")
-    validate_index_from_path("/annotations?page=3")    
-    validate_index_from_path("/annotations?page=4") 
+    validate_index_from_path("/annotations?page=3")
+    validate_index_from_path("/annotations?page=4")
     validate_index_from_path("/annotations?page=5")
   end
 
@@ -75,16 +75,16 @@ class JsonTests < Test::Unit::TestCase
   def test_annotation
     config["annotation_ids"].each { |id| validate_annotation_from_path("/annotations/#{id}") }
   end
-  
+
   # category
   def test_categories
     validate_index_from_path("/categories")
     validate_index_from_path("/categories?page=2")
   end
-  
+
   def test_category
-    config["category_ids"].each { |id| 
-      validate_category_from_path("/categories/#{id}") 
+    config["category_ids"].each { |id|
+      validate_category_from_path("/categories/#{id}")
       validate_index_from_path("/categories/#{id}/services")
     }
   end
@@ -100,10 +100,10 @@ class JsonTests < Test::Unit::TestCase
     validate_index_from_path("/registries?sort_by=created&sort_order=asc")
     validate_index_from_path("/registries?sort_by=created&sort_order=asc&page=2", true)
   end
-  
+
   def test_registry
-    config["registry_ids"].each { |id| 
-      validate_registry_from_path("/registries/#{id}") 
+    config["registry_ids"].each { |id|
+      validate_registry_from_path("/registries/#{id}")
       validate_index_from_path("/registries/#{id}/annotations_by", true)
       validate_index_from_path("/registries/#{id}/services", true)
     }
@@ -116,7 +116,7 @@ class JsonTests < Test::Unit::TestCase
     validate_index_from_path("/rest_methods?sort_by=name")
     validate_index_from_path("/rest_methods?sort_by=name&sort_order=desc")
     validate_index_from_path("/rest_methods?sort_by=name&sort_order=asc")
-    validate_index_from_path("/rest_methods?q=database", true)    
+    validate_index_from_path("/rest_methods?q=database", true)
   end
 
   def test_rest_methods_filters
@@ -124,8 +124,8 @@ class JsonTests < Test::Unit::TestCase
   end
 
   def test_rest_method
-    config["rest_method_ids"].each { |id| 
-      validate_rest_method_from_path("/rest_methods/#{id}") 
+    config["rest_method_ids"].each { |id|
+      validate_rest_method_from_path("/rest_methods/#{id}")
       validate_rest_method_from_path("/rest_methods/#{id}/inputs", :inputs)
       validate_rest_method_from_path("/rest_methods/#{id}/outputs", :outputs)
       validate_index_from_path("/rest_methods/#{id}/annotations")
@@ -134,16 +134,16 @@ class JsonTests < Test::Unit::TestCase
 
   # rest_parameter
   def test_rest_parameter
-    config["rest_parameter_ids"].each { |id| 
-      validate_rest_parameter_from_path("/rest_parameters/#{id}") 
+    config["rest_parameter_ids"].each { |id|
+      validate_rest_parameter_from_path("/rest_parameters/#{id}")
       validate_index_from_path("/rest_parameters/#{id}/annotations", true)
     }
   end
 
   # rest_representation
   def test_rest_representation
-    config["rest_representation_ids"].each { |id| 
-      validate_rest_representation_from_path("/rest_representations/#{id}") 
+    config["rest_representation_ids"].each { |id|
+      validate_rest_representation_from_path("/rest_representations/#{id}")
       validate_index_from_path("/rest_representations/#{id}/annotations", true)
     }
   end
@@ -153,38 +153,38 @@ class JsonTests < Test::Unit::TestCase
     validate_index_from_path("/rest_resources")
     validate_index_from_path("/rest_resources?page=2")
   end
-  
+
   def test_rest_resource
-    config["rest_resource_ids"].each { |id| 
-      validate_rest_resource_from_path("/rest_resources/#{id}") 
-      validate_rest_resource_from_path("/rest_resources/#{id}/methods", :methods) 
+    config["rest_resource_ids"].each { |id|
+      validate_rest_resource_from_path("/rest_resources/#{id}")
+      validate_rest_resource_from_path("/rest_resources/#{id}/methods", :methods)
       validate_index_from_path("/rest_resources/#{id}/annotations", true)
     }
   end
-  
+
   # rest_service
   def test_rest_services
     validate_index_from_path("/rest_services")
     validate_index_from_path("/rest_services?page=2")
   end
-  
+
   def test_rest_service
     config["rest_service_ids"].each { |id|
-      validate_rest_service_from_path("/rest_services/#{id}") 
-      validate_rest_service_from_path("/rest_services/#{id}/deployments", :deployments) 
-      validate_rest_service_from_path("/rest_services/#{id}/resources", :resources) 
-      validate_rest_service_from_path("/rest_services/#{id}/methods", :methods) 
+      validate_rest_service_from_path("/rest_services/#{id}")
+      validate_rest_service_from_path("/rest_services/#{id}/deployments", :deployments)
+      validate_rest_service_from_path("/rest_services/#{id}/resources", :resources)
+      validate_rest_service_from_path("/rest_services/#{id}/methods", :methods)
       validate_index_from_path("/rest_services/#{id}/annotations")
     }
   end
-  
+
   # TODO: saved_search
   def test_saved_search
   end
-  
+
   # search
   def test_search
-    config["search_queries"].each { |query| 
+    config["search_queries"].each { |query|
       validate_index_from_path("/search?q=#{query}", true)
       validate_index_from_path("/search?q=#{query}&page=2", true)
       validate_index_from_path("/search?q=#{query}&page=3", true)
@@ -220,21 +220,21 @@ class JsonTests < Test::Unit::TestCase
   def test_services_filters
     validate_filters_from_path("/services/filters")
   end
-  
+
   def test_service
-    config["service_ids"].each { |id| 
-      validate_service_from_path("/services/#{id}") 
-      validate_service_from_path("/services/#{id}/deployments", :deployments) 
-      validate_service_from_path("/services/#{id}/variants", :variants) 
-      validate_service_from_path("/services/#{id}/monitoring", :monitoring) 
+    config["service_ids"].each { |id|
+      validate_service_from_path("/services/#{id}")
+      validate_service_from_path("/services/#{id}/deployments", :deployments)
+      validate_service_from_path("/services/#{id}/variants", :variants)
+      validate_service_from_path("/services/#{id}/monitoring", :monitoring)
       validate_index_from_path("/services/#{id}/annotations", true)
     }
   end
-  
+
   # service_deployment
   def test_service_deployment
     config["service_deployment_ids"].each { |id|
-      validate_service_deployment_from_path("/service_deployments/#{id}") 
+      validate_service_deployment_from_path("/service_deployments/#{id}")
       validate_index_from_path("/service_deployments/#{id}/annotations", true)
     }
   end
@@ -251,14 +251,14 @@ class JsonTests < Test::Unit::TestCase
     validate_index_from_path("/service_providers?q=ddbj", true)
     validate_index_from_path("/service_providers?c=[japan]")
   end
-  
+
   def test_service_providers_filters
     validate_filters_from_path("/service_providers/filters")
   end
 
   def test_service_provider
-    config["service_provider_ids"].each { |id| 
-      validate_service_provider_from_path("/service_providers/#{id}") 
+    config["service_provider_ids"].each { |id|
+      validate_service_provider_from_path("/service_providers/#{id}")
       validate_index_from_path("/service_providers/#{id}/services")
       validate_index_from_path("/service_providers/#{id}/annotations")
       validate_index_from_path("/service_providers/#{id}/annotations_by", true)
@@ -267,16 +267,16 @@ class JsonTests < Test::Unit::TestCase
 
   # service_test
   def test_service_test
-    config["service_test_ids"].each { |id| 
-      validate_service_test_from_path("/service_tests/#{id}") 
+    config["service_test_ids"].each { |id|
+      validate_service_test_from_path("/service_tests/#{id}")
       validate_index_from_path("/service_tests/#{id}/results")
     }
   end
-  
+
   # soap_input
   def test_soap_input
     config["soap_input_ids"].each { |id|
-      validate_soap_input_from_path("/soap_inputs/#{id}") 
+      validate_soap_input_from_path("/soap_inputs/#{id}")
       validate_index_from_path("/soap_inputs/#{id}/annotations", true)
     }
   end
@@ -296,20 +296,20 @@ class JsonTests < Test::Unit::TestCase
   def test_soap_operations_filters
     validate_filters_from_path("/soap_operations/filters")
   end
-  
+
   def test_soap_operation
-    config["soap_operation_ids"].each { |id| 
-      validate_soap_operation_from_path("/soap_operations/#{id}") 
-      validate_soap_operation_from_path("/soap_operations/#{id}/inputs", :inputs) 
-      validate_soap_operation_from_path("/soap_operations/#{id}/outputs", :outputs) 
+    config["soap_operation_ids"].each { |id|
+      validate_soap_operation_from_path("/soap_operations/#{id}")
+      validate_soap_operation_from_path("/soap_operations/#{id}/inputs", :inputs)
+      validate_soap_operation_from_path("/soap_operations/#{id}/outputs", :outputs)
       validate_index_from_path("/soap_operations/#{id}/annotations", true)
     }
   end
-  
+
   # soap_output
   def test_soap_output
     config["soap_output_ids"].each { |id|
-      validate_soap_output_from_path("/soap_outputs/#{id}") 
+      validate_soap_output_from_path("/soap_outputs/#{id}")
       validate_index_from_path("/soap_outputs/#{id}/annotations", true)
     }
   end
@@ -319,12 +319,12 @@ class JsonTests < Test::Unit::TestCase
     validate_index_from_path("/soap_services")
     validate_index_from_path("/soap_services?page=2")
   end
-  
+
   def test_soap_service
-    config["soap_service_ids"].each { |id| 
-      validate_soap_service_from_path("/soap_services/#{id}") 
-      validate_soap_service_from_path("/soap_services/#{id}/deployments", :deployments) 
-      validate_soap_service_from_path("/soap_services/#{id}/operations", :operations) 
+    config["soap_service_ids"].each { |id|
+      validate_soap_service_from_path("/soap_services/#{id}")
+      validate_soap_service_from_path("/soap_services/#{id}/deployments", :deployments)
+      validate_soap_service_from_path("/soap_services/#{id}/operations", :operations)
       validate_index_from_path("/soap_services/#{id}/annotations")
     }
   end
@@ -338,7 +338,7 @@ class JsonTests < Test::Unit::TestCase
     validate_index_from_path("/tags?sort=name&page=3")
     validate_index_from_path("/tags?sort=counts&page=2")
   end
-  
+
   def test_tag
     config["tag_endpoints"].each { |path| validate_tag_from_path(path) }
   end
@@ -347,12 +347,12 @@ class JsonTests < Test::Unit::TestCase
   def test_test_results
     validate_index_from_path("/test_results")
     validate_index_from_path("/test_results?page=2")
-    
+
     config["service_test_ids"].each { |id|
       validate_index_from_path("/test_results?service_test_id=#{id}")
     }
   end
-  
+
   def test_test_result
     config["test_result_ids"].each { |id| validate_test_result_from_path("/test_results/#{id}") }
   end
@@ -375,8 +375,8 @@ class JsonTests < Test::Unit::TestCase
   end
 
   def test_user
-    config["user_ids"].each { |id| 
-      validate_user_from_path("/users/#{id}") 
+    config["user_ids"].each { |id|
+      validate_user_from_path("/users/#{id}")
       validate_index_from_path("/users/#{id}/annotations_by", true)
       validate_index_from_path("/users/#{id}/services", true)
 
@@ -386,7 +386,7 @@ class JsonTests < Test::Unit::TestCase
   end
 
   # --------------------
-  
+
   def teardown
   end
 

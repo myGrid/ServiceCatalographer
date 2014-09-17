@@ -14,7 +14,12 @@ module JsonTestHelper
   include TestHelper
   
   def load_data_from_endpoint(endpoint_url)
-    JSON.parse(open(endpoint_url, "Accept" => "application/json", "User-Agent" => HTTP_USER_AGENT).read)
+    begin
+      JSON.parse(open(endpoint_url, "Accept" => "application/json", "User-Agent" => HTTP_USER_AGENT).read)
+    rescue Exception => ex
+      puts "Problem occurred with #{endpoint_url}: #{ex.message}."
+      throw ex
+    end
   end
   
   # ========================================
@@ -49,7 +54,7 @@ module JsonTestHelper
 
   # ========================================
   
-  def validate_index_from_path(path, allow_empty=false, allowed_size=20)
+  def validate_index_from_path(path, allow_empty=false, allowed_size=50)
     data = validate_data_from_path(make_url(path))
     resource_name = data.keys.first
     

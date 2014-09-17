@@ -12,7 +12,7 @@ annotation_ids:
   - 1
   - 2
   - 4
-  - 5
+  - 6
   - 20
 
 annotation_attribute_ids:
@@ -31,7 +31,7 @@ registry_ids:
   - 1
   - 2
   - 3
-    
+
 rest_method_ids:
   - 60
   - 92
@@ -39,7 +39,7 @@ rest_method_ids:
 rest_parameter_ids:
   - 138
   - 78
-  
+
 rest_representation_ids:
   - 3
   - 8
@@ -59,52 +59,45 @@ search_queries:
  - "blahdihblahblah"
 
 service_ids:
-  - 2     # SOAP 1 Operation
-  - 4     # SOAP 7 Operations
+  - 2633     # SOAP 6 Operations
   - 2083  # SOAP 10 Operations
   - 607   # REST 0 Endpoints
-  - 2625  # REST 7 Endpoints
-  - 6     # Archived
-  
+  - 2653  # REST 1 Endpoint
+  - 2625    # Archived
+
 service_deployment_ids:
-  - 2     # SOAP 
   - 1928  # SOAP
   - 2637  # REST
 
 service_provider_ids:
   - 1
-  - 4
+  - 8
 
 service_test_ids:
-  - 3
   - 2364
 
 soap_input_ids:
-  - 12
   - 21737
   - 597
-  
+
 soap_operation_ids:
-  - 11
-  - 12
+  - 35416
   - 428
 
 soap_output_ids:
-  - 11
   - 13243
   - 421
-  
+
 soap_service_ids:
-  - 2
   - 1926
   - 2137
-   
+
 tag_endpoints:
   - "/tags/ebi"
   - "/tags/protein%20sequence"
   - "/tags/secondaryParameter?namespace=mygrid-service-ontology"
   - "/tags/DDBJ_record?namespace=mygrid-domain-ontology"
-  
+
 test_result_ids:
   - 10
   - 50
@@ -113,7 +106,7 @@ test_result_ids:
   - 1000
   - 5000
   - 10000
-  
+
 user_ids:
   - 2
   - 228
@@ -124,4 +117,3 @@ wsdl_locations:
   - "http://api.bioinfo.no/wsdl/ELMdb.wsdl"
   - "http://biomoby.org/services/wsdl/mpiz-koeln.mpg.de/runAFAWEAnalysesBySequenceAndOrganismAndGetAFAWE_URL"
   - "http://mrs.cmbi.ru.nl/mrsws/clustal/wsdl"
-  

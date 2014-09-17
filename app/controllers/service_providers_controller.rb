@@ -7,7 +7,7 @@
 class ServiceProvidersController < ApplicationController
   
   before_filter :disable_action, :only => [ :new, :edit, :create ]
-  before_filter :disable_action_for_api, :except => [ :index, :show, :annotations, :annotations_by, :services, :filters, :filtered_index ]
+  before_filter :disable_action_for_api, :except => [ :index, :show, :profile, :annotations, :annotations_by, :services, :filters, :filtered_index ]
   
   skip_before_filter :verify_authenticity_token, :only => [ :auto_complete ]
 
@@ -30,7 +30,7 @@ class ServiceProvidersController < ApplicationController
   set_tab :services, :service_providers, :only => [:services]
   set_tab :hostnames, :service_providers, :only => [:hostnames]
   before_filter :load_tab_variables, :only => [:profile, :services, :hostnames, :show]
-  before_filter :show, :only => [:profile, :services, :hostnames]
+  #before_filter :show, :only => [:profile]
 
   # GET /service_providers
   # GET /service_providers.xml
@@ -61,11 +61,12 @@ class ServiceProvidersController < ApplicationController
   # GET /service_providers/1.xml
   def show
     respond_to do |format|
-      format.html { render 'service_providers/show.html.erb'}# show.html.erb
+      format.html # show.html.erb
       format.xml  # show.xml.builder
       format.json { render :json => @service_provider.to_json }
     end
   end
+
   def load_tab_variables
   @provider_hostnames = @service_provider.service_provider_hostnames
 
@@ -75,9 +76,21 @@ class ServiceProvidersController < ApplicationController
   end
   end
 
-  def profile ; end
-  def services ; end
-  def hostnames ; end
+  def profile
+    respond_to do |format|
+      format.html { render 'service_providers/show.html.erb'}# show.html.erb
+      format.xml  { render 'service_providers/show.xml.builder'} # show.xml.builder
+      format.json { render :json => @service_provider.to_json }
+    end
+  end
+
+  def hostnames
+    respond_to do |format|
+      format.html { render 'service_providers/show.html.erb'} # show.html.erb
+      format.xml { disable_action }
+      format.json { disable_action }
+    end
+  end
 
   def annotations
     respond_to do |format|
@@ -97,7 +110,7 @@ class ServiceProvidersController < ApplicationController
   
   def services
     respond_to do |format|
-      format.html { disable_action }
+      format.html { render 'service_providers/show.html.erb'}
       format.xml { redirect_to(generate_include_filter_url(:p, params[:id], "services", :xml)) }
       format.json { redirect_to(generate_include_filter_url(:p, params[:id], "services", :json)) }
     end

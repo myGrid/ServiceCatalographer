@@ -145,7 +145,6 @@ ServiceCatalographer::Application.routes.draw do
     member do
       get :annotations_by
       get :annotations
-      get :services
       post :edit_by_popup
       put :upload_logo
       delete :remove_logo

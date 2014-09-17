@@ -54,7 +54,7 @@ module BljsonTestHelper
     # (this assumes the JSON API is working as expected!)
     data2 = load_data_from_main_json_endpoint(make_url(path))
     
-    assert data[resource_name].length == data2[resource_name]["total"], "Different number of results found between the bljson and json endpoints"
+    assert data[resource_name].length == data2[resource_name]["total"], "Different number of results found between the bljson and json endpoints for resource: #{resource_name} and path #{path}"
   end
   
   # ========================================

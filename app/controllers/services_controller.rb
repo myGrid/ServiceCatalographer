@@ -235,6 +235,7 @@ class ServicesController < ApplicationController
     respond_to do |format|
       format.xml  # monitoring.xml.builder
       format.html { render 'services/show'}
+      format.json { render :json => @service.to_custom_json("monitoring") }
     end
   end
 
@@ -459,6 +460,7 @@ class ServicesController < ApplicationController
 
     @filter_message = "The services index has been filtered" unless @current_filters.blank?
 
+    conditions[:archived_at] = nil unless include_archived?
 
     if self.request.format == :bljson
       finder_options = {
@@ -467,8 +469,8 @@ class ServicesController < ApplicationController
         :conditions => conditions,
         :joins => joins
       }
-
       @services = ActiveRecord::Base.connection.select_all(Service.send(:construct_finder_arel, finder_options))
+
     else
       # Must check if we need to include archived services or not
       if include_archived?
